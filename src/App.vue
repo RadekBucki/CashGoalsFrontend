@@ -1,12 +1,19 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  <div>
+    <nav>
+      <RouterLink to="/">
+        Home
+      </RouterLink> |
+      <RouterLink to="/about">
+        About
+      </RouterLink>
+    </nav>
+    <RouterView />
+  </div>
 </template>
 
 <style>
+/*noinspection CssUnusedSymbol*/
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -24,6 +31,7 @@ nav a {
   color: #2c3e50;
 }
 
+/*noinspection CssUnusedSymbol*/
 nav a.router-link-exact-active {
   color: #42b983;
 }
