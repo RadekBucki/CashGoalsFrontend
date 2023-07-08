@@ -3,23 +3,30 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "serve": "vite preview",
+    "build": "vite build",
     "lint": "vue-cli-service lint",
+    "dev": "vite",
     "i18n:report": "vue-cli-service i18n:report --src \\\"./src/**/*.?(js|vue)\\\" --locales \\\"src/locales/**/*.json\\\""
   },
   "dependencies": {
+    "@mdi/font": "5.9.55",
     "register-service-worker": "^1.7.2",
+    "roboto-fontface": "*",
     "vue": "^3.2.13",
     "vue-i18n": "^9.1.0",
     "vue-router": "^4.0.3",
-    "vuex": "^4.0.0"
+    "vuetify": "^3.0.0-beta.0",
+    "vuex": "^4.0.0",
+    "webfontloader": "^1.0.0"
   },
   "devDependencies": {
     "@intlify/vue-i18n-loader": "^3.0.0",
     "@types/vue-i18n": "^7.0.0",
+    "@types/webfontloader": "^1.0.0",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",
+    "@vitejs/plugin-vue": "^3.0.3",
     "@vue/cli-plugin-eslint": "~5.0.0",
     "@vue/cli-plugin-pwa": "~5.0.0",
     "@vue/cli-plugin-router": "~5.0.0",
@@ -34,7 +41,10 @@
     "eslint-plugin-vuejs-accessibility": "^1.1.0",
     "lint-staged": "^11.1.2",
     "typescript": "~4.5.5",
-    "vue-cli-plugin-i18n": "^2.3.2"
+    "vite": "^3.0.8",
+    "vite-plugin-vuetify": "^1.0.0-alpha.12",
+    "vue-cli-plugin-i18n": "^2.3.2",
+    "vue-cli-plugin-vuetify": "^2.5.8"
   },
   "eslintConfig": {
     "root": true,
@@ -42,9 +52,9 @@
       "node": true
     },
     "extends": [
+      "@vue/typescript/recommended",
       "plugin:vue/recommended",
-      "@vue/airbnb",
-      "@vue/typescript/recommended"
+      "@vue/airbnb"
     ],
     "plugins": [
       "vue",

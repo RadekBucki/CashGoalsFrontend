@@ -1,22 +1,18 @@
-import { createI18n, LocaleMessages, VueMessageType } from 'vue-i18n';
+import { createI18n } from 'vue-i18n';
 
-function loadLocaleMessages(): LocaleMessages<VueMessageType> {
-  const locales = require.context('./', true, /[A-Za-z0-9-_,\s]+\.json$/i);
-  const messages: LocaleMessages<VueMessageType> = {};
-  locales.keys()
-    .forEach((key) => {
-      const matched = /([A-Za-z0-9-_]+)\./i.exec(key);
-      if (matched && matched.length > 1) {
-        const locale = matched[1];
-        messages[locale] = locales(key).default;
-      }
-    });
-  return messages;
-}
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import en from './locales/en.json';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import pl from './locales/pl.json';
 
 export default createI18n({
   legacy: false,
   locale: process.env.VUE_APP_I18N_LOCALE || 'en',
   fallbackLocale: process.env.VUE_APP_I18N_FALLBACK_LOCALE || 'en',
-  messages: loadLocaleMessages() as LocaleMessages<never>,
+  messages: {
+    en,
+    pl,
+  },
 });
