@@ -1,26 +1,26 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import vue from '@vitejs/plugin-vue';
-import { defineConfig } from 'vite';
-import vuetify from 'vite-plugin-vuetify';
+import { fileURLToPath, URL } from 'node:url';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const path = require('path');
+import vue from '@vitejs/plugin-vue';
+import { config } from 'dotenv';
+import { defineConfig } from 'vite';
+import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify';
+
+config();
 
 export default defineConfig({
   plugins: [
-    vue(),
+    vue({
+      template: { transformAssetUrls },
+    }),
     vuetify({
       autoImport: true,
     }),
   ],
-  define: { 'process.env': {} },
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, 'src'),
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
-  },
-  /* remove the need to specify .vue files https://vitejs.dev/config/#resolve-extensions
-  resolve: {
     extensions: [
       '.js',
       '.json',
@@ -29,7 +29,14 @@ export default defineConfig({
       '.ts',
       '.tsx',
       '.vue',
-    ]
+    ],
   },
-  */
+  server: {
+    port: 3000,
+    watch: {
+      usePolling: true,
+    },
+    host: true,
+    strictPort: true,
+  },
 });

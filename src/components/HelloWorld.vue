@@ -1,146 +1,77 @@
 <template>
-  <VContainer>
-    <VRow class="text-center">
-      <VCol class="mb-4">
-        <h1 class="display-2 font-weight-bold mb-3">
-          {{ t(message) }}
-        </h1>
+  <v-container class="fill-height">
+    <v-responsive class="align-center fill-height text-center">
+      <v-img height="300" src="@/assets/logo.svg" />
 
-        <h4>Vite Preview</h4>
+      <div class="font-weight-light mb-n1 text-body-2">Welcome to</div>
 
-        <p class="font-weight-regular subheading">
-          For help and collaboration with other Vuetify developers,
-          <br>please join our online
-          <a
-            href="https://community.vuetifyjs.com"
+      <h1 class="font-weight-bold text-h2">{{ t('Vuetify') }}</h1>
+
+      <div class="py-14" />
+
+      <v-row class="align-center d-flex justify-center">
+        <v-col cols="auto">
+          <v-btn
+            href="https://vuetifyjs.com/components/all/"
+            min-width="164"
+            rel="noopener noreferrer"
             target="_blank"
-          >Discord Community</a>
-        </p>
-      </VCol>
-
-      <VCol
-        class="mb-5"
-        cols="12"
-      >
-        <h2 class="font-weight-bold headline mb-5">
-          What's next?
-        </h2>
-
-        <VRow justify="center">
-          <a
-            v-for="(next, i) in whatsNext"
-            :key="i"
-            :href="next.href"
-            class="mx-3 subheading"
-            target="_blank"
+            variant="text"
           >
-            {{ next.text }}
-          </a>
-        </VRow>
-      </VCol>
+            <v-icon
+              icon="mdi-view-dashboard"
+              size="large"
+              start
+            />
 
-      <VCol
-        class="mb-5"
-        cols="12"
-      >
-        <h2 class="font-weight-bold headline mb-5">
-          Important Links
-        </h2>
+            Components
+          </v-btn>
+        </v-col>
 
-        <VRow justify="center">
-          <a
-            v-for="(link, i) in importantLinks"
-            :key="i"
-            :href="link.href"
-            class="mx-3 subheading"
+        <v-col cols="auto">
+          <v-btn
+            color="primary"
+            href="https://vuetifyjs.com/introduction/why-vuetify/#feature-guides"
+            min-width="228"
+            rel="noopener noreferrer"
+            size="x-large"
             target="_blank"
+            variant="flat"
           >
-            {{ link.text }}
-          </a>
-        </VRow>
-      </VCol>
+            <v-icon
+              icon="mdi-speedometer"
+              size="large"
+              start
+            />
 
-      <VCol
-        class="mb-5"
-        cols="12"
-      >
-        <h2 class="font-weight-bold headline mb-5">
-          Ecosystem
-        </h2>
+            Get Started
+          </v-btn>
+        </v-col>
 
-        <VRow justify="center">
-          <a
-            v-for="(eco, i) in ecosystem"
-            :key="i"
-            :href="eco.href"
-            class="mx-3 subheading"
+        <v-col cols="auto">
+          <v-btn
+            href="https://community.vuetifyjs.com/"
+            min-width="164"
+            rel="noopener noreferrer"
             target="_blank"
+            variant="text"
           >
-            {{ eco.text }}
-          </a>
-        </VRow>
-      </VCol>
-    </VRow>
-  </VContainer>
+            <v-icon
+              icon="mdi-account-group"
+              size="large"
+              start
+            />
+
+            Community
+          </v-btn>
+        </v-col>
+      </v-row>
+    </v-responsive>
+  </v-container>
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from 'vue';
 import { useLocale } from 'vuetify';
 
 const { t } = useLocale();
-
-const message = ref<string>('Welcome to Your Vue.js + TypeScript + Vuetify App');
-
-interface Link {
-  text: string;
-  href: string;
-}
-
-const ecosystem = reactive<Link[]>([
-  {
-    text: 'vuetify-loader',
-    href: 'https://github.com/vuetifyjs/vuetify-loader/tree/next',
-  },
-  {
-    text: 'github',
-    href: 'https://github.com/vuetifyjs/vuetify/tree/next',
-  },
-  {
-    text: 'awesome-vuetify',
-    href: 'https://github.com/vuetifyjs/awesome-vuetify',
-  },
-]);
-const importantLinks = reactive<Link[]>([
-  {
-    text: 'Chat',
-    href: 'https://community.vuetifyjs.com',
-  },
-  {
-    text: 'Made with Vuetify',
-    href: 'https://madewithvuejs.com/vuetify',
-  },
-  {
-    text: 'Twitter',
-    href: 'https://twitter.com/vuetifyjs',
-  },
-  {
-    text: 'Articles',
-    href: 'https://medium.com/vuetify',
-  },
-]);
-const whatsNext = reactive<Link[]>([
-  {
-    text: 'Explore components',
-    href: 'https://vuetifyjs.com',
-  },
-  {
-    text: 'Roadmap',
-    href: 'https://vuetifyjs.com/en/introduction/roadmap/',
-  },
-  {
-    text: 'Frequently Asked Questions',
-    href: 'https://vuetifyjs.com/getting-started/frequently-asked-questions',
-  },
-]);
 </script>
