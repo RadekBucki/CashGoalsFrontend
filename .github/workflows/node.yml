@@ -33,3 +33,6 @@ jobs:
 
       - name: Build in production mode
         run: npm run build -- --mode production
+
+      - name: Builders Sonar Analyze
+        uses: platformbuilders/sonar-action@v1.0.0
