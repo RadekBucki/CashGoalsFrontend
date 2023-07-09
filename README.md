@@ -1,44 +1,27 @@
-# default
+# Cash Goals Frontend
 
-## Project setup
+## This repository is part of the Cash Goals application
+| Responsibility                      | Link                                                     |
+|-------------------------------------|----------------------------------------------------------|
+| Architecture and Engineering Thesis | https://github.com/RadekBucki/CashGoalsEngineeringThesis |
+| Frontend                            | https://github.com/RadekBucki/CashGoalsFrontend          |
+| Backend                             | https://github.com/RadekBucki/CashGoalsBackend           |
 
-```
-# yarn
-yarn
+## Running the application
 
-# npm
-npm install
+### Prerequisites
 
-# pnpm
-pnpm install
-```
+- Node.js
+- npm
 
-### Compiles and hot-reloads for development
+### Run for development
 
-```
-# yarn
-yarn dev
+1. Run `npm install` to install all dependencies
+2. Run `npm run dev` to start the application
 
-# npm
-npm run dev
+### Run for production
 
-# pnpm
-pnpm dev
-```
-
-### Compiles and minifies for production
-
-```
-# yarn
-yarn build
-
-# npm
-npm run build
-
-# pnpm
-pnpm build
-```
-
-### Customize configuration
-
-See [Configuration Reference](https://vitejs.dev/config/).
+1. Run `npm install` to install all dependencies
+2. Run `npm run build` to build the application
+3. Run `npm run start` to start the application
+   (it could be necessary tu run `npm install -g http-server` if you run production mode locally)

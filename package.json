@@ -4,6 +4,7 @@
   "scripts": {
     "dev": "vite",
     "build": "npm run type-check && vite build",
+    "start": "http-server dist",
     "type-check": "vue-tsc --noEmit",
     "preview": "vite preview",
     "lint": "npm run lint-check && npm run lint-fix",
