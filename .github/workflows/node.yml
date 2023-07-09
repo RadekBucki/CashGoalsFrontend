@@ -11,7 +11,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [ 14.x, 16.x, 18.x ]
+        node-version: [ 16.x, 18.x ]
 
     steps:
       - name: Checkout code
@@ -33,6 +33,3 @@ jobs:
 
       - name: Build in production mode
         run: npm run build -- --mode production
-
-      - name: Builders Sonar Analyze
-        uses: platformbuilders/sonar-action@v1.0.0
