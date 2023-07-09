@@ -3,9 +3,11 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build",
+    "build": "npm run type-check && vite build",
     "preview": "vite preview",
-    "lint": "eslint . --fix --ignore-path .gitignore"
+    "lint": "npm run lint-check && npm run lint-fix",
+    "lint-check": "eslint .",
+    "lint-fix": "eslint . --fix"
   },
   "dependencies": {
     "@mdi/font": "7.0.96",
