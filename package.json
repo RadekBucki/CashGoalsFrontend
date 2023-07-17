@@ -1,0 +1,39 @@
+{
+  "name": "cashgoals",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "npm run type-check && vite build",
+    "start": "http-server dist",
+    "type-check": "vue-tsc --noEmit",
+    "preview": "vite preview",
+    "lint": "npm run lint-check && npm run lint-fix",
+    "lint-check": "eslint src",
+    "lint-fix": "eslint src --fix"
+  },
+  "dependencies": {
+    "@mdi/font": "7.2.96",
+    "pinia": "^2.1.4",
+    "roboto-fontface": "*",
+    "vue": "^3.3.4",
+    "vue-i18n": "^9.2.2",
+    "vue-router": "^4.2.4",
+    "vuetify": "^3.3.7",
+    "webfontloader": "^1.6.28",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "@babel/types": "^7.22.5",
+    "@types/node": "^20.4.1",
+    "@types/webfontloader": "^1.6.35",
+    "@vitejs/plugin-vue": "^4.2.3",
+    "@vue/eslint-config-airbnb": "^7.0.0",
+    "@vue/eslint-config-typescript": "^11.0.3",
+    "eslint": "^8.44.0",
+    "eslint-plugin-vue": "^9.15.1",
+    "typescript": "^5.1.6",
+    "vite": "^4.4.2",
+    "vite-plugin-vuetify": "^1.0.2",
+    "vue-tsc": "^1.8.4"
+  }
+}
