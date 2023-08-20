@@ -28,11 +28,16 @@
 import { computed, ComputedRef } from 'vue';
 import { useTheme } from 'vuetify';
 
-const theme = useTheme();
+import useAppStore from '@/store/app';
 
-const isThemeDark: ComputedRef<boolean> = computed(() => theme.global.name.value === 'dark');
+const theme = useTheme();
+const appStore = useAppStore();
+
+const isThemeDark: ComputedRef<boolean> = computed(() => appStore.isDarkMode);
+theme.global.name.value = isThemeDark.value ? 'dark' : 'light';
 
 function toggleTheme() {
   theme.global.name.value = isThemeDark.value ? 'light' : 'dark';
+  appStore.toggleDarkMode();
 }
 </script>
