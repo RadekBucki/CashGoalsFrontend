@@ -1,0 +1,2 @@
+schema: ${VITE_BACKEND_GRAPHQL_URL}
+documents: '**/*.graphql'
