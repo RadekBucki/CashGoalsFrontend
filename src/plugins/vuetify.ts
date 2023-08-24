@@ -30,11 +30,32 @@ export const vuetify = createVuetify({
     }),
   },
   theme: {
+    defaultTheme: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light',
     themes: {
       light: {
+        dark: false,
         colors: {
           primary: '#1867C0',
           secondary: '#5CBBF6',
+          accent: '#FFC107',
+          error: '#FF5252',
+          info: '#2196F3',
+          success: '#4CAF50',
+          warning: '#FFC107',
+          background: '#FFFFFF',
+        },
+      },
+      dark: {
+        dark: true,
+        colors: {
+          primary: '#1867C0',
+          secondary: '#5CBBF6',
+          accent: '#FFC107',
+          error: '#FF5252',
+          info: '#2196F3',
+          success: '#4CAF50',
+          warning: '#FFC107',
+          background: '#121212',
         },
       },
     },

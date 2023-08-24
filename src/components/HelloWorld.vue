@@ -66,12 +66,19 @@
           </v-btn>
         </v-col>
       </v-row>
+      <v-row class="align-center d-flex justify-center">
+        <v-col cols="auto">
+          <ThemeToggle />
+        </v-col>
+      </v-row>
     </v-responsive>
   </v-container>
 </template>
 
 <script setup lang="ts">
 import { useLocale } from 'vuetify';
+
+import ThemeToggle from '@/components/ThemeToggle.vue';
 
 const { t } = useLocale();
 </script>

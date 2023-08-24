@@ -1,3 +1,7 @@
 import { createPinia } from 'pinia';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import piniaPluginPersistedState from 'pinia-plugin-persistedstate';
 
-export default createPinia();
+const pinia = createPinia();
+pinia.use(piniaPluginPersistedState);
+export default pinia;

@@ -1,6 +1,10 @@
 import type { App } from 'vue';
 
-import { vuetify, i18n } from './vuetify';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { DefaultApolloClient } from '@vue/apollo-composable';
+
+import ApolloClient from './apollo';
+import { i18n, vuetify } from './vuetify';
 import loadFonts from './webfontloader';
 import router from '../router';
 import pinia from '../store';
@@ -12,5 +16,6 @@ export default function registerPlugins(app: App) {
   app.use(i18n)
     .use(vuetify)
     .use(router)
-    .use(pinia);
+    .use(pinia)
+    .provide(DefaultApolloClient, ApolloClient);
 }
