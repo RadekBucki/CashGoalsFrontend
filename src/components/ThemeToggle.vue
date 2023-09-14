@@ -1,27 +1,13 @@
 <template>
-  <v-switch
-    color="yellow"
-    v-model="isThemeDark"
-    @change="toggleTheme"
-  >
+  <VSwitch color="yellow" v-model="isThemeDark" @change="toggleTheme">
     <template #prepend>
-      <v-icon
-        :color="isThemeDark ? 'yellow' : 'grey'"
-        left
-      >
-        mdi-weather-sunny
-      </v-icon>
+      <VIcon :color="isThemeDark ? 'yellow' : 'grey'" left>mdi-weather-sunny</VIcon>
     </template>
 
     <template #label>
-      <v-icon
-        :color="isThemeDark ? 'yellow' : 'grey'"
-        right
-      >
-        mdi-weather-night
-      </v-icon>
+      <VIcon :color="isThemeDark ? 'yellow' : 'grey'" right>mdi-weather-night</VIcon>
     </template>
-  </v-switch>
+  </VSwitch>
 </template>
 
 <script setup lang="ts">
