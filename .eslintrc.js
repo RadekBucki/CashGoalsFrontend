@@ -104,7 +104,6 @@ module.exports = {
     'vue/no-empty-component-block': 'error',
     'vue/no-potential-component-option-typo': 'error',
     'vue/padding-line-between-blocks': 'error',
-    'vue/padding-lines-in-component-definition': 'error',
     'vue/prefer-separate-static-class': 'error',
     'vue/prefer-true-attribute-shorthand': 'error',
     'vue/require-direct-export': 'error',

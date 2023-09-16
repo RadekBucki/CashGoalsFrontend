@@ -1,71 +1,68 @@
 <script setup lang="ts">
-import { ref, Ref } from 'vue';
+import { computed, ComputedRef } from 'vue';
 import { useLocale } from 'vuetify';
 
-import { VForm } from 'vuetify/components';
-
+import CardForm from '@/components/CardForm.vue';
 import CenteredLayout from '@/layouts/content/CenteredLayout.vue';
+import useFormsStore from '@/store/forms';
 
 const { t } = useLocale();
+
+const formsStore = useFormsStore();
 
 type LoginInput = {
   email: string;
   password: string;
 };
 
-const form: Ref<LoginInput> = ref({
+formsStore.setForm('login', {
   email: '',
   password: '',
-});
+} as LoginInput);
+const form: ComputedRef<LoginInput> = computed(() => formsStore.getForm('login') as LoginInput);
 
-const formRef: Ref<VForm | null> = ref(null);
+const fields = [
+  {
+    label: t('email'),
+    name: 'email',
+    rules: [(v: string) => /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(v) || t('email.format.validation.error')],
+    required: true,
+  },
+  {
+    label: t('password'),
+    name: 'password',
+    required: true,
+    type: 'password',
+  },
+];
+
+const links = [
+  {
+    textBefore: t('dont.have.account'),
+    text: t('register'),
+    routeName: 'Register',
+  },
+  {
+    textBefore: t('forgot.password'),
+    text: t('reset.password'),
+    routeName: 'ForgotPassword',
+  },
+];
 
 async function login() {
-  const { valid } = await formRef?.value?.validate();
-  if (valid) {
-    console.log('login', form.value);
-  } else {
-    console.log('invalid');
-  }
+  console.log('login', form.value);
 }
 </script>
 
 <template>
   <CenteredLayout>
-    <VCard>
-      <VCardTitle class="text-center">
-        <span class="headline">{{ t('login') }}</span>
-      </VCardTitle>
-
-      <VForm ref="formRef" @submit.prevent="login">
-        <VCardText>
-          <VTextField
-            v-model="form.email"
-            :label="t('email')"
-            required
-          />
-
-          <VTextField
-            v-model="form.password"
-            :label="t('password')"
-            :rules="[(v: string) => /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(v) || t('email.format.validation.error')]"
-            type="password"
-            required
-          />
-          <div>
-            {{ t('dont.have.account') }}
-            <RouterLink :to="{ name: 'Register' }">{{ t('register') }}</RouterLink>
-          </div>
-          <div>
-            {{ t('forgot.password') }}
-            <RouterLink :to="{ name: 'ForgotPassword' }">{{ t('reset.password') }}</RouterLink>
-          </div>
-        </VCardText>
-
-        <VCardActions class="justify-center">
-          <VBtn type="submit" color="secondary" variant="elevated">{{ t('login') }}</VBtn>
-        </VCardActions>
-      </VForm>
-    </VCard>
+    <CardForm
+      :title="t('login')"
+      :fields="fields"
+      :links="links"
+      formName="login"
+      :submitFunction="login"
+      :submitText="t('login')"
+    />
   </CenteredLayout>
 </template>
