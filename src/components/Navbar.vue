@@ -38,7 +38,7 @@ const items = [
       <VList>
         <VListItem v-for="(item, index) in items" :key="index">
           <VListItemTitle>
-            <RouterLink :to="{ name: item.routeName }">{{ item.title }}</RouterLink>
+            <VBtn :to="{ name: item.routeName }">{{ item.title }}</VBtn>
           </VListItemTitle>
         </VListItem>
       </VList>

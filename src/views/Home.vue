@@ -1,3 +1,5 @@
 <template>
-  <span>Home page</span>
+  <VMain>
+    <span>Home page</span>
+  </VMain>
 </template>
