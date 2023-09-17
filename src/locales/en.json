@@ -8,11 +8,13 @@
   "password.confirmation": "Password confirmation",
   "forgot.password": "Forgot password?",
   "reset.password": "Reset password",
+  "token": "Code",
   "already.have.account": "Already have an account?",
   "email": "Email",
   "name": "Name",
   "email.format.validation.error": "Invalid email address format",
   "name.length.validation.error": "Name must be between 3 and 100 characters",
   "password.format.validation.error": "Password must be at least 8 characters long, contain at least one number, upper and lower case letter and special character",
-  "password.confirmation.validation.error": "Password confirmation must match password"
+  "password.confirmation.validation.error": "Password confirmation must match password",
+  "activate.account": "Activate account"
 }

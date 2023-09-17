@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {
-  computed, PropType, Ref, ref,
+  computed, onMounted, PropType, Ref, ref,
 } from 'vue';
 
 import { VForm } from 'vuetify/components';
@@ -45,7 +45,12 @@ const props = defineProps({
   },
   submitText: {
     type: String,
-    required: true,
+    required: false,
+    default: () => null,
+  },
+  autoSubmit: {
+    type: Boolean,
+    default: false,
   },
 });
 
@@ -63,6 +68,12 @@ async function submit() {
   }
   props.submitFunction();
 }
+
+onMounted(() => {
+  if (props.autoSubmit) {
+    submit();
+  }
+});
 </script>
 
 <template>
@@ -87,7 +98,7 @@ async function submit() {
         </div>
       </VCardText>
       <VCardActions class="justify-center">
-        <VBtn type="submit" color="secondary" variant="elevated">{{ submitText }}</VBtn>
+        <VBtn type="submit" color="secondary" variant="elevated">{{ submitText ?? title }}</VBtn>
       </VCardActions>
     </VForm>
   </VCard>

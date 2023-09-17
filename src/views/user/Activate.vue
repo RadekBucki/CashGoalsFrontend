@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, ComputedRef } from 'vue';
+import { useRouter } from 'vue-router';
 import { useLocale } from 'vuetify';
 
 import CardForm from '@/components/CardForm.vue';
@@ -7,19 +8,20 @@ import CenteredLayout from '@/layouts/content/CenteredLayout.vue';
 import useFormsStore from '@/store/forms';
 
 const { t } = useLocale();
+const router = useRouter();
 
 const formsStore = useFormsStore();
 
-type LoginInput = {
+type ActivateUserInput = {
   email: string;
-  password: string;
+  token: string;
 };
 
-formsStore.setForm('login', {
-  email: '',
-  password: '',
-} as LoginInput);
-const form: ComputedRef<LoginInput> = computed(() => formsStore.getForm('login') as LoginInput);
+formsStore.setForm('activateUser', {
+  email: router.currentRoute.value.query.user ?? '',
+  token: router.currentRoute.value.query.code ?? '',
+} as ActivateUserInput);
+const form: ComputedRef<ActivateUserInput> = computed(() => formsStore.getForm('activateUser') as ActivateUserInput);
 
 const fields = [
   {
@@ -29,39 +31,25 @@ const fields = [
     required: true,
   },
   {
-    label: t('password'),
-    name: 'password',
+    label: t('token'),
+    name: 'token',
     required: true,
-    type: 'password',
   },
 ];
 
-const links = [
-  {
-    textBefore: t('dont.have.account'),
-    text: t('register'),
-    routeName: 'Register',
-  },
-  {
-    textBefore: t('forgot.password'),
-    text: t('reset.password'),
-    routeName: 'ForgotPassword',
-  },
-];
-
-async function login() {
-  console.log('login', form.value);
+async function activateUser() {
+  console.log('activateUser', form.value);
 }
 </script>
 
 <template>
   <CenteredLayout>
     <CardForm
-      :title="t('login')"
+      :title="t('activate.account')"
       :fields="fields"
-      :links="links"
-      formName="login"
-      :submitFunction="login"
+      formName="activateUser"
+      :submitFunction="activateUser"
+      auto-submit
     />
   </CenteredLayout>
 </template>

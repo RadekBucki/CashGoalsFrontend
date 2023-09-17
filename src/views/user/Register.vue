@@ -25,7 +25,7 @@ formsStore.setForm('register', {
   password: '',
   passwordConfirmation: '',
   name: '',
-  activationUrl: router.resolve({ name: 'Login' }).href,
+  activationUrl: router.resolve({ name: 'Activate' }).href,
 } as RegisterInput);
 const form: ComputedRef<RegisterInput> = computed(() => formsStore.getForm('register') as RegisterInput);
 
@@ -60,7 +60,7 @@ const fields = [
 const links = [
   {
     textBefore: t('already.have.account'),
-    text: t('login'),
+    text: t('requestPasswordReset'),
     routeName: 'Login',
   },
   {
@@ -83,7 +83,6 @@ function register() {
       :links="links"
       form-name="register"
       :submit-function="register"
-      :submit-text="t('register')"
     />
   </CenteredLayout>
 </template>

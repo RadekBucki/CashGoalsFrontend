@@ -8,11 +8,13 @@
   "password.confirmation": "Potwierdź hasło",
   "forgot.password": "Zapomniałeś hasła?",
   "reset.password": "Zresetuj hasło",
+  "token": "Kod",
   "already.have.account": "Masz już konto?",
   "email": "Email",
   "name": "Imię",
   "email.format.validation.error": "Niepoprawny format adresu email",
   "name.length.validation.error": "Imię musi mieć pomiędzy 3 a 100 znaków",
   "password.format.validation.error": "Hasło musi mieć co najmniej 8 znaków, zawierać co najmniej jedną cyfrę, dużą i małą literę oraz znak specjalny",
-  "password.confirmation.validation.error": "Hasła muszą być takie same"
+  "password.confirmation.validation.error": "Hasła muszą być takie same",
+  "activate.account": "Aktywuj konto"
 }
