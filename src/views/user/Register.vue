@@ -10,11 +10,13 @@ import { CreateUserInput } from '@/graphql/types';
 import CreateUserMutation from '@/graphql/user/CreateUserMutation.ts';
 import CenteredLayout from '@/layouts/content/CenteredLayout.vue';
 import useFormsStore from '@/store/forms';
+import { useModalStore, Modal } from '@/store/modal';
 
 const { t } = useLocale();
 const router = useRouter();
 
 const formsStore = useFormsStore();
+const modalStore = useModalStore();
 
 type RegisterInput = {
   email: string;
@@ -25,10 +27,10 @@ type RegisterInput = {
 };
 
 formsStore.setForm('register', {
-  email: '',
-  password: '',
-  passwordConfirmation: '',
-  name: '',
+  email: 'radek1@gmail.com',
+  password: 'Qwerty123!',
+  passwordConfirmation: 'Qwerty123!',
+  name: 'Radek',
   activationUrl: window.location.origin + router.resolve({ name: 'Activate' }).href,
 } as RegisterInput);
 const form: ComputedRef<RegisterInput> = computed(() => formsStore.getForm('register') as RegisterInput);
@@ -82,8 +84,17 @@ onError(({ graphQLErrors }) => {
   }
   cardForm.value.handleValidationErrors(graphQLErrors);
 });
-onDone((data) => {
-  console.log(data);
+onDone(() => {
+  modalStore.showModal({
+    title: t('register.success.title'),
+    content: t('register.success.content'),
+    type: 'success',
+    onClose: () => {
+      const url = router.resolve({ name: 'Activate' }).href;
+      const queryParameters = new URLSearchParams({ user: form.value.email });
+      router.push(`${url}?${queryParameters.toString()}`);
+    },
+  } as Modal);
 });
 function register() {
   if (!cardForm.value) {

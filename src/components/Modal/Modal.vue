@@ -1,0 +1,45 @@
+<script setup lang="ts">
+import { computed, ComputedRef } from 'vue';
+
+import { useModalStore, Modal } from '@/store/modal.ts';
+
+const modalStore = useModalStore();
+
+const modal: ComputedRef<Modal> = computed(() => modalStore.modal);
+const visible: ComputedRef<boolean> = computed(() => modalStore.visible);
+function close() {
+  modalStore.hideModal();
+  if (modal.value.onClose) {
+    modal.value.onClose();
+  }
+}
+</script>
+
+<template>
+  <VDialog v-model="visible" close-on-back>
+    <VCard class="pa-16">
+      <VCardActions class="close-button">
+        <VSpacer />
+        <VBtn icon @click="close">
+          <VIcon>mdi-close</VIcon>
+        </VBtn>
+      </VCardActions>
+      <VCardItem class="text-center">
+        <VIcon v-if="modal.type === 'success'" color="success" size="50">mdi-check-circle-outline</VIcon>
+        <VIcon v-if="modal.type === 'error'" color="error" size="50">mdi-alert-circle-outline</VIcon>
+        <VIcon v-if="modal.type === 'info'" color="info" size="50">mdi-information-outline</VIcon>
+        <VIcon v-if="modal.type === 'warning'" color="warning" size="50">mdi-alert-outline</VIcon>
+      </VCardItem>
+      <VCardTitle class="text-center">{{ modal.title }}</VCardTitle>
+      <VCardText class="text-center">{{ modal.content }}</VCardText>
+    </VCard>
+  </VDialog>
+</template>
+
+<style scoped>
+.close-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+</style>

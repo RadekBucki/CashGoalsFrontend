@@ -16,8 +16,8 @@ const routes: Array<RouteRecordRaw> = [
       { path: 'register', name: 'Register', component: Register },
       { path: 'login', name: 'Login', component: Login },
       { path: 'forgot-password', name: 'ForgotPassword', component: ForgotPassword },
-      { path: 'reset-password', name: 'ResetPassword', component: ResetPassword },
-      { path: 'activate', name: 'Activate', component: Activate },
+      { path: 'reset-password', name: 'ResetPassword', component: ResetPassword, props: true },
+      { path: 'activate', name: 'Activate', component: Activate, props: true },
     ],
   },
 ];

@@ -49,7 +49,7 @@ async function activateUser() {
       :fields="fields"
       formName="activateUser"
       :submitFunction="activateUser"
-      auto-submit
+      :auto-submit="Boolean(form.email && form.token)"
     />
   </CenteredLayout>
 </template>

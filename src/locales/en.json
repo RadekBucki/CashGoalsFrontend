@@ -16,5 +16,7 @@
   "name.length.validation.error": "Name must be between 3 and 100 characters",
   "password.format.validation.error": "Password must be at least 8 characters long, contain at least one number, upper and lower case letter and special character",
   "password.confirmation.validation.error": "Password confirmation must match password",
-  "activate.account": "Activate account"
+  "activate.account": "Activate account",
+  "register.success.title": "Registration successful",
+  "register.success.content": "You have successfully registered. Please check your email for activation link."
 }

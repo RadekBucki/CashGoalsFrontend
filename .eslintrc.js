@@ -110,9 +110,9 @@ module.exports = {
     'vue/require-name-property': 'error',
     'vue/require-typed-ref': 'error',
     'vue/static-class-names-order': 'error',
-    'vue/v-on-handler-style': 'error',
     'import/no-unresolved': 'off',
     'vue/multi-word-component-names': 'off',
     'import/extensions': 'off',
+    'object-curly-newline': 'off',
   },
 };

@@ -16,5 +16,7 @@
   "name.length.validation.error": "Imię musi mieć pomiędzy 3 a 100 znaków",
   "password.format.validation.error": "Hasło musi mieć co najmniej 8 znaków, zawierać co najmniej jedną cyfrę, dużą i małą literę oraz znak specjalny",
   "password.confirmation.validation.error": "Hasła muszą być takie same",
-  "activate.account": "Aktywuj konto"
+  "activate.account": "Aktywuj konto",
+  "register.success.title": "Rejestracja zakończona sukcesem",
+  "register.success.content": "Na podany adres email został wysłany link aktywacyjny"
 }
