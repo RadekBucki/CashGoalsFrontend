@@ -19,7 +19,7 @@ type ForgotPasswordInput = {
 
 formsStore.setForm('forgotPassword', {
   email: '',
-  resetUrl: router.resolve({ name: 'ResetPassword' }).href,
+  resetUrl: window.location.origin + router.resolve({ name: 'ResetPassword' }).href,
 } as ForgotPasswordInput);
 const form: ComputedRef<ForgotPasswordInput> = computed(() => formsStore.getForm('forgotPassword') as ForgotPasswordInput);
 

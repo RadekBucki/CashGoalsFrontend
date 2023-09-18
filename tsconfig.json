@@ -10,6 +10,8 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "esModuleInterop": true,
+    "allowImportingTsExtensions": true,
+    "noImplicitAny": true,
     "lib": [
       "ESNext",
       "DOM"
@@ -22,7 +24,8 @@
       ]
     },
     "types": [
-      "node"
+      "node",
+      "graphql",
     ]
   },
   "include": [

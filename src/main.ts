@@ -5,6 +5,7 @@ import registerPlugins from '@/plugins';
 
 const app = createApp(App);
 
-registerPlugins(app);
-
-app.mount('#app');
+app.runWithContext(() => {
+  registerPlugins(app);
+  app.mount('#app');
+});

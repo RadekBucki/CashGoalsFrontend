@@ -3,6 +3,7 @@ import {
   computed, onMounted, PropType, Ref, ref,
 } from 'vue';
 
+import { GraphQLErrors } from '@apollo/client/errors';
 import { VForm } from 'vuetify/components';
 
 import useFormsStore from '@/store/forms';
@@ -11,7 +12,7 @@ interface Field {
   label: string;
   name: string;
   rules?: string[];
-  validateOn?: 'lazy' | ('input' | 'blur' | 'submit') | 'input lazy' | 'blur lazy' | 'submit lazy' | 'lazy input' | 'lazy blur' | 'lazy submit' | undefined;
+  validateOn?: 'lazy' | ('input' | 'blur' | 'submit') | 'input lazy' | 'blur lazy' | 'submit lazy' | 'lazy input' | 'lazy blur' | 'lazy submit'
   required?: boolean;
   type?: string;
 }
@@ -57,9 +58,11 @@ const props = defineProps({
 const formRef: Ref<VForm | null> = ref(null);
 const formsStore = useFormsStore();
 const formValues = computed(() => formsStore.getForm(props.formName));
+// eslint-disable-next-line
+const formCustomErrorMessages: Ref<any> = ref({});
 
 async function submit() {
-  if (!formRef.value || !formRef.value) {
+  if (!formRef.value) {
     return;
   }
   const { valid } = await formRef.value.validate();
@@ -69,10 +72,32 @@ async function submit() {
   props.submitFunction();
 }
 
+function handleValidationErrors(graphQlErrors: GraphQLErrors) {
+  if (!formRef.value) {
+    return;
+  }
+  graphQlErrors.forEach((error) => {
+    if (error.extensions?.classification !== 'ValidationError') {
+      return;
+    }
+    const path = error.path ?? [] as string[];
+    const fieldName = path[path.length - 1];
+    const errorMessages = formCustomErrorMessages.value[fieldName] ?? [];
+    errorMessages.push(error.message);
+    formCustomErrorMessages.value = {
+      ...formCustomErrorMessages.value,
+      [fieldName]: errorMessages,
+    };
+  });
+}
+
 onMounted(() => {
   if (props.autoSubmit) {
     submit();
   }
+});
+defineExpose({
+  handleValidationErrors,
 });
 </script>
 
@@ -91,6 +116,7 @@ onMounted(() => {
           :validateOn="field.validateOn ?? 'blur'"
           :required="field.required ?? false"
           :type="field.type ?? 'text'"
+          :error-messages="formCustomErrorMessages[field.name] ?? []"
         />
         <div v-for="link in links" :key="link.routeName">
           {{ link.textBefore }}

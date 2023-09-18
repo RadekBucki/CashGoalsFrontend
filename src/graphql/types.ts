@@ -1,6 +1,5 @@
 /* eslint-disable */
 // noinspection ES6UnusedImports,JSUnusedGlobalSymbols
-
 import gql from 'graphql-tag';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
@@ -24,12 +23,12 @@ export type Scalars = {
 export type CreateUserInput = {
   activationUrl: Scalars['String']['input'];
   email: Scalars['String']['input'];
+  name: Scalars['String']['input'];
   password: Scalars['String']['input'];
-  username: Scalars['String']['input'];
 };
 
 export type UserInput = {
   email: Scalars['String']['input'];
+  name: Scalars['String']['input'];
   password: Scalars['String']['input'];
-  username: Scalars['String']['input'];
 };

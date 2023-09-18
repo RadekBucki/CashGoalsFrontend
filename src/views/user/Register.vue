@@ -1,9 +1,13 @@
 <script setup lang="ts">
-import { computed, ComputedRef } from 'vue';
+import { computed, ComputedRef, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useLocale } from 'vuetify';
 
+import { useMutation } from '@vue/apollo-composable';
+
 import CardForm from '@/components/CardForm.vue';
+import { CreateUserInput } from '@/graphql/types';
+import CreateUserMutation from '@/graphql/user/CreateUserMutation.ts';
 import CenteredLayout from '@/layouts/content/CenteredLayout.vue';
 import useFormsStore from '@/store/forms';
 
@@ -25,10 +29,9 @@ formsStore.setForm('register', {
   password: '',
   passwordConfirmation: '',
   name: '',
-  activationUrl: router.resolve({ name: 'Activate' }).href,
+  activationUrl: window.location.origin + router.resolve({ name: 'Activate' }).href,
 } as RegisterInput);
 const form: ComputedRef<RegisterInput> = computed(() => formsStore.getForm('register') as RegisterInput);
-
 const fields = [
   {
     label: t('email'),
@@ -54,13 +57,14 @@ const fields = [
     name: 'passwordConfirmation',
     rules: [(v: string) => v === form.value.password || t('password.confirmation.validation.error')],
     required: true,
+    type: 'password',
   },
 ];
 
 const links = [
   {
     textBefore: t('already.have.account'),
-    text: t('requestPasswordReset'),
+    text: t('login'),
     routeName: 'Login',
   },
   {
@@ -70,8 +74,29 @@ const links = [
   },
 ];
 
+const cardForm = ref<typeof CardForm | null>(null);
+const { mutate, onError, onDone } = useMutation(CreateUserMutation);
+onError(({ graphQLErrors }) => {
+  if (!cardForm.value) {
+    return;
+  }
+  cardForm.value.handleValidationErrors(graphQLErrors);
+});
+onDone((data) => {
+  console.log(data);
+});
 function register() {
-  console.log('register', form.value);
+  if (!cardForm.value) {
+    return;
+  }
+  mutate({
+    userInput: {
+      email: form.value.email,
+      password: form.value.password,
+      name: form.value.name,
+      activationUrl: form.value.activationUrl,
+    } as CreateUserInput,
+  });
 }
 </script>
 
@@ -83,6 +108,7 @@ function register() {
       :links="links"
       form-name="register"
       :submit-function="register"
+      ref="cardForm"
     />
   </CenteredLayout>
 </template>

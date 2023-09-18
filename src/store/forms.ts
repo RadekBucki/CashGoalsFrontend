@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { defineStore } from 'pinia';
 
 export default defineStore('forms', {
@@ -5,7 +7,7 @@ export default defineStore('forms', {
     forms: {},
   }),
   actions: {
-    setForm(formName: string, form: never) {
+    setForm(formName: string, form: any) {
       this.forms[formName] = form;
     },
     getForm(formName: string) {
