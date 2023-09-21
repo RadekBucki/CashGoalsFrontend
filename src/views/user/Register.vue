@@ -27,10 +27,10 @@ type RegisterInput = {
 };
 
 formsStore.setForm('register', {
-  email: 'radek1@gmail.com',
-  password: 'Qwerty123!',
-  passwordConfirmation: 'Qwerty123!',
-  name: 'Radek',
+  email: '',
+  password: '',
+  passwordConfirmation: '',
+  name: '',
   activationUrl: window.location.origin + router.resolve({ name: 'Activate' }).href,
 } as RegisterInput);
 const form: ComputedRef<RegisterInput> = computed(() => formsStore.getForm('register') as RegisterInput);
