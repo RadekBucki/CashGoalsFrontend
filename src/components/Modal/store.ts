@@ -1,12 +1,8 @@
 import { defineStore } from 'pinia';
 
-export type Modal = {
-  title: string;
-  content: string;
-  type: 'success' | 'error' | 'info' | 'warning';
-  onClose?: () => void;
-};
-export const useModalStore = defineStore('modal', {
+import { Modal } from '@/components/Modal/types.ts';
+
+export default defineStore('modal', {
   state: () => ({
     modal: {
       title: '',

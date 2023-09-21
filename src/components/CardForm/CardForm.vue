@@ -1,27 +1,13 @@
 <script setup lang="ts">
-import {
-  computed, onMounted, PropType, Ref, ref,
-} from 'vue';
+import { computed, onMounted, PropType, Ref, ref } from 'vue';
 
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { GraphQLErrors } from '@apollo/client/errors';
 import { VForm } from 'vuetify/components';
 
-import useFormsStore from '@/store/forms';
+import { Field, TextWithLink, useFormsStore } from '@/components/CardForm';
 
-interface Field {
-  label: string;
-  name: string;
-  rules?: string[];
-  validateOn?: 'lazy' | ('input' | 'blur' | 'submit') | 'input lazy' | 'blur lazy' | 'submit lazy' | 'lazy input' | 'lazy blur' | 'lazy submit'
-  required?: boolean;
-  type?: string;
-}
-
-interface TextWithLink {
-  textBefore: string;
-  text: string;
-  routeName: string;
-}
+const formsStore = useFormsStore();
 
 const props = defineProps({
   title: {
@@ -56,7 +42,6 @@ const props = defineProps({
 });
 
 const formRef: Ref<VForm | null> = ref(null);
-const formsStore = useFormsStore();
 const formValues = computed(() => formsStore.getForm(props.formName));
 // eslint-disable-next-line
 const formCustomErrorMessages: Ref<any> = ref({});

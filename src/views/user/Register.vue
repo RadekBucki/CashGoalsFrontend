@@ -5,18 +5,16 @@ import { useLocale } from 'vuetify';
 
 import { useMutation } from '@vue/apollo-composable';
 
-import CardForm from '@/components/CardForm.vue';
+import { CardForm, Field, useFormsStore, TextWithLink } from '@/components/CardForm';
+import { useModalStore, Modal } from '@/components/Modal';
 import { CreateUserInput } from '@/graphql/types';
 import CreateUserMutation from '@/graphql/user/CreateUserMutation.ts';
 import CenteredLayout from '@/layouts/content/CenteredLayout.vue';
-import useFormsStore from '@/store/forms';
-import { useModalStore, Modal } from '@/store/modal';
 
 const { t } = useLocale();
 const router = useRouter();
-
-const formsStore = useFormsStore();
 const modalStore = useModalStore();
+const formsStore = useFormsStore();
 
 type RegisterInput = {
   email: string;
@@ -34,7 +32,7 @@ formsStore.setForm('register', {
   activationUrl: window.location.origin + router.resolve({ name: 'Activate' }).href,
 } as RegisterInput);
 const form: ComputedRef<RegisterInput> = computed(() => formsStore.getForm('register') as RegisterInput);
-const fields = [
+const fields: Field[] = [
   {
     label: t('email'),
     name: 'email',
@@ -63,7 +61,7 @@ const fields = [
   },
 ];
 
-const links = [
+const links: TextWithLink[] = [
   {
     textBefore: t('already.have.account'),
     text: t('login'),

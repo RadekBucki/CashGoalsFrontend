@@ -3,13 +3,11 @@ import { computed, ComputedRef } from 'vue';
 import { useRouter } from 'vue-router';
 import { useLocale } from 'vuetify';
 
-import CardForm from '@/components/CardForm.vue';
+import { CardForm, Field, useFormsStore } from '@/components/CardForm';
 import CenteredLayout from '@/layouts/content/CenteredLayout.vue';
-import useFormsStore from '@/store/forms';
 
 const { t } = useLocale();
 const router = useRouter();
-
 const formsStore = useFormsStore();
 
 type ResetPasswordInput = {
@@ -25,7 +23,7 @@ formsStore.setForm('resetPassword', {
 } as ResetPasswordInput);
 const form: ComputedRef<ResetPasswordInput> = computed(() => formsStore.getForm('resetPassword') as ResetPasswordInput);
 
-const fields = [
+const fields: Field[] = [
   {
     label: t('email'),
     name: 'email',

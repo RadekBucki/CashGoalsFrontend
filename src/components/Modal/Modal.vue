@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed, ComputedRef } from 'vue';
 
+import { useModalStore, Modal } from '@/components/Modal';
 import CenteredLayout from '@/layouts/content/CenteredLayout.vue';
-import { useModalStore, Modal } from '@/store/modal.ts';
 
 const modalStore = useModalStore();
 
@@ -18,7 +18,7 @@ function close() {
 
 <template>
   <VDialog v-model="visible" close-on-back close-on-content-click>
-    <CenteredLayout sm="12" md="6">
+    <CenteredLayout :sm="12" :md="6">
       <VCard class="pa-10">
         <VCardActions class="close-button">
           <VSpacer />

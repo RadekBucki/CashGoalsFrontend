@@ -2,12 +2,10 @@
 import { computed, ComputedRef } from 'vue';
 import { useLocale } from 'vuetify';
 
-import CardForm from '@/components/CardForm.vue';
+import { CardForm, Field, useFormsStore, TextWithLink } from '@/components/CardForm';
 import CenteredLayout from '@/layouts/content/CenteredLayout.vue';
-import useFormsStore from '@/store/forms';
 
 const { t } = useLocale();
-
 const formsStore = useFormsStore();
 
 type LoginInput = {
@@ -21,7 +19,7 @@ formsStore.setForm('login', {
 } as LoginInput);
 const form: ComputedRef<LoginInput> = computed(() => formsStore.getForm('login') as LoginInput);
 
-const fields = [
+const fields: Field[] = [
   {
     label: t('email'),
     name: 'email',
@@ -36,7 +34,7 @@ const fields = [
   },
 ];
 
-const links = [
+const links: TextWithLink[] = [
   {
     textBefore: t('dont.have.account'),
     text: t('register'),
