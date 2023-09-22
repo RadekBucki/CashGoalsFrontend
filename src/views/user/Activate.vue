@@ -3,12 +3,13 @@ import { computed, ComputedRef } from 'vue';
 import { useRouter } from 'vue-router';
 import { useLocale } from 'vuetify';
 
-import { CardForm, Field, useFormsStore } from '@/components/CardForm';
+import { CardForm, Field, useFieldsLibrary, useFormsStore } from '@/components/CardForm';
 import CenteredLayout from '@/layouts/content/CenteredLayout.vue';
 
 const { t } = useLocale();
 const router = useRouter();
 const formsStore = useFormsStore();
+const fieldsLibrary = useFieldsLibrary();
 
 type ActivateUserInput = {
   email: string;
@@ -21,19 +22,7 @@ formsStore.setForm('activateUser', {
 } as ActivateUserInput);
 const form: ComputedRef<ActivateUserInput> = computed(() => formsStore.getForm('activateUser') as ActivateUserInput);
 
-const fields: Field[] = [
-  {
-    label: t('email'),
-    name: 'email',
-    rules: [(v: string) => /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(v) || t('email.format.validation.error')],
-    required: true,
-  },
-  {
-    label: t('token'),
-    name: 'token',
-    required: true,
-  },
-];
+const fields: Field[] = [fieldsLibrary.EMAIL, fieldsLibrary.TOKEN];
 
 async function activateUser() {
   console.log('activateUser', form.value);

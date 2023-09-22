@@ -2,11 +2,13 @@
 import { computed, ComputedRef } from 'vue';
 import { useLocale } from 'vuetify';
 
-import { CardForm, Field, useFormsStore, TextWithLink } from '@/components/CardForm';
+import { CardForm, Field, useFormsStore, TextWithLink, useFieldsLibrary, useLinksLibrary } from '@/components/CardForm';
 import CenteredLayout from '@/layouts/content/CenteredLayout.vue';
 
 const { t } = useLocale();
 const formsStore = useFormsStore();
+const fieldsLibrary = useFieldsLibrary();
+const linksLibrary = useLinksLibrary();
 
 type LoginInput = {
   email: string;
@@ -19,33 +21,8 @@ formsStore.setForm('login', {
 } as LoginInput);
 const form: ComputedRef<LoginInput> = computed(() => formsStore.getForm('login') as LoginInput);
 
-const fields: Field[] = [
-  {
-    label: t('email'),
-    name: 'email',
-    rules: [(v: string) => /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(v) || t('email.format.validation.error')],
-    required: true,
-  },
-  {
-    label: t('password'),
-    name: 'password',
-    required: true,
-    type: 'password',
-  },
-];
-
-const links: TextWithLink[] = [
-  {
-    textBefore: t('dont.have.account'),
-    text: t('register'),
-    routeName: 'Register',
-  },
-  {
-    textBefore: t('forgot.password'),
-    text: t('reset.password'),
-    routeName: 'ForgotPassword',
-  },
-];
+const fields: Field[] = [fieldsLibrary.EMAIL, fieldsLibrary.PASSWORD];
+const links: TextWithLink[] = [linksLibrary.FORGOT_PASSWORD, linksLibrary.REGISTER];
 
 async function login() {
   console.log('login', form.value);

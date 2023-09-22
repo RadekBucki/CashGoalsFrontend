@@ -3,12 +3,13 @@ import { computed, ComputedRef } from 'vue';
 import { useRouter } from 'vue-router';
 import { useLocale } from 'vuetify';
 
-import { CardForm, Field, useFormsStore } from '@/components/CardForm';
+import { CardForm, Field, useFieldsLibrary, useFormsStore } from '@/components/CardForm';
 import CenteredLayout from '@/layouts/content/CenteredLayout.vue';
 
 const { t } = useLocale();
 const router = useRouter();
 const formsStore = useFormsStore();
+const fieldsLibrary = useFieldsLibrary();
 
 type ForgotPasswordInput = {
   email: string;
@@ -21,14 +22,7 @@ formsStore.setForm('forgotPassword', {
 } as ForgotPasswordInput);
 const form: ComputedRef<ForgotPasswordInput> = computed(() => formsStore.getForm('forgotPassword') as ForgotPasswordInput);
 
-const fields: Field[] = [
-  {
-    label: t('email'),
-    name: 'email',
-    rules: [(v: string) => /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(v) || t('email.format.validation.error')],
-    required: true,
-  },
-];
+const fields: Field[] = [fieldsLibrary.EMAIL];
 
 async function requestPasswordReset() {
   console.log('requestPasswordReset', form.value);

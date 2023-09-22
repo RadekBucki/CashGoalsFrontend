@@ -3,12 +3,13 @@ import { computed, ComputedRef } from 'vue';
 import { useRouter } from 'vue-router';
 import { useLocale } from 'vuetify';
 
-import { CardForm, Field, useFormsStore } from '@/components/CardForm';
+import { CardForm, Field, useFieldsLibrary, useFormsStore } from '@/components/CardForm';
 import CenteredLayout from '@/layouts/content/CenteredLayout.vue';
 
 const { t } = useLocale();
 const router = useRouter();
 const formsStore = useFormsStore();
+const fieldsLibrary = useFieldsLibrary();
 
 type ResetPasswordInput = {
   email: string;
@@ -23,26 +24,7 @@ formsStore.setForm('resetPassword', {
 } as ResetPasswordInput);
 const form: ComputedRef<ResetPasswordInput> = computed(() => formsStore.getForm('resetPassword') as ResetPasswordInput);
 
-const fields: Field[] = [
-  {
-    label: t('email'),
-    name: 'email',
-    rules: [(v: string) => /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(v) || t('email.format.validation.error')],
-    required: true,
-  },
-  {
-    label: t('token'),
-    name: 'token',
-    required: true,
-  },
-  {
-    label: t('password'),
-    name: 'password',
-    rules: [(v: string) => /^(?=.*[A-Z])(?=.*[\W_]).{5,}$/.test(v) || t('password.format.validation.error')],
-    required: true,
-    type: 'password',
-  },
-];
+const fields: Field[] = [fieldsLibrary.EMAIL, fieldsLibrary.TOKEN, fieldsLibrary.PASSWORD];
 
 async function resetPassword() {
   console.log('resetPassword', form.value);

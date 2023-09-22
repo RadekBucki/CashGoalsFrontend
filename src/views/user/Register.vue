@@ -5,7 +5,7 @@ import { useLocale } from 'vuetify';
 
 import { useMutation } from '@vue/apollo-composable';
 
-import { CardForm, Field, useFormsStore, TextWithLink } from '@/components/CardForm';
+import { CardForm, Field, useFormsStore, TextWithLink, useFieldsLibrary, useLinksLibrary } from '@/components/CardForm';
 import { useModalStore, Modal } from '@/components/Modal';
 import { CreateUserInput } from '@/graphql/types';
 import CreateUserMutation from '@/graphql/user/CreateUserMutation.ts';
@@ -15,6 +15,8 @@ const { t } = useLocale();
 const router = useRouter();
 const modalStore = useModalStore();
 const formsStore = useFormsStore();
+const fieldsLibrary = useFieldsLibrary();
+const linksLibrary = useLinksLibrary();
 
 type RegisterInput = {
   email: string;
@@ -33,25 +35,9 @@ formsStore.setForm('register', {
 } as RegisterInput);
 const form: ComputedRef<RegisterInput> = computed(() => formsStore.getForm('register') as RegisterInput);
 const fields: Field[] = [
-  {
-    label: t('email'),
-    name: 'email',
-    rules: [(v: string) => /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(v) || t('email.format.validation.error')],
-    required: true,
-  },
-  {
-    label: t('name'),
-    name: 'name',
-    rules: [(v: string) => /^.{2,100}$/.test(v) || t('name.length.validation.error')],
-    required: true,
-  },
-  {
-    label: t('password'),
-    name: 'password',
-    rules: [(v: string) => /^(?=.*[A-Z])(?=.*[\W_]).{5,}$/.test(v) || t('password.format.validation.error')],
-    required: true,
-    type: 'password',
-  },
+  fieldsLibrary.EMAIL,
+  fieldsLibrary.NAME,
+  fieldsLibrary.PASSWORD,
   {
     label: t('password.confirmation'),
     name: 'passwordConfirmation',
@@ -61,18 +47,7 @@ const fields: Field[] = [
   },
 ];
 
-const links: TextWithLink[] = [
-  {
-    textBefore: t('already.have.account'),
-    text: t('login'),
-    routeName: 'Login',
-  },
-  {
-    textBefore: t('forgot.password'),
-    text: t('reset.password'),
-    routeName: 'ForgotPassword',
-  },
-];
+const links: TextWithLink[] = [linksLibrary.LOGIN, linksLibrary.FORGOT_PASSWORD];
 
 const cardForm = ref<typeof CardForm | null>(null);
 const { mutate, onError, onDone } = useMutation(CreateUserMutation);
