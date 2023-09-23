@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, PropType, Ref, ref } from 'vue';
+import { useLocale } from 'vuetify';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { GraphQLErrors } from '@apollo/client/errors';
@@ -8,6 +9,7 @@ import { VForm } from 'vuetify/components';
 import { Field, TextWithLink, useFormsStore } from '@/components/CardForm';
 
 const formsStore = useFormsStore();
+const { t } = useLocale();
 
 const props = defineProps({
   title: {
@@ -97,7 +99,7 @@ defineExpose({
           :key="field.label"
           v-model="formValues[field.name]"
           :label="field.label"
-          :rules="field.rules ?? []"
+          :rules="field.rules ?? field.required ? [v => !!v || t('required.validation.error')] : []"
           :validateOn="field.validateOn ?? 'blur'"
           :required="field.required ?? false"
           :type="field.type ?? 'text'"

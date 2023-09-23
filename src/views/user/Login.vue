@@ -23,7 +23,15 @@ formsStore.setForm('login', {
 } as LoginInput);
 const form: ComputedRef<LoginInput> = computed(() => formsStore.getForm('login') as LoginInput);
 
-const fields: Field[] = [fieldsLibrary.EMAIL, fieldsLibrary.PASSWORD];
+const fields: Field[] = [
+  fieldsLibrary.EMAIL,
+  {
+    label: t('password'),
+    name: 'password',
+    required: true,
+    type: 'password',
+  },
+];
 const links: TextWithLink[] = [linksLibrary.FORGOT_PASSWORD, linksLibrary.REGISTER];
 
 async function login() {
