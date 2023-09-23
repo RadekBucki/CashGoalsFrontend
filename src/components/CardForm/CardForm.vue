@@ -45,6 +45,10 @@ const props = defineProps({
 
 const formRef: Ref<VForm | null> = ref(null);
 const formValues = computed(() => formsStore.getForm(props.formName));
+const fieldsModifiable: Ref<Field[]> = ref([]);
+onMounted(() => {
+  fieldsModifiable.value = props.fields.map((field) => ({ ...field }));
+});
 // eslint-disable-next-line
 const formCustomErrorMessages: Ref<any> = ref({});
 
@@ -95,7 +99,7 @@ defineExpose({
     <VForm ref="formRef" @submit.prevent="submit">
       <VCardText>
         <VTextField
-          v-for="field in fields"
+          v-for="(field, index) in fieldsModifiable"
           :key="field.label"
           v-model="formValues[field.name]"
           :label="field.label"
@@ -104,6 +108,9 @@ defineExpose({
           :required="field.required ?? false"
           :type="field.type ?? 'text'"
           :error-messages="formCustomErrorMessages[field.name] ?? []"
+          clearable
+          :append-inner-icon="fields[index].type === 'password' ? (field.type === 'password' ? 'mdi-eye' : 'mdi-eye-off') : ''"
+          @click:append-inner="field.type = field.type === 'password' ? 'text' : 'password'"
         />
         <div v-for="link in links" :key="link.routeName">
           {{ link.textBefore }}

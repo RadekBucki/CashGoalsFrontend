@@ -114,5 +114,6 @@ module.exports = {
     'vue/multi-word-component-names': 'off',
     'import/extensions': 'off',
     'object-curly-newline': 'off',
+    'vue/max-len': 'off',
   },
 };
