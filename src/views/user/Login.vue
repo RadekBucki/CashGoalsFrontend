@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, ComputedRef } from 'vue';
+import { useRouter } from 'vue-router';
 import { useLocale } from 'vuetify';
 
 import { CardForm, Field, useFormsStore, TextWithLink, useFieldsLibrary, useLinksLibrary } from '@/components/CardForm';
@@ -9,6 +10,7 @@ const { t } = useLocale();
 const formsStore = useFormsStore();
 const fieldsLibrary = useFieldsLibrary();
 const linksLibrary = useLinksLibrary();
+const router = useRouter();
 
 type LoginInput = {
   email: string;
@@ -16,7 +18,7 @@ type LoginInput = {
 };
 
 formsStore.setForm('login', {
-  email: '',
+  email: router.currentRoute.value.query.user ?? '',
   password: '',
 } as LoginInput);
 const form: ComputedRef<LoginInput> = computed(() => formsStore.getForm('login') as LoginInput);

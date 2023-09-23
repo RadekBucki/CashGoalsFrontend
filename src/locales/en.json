@@ -18,5 +18,7 @@
   "password.confirmation.validation.error": "Password confirmation must match password.",
   "activate.account": "Activate account",
   "register.success.title": "Registration successful",
-  "register.success.content": "You have successfully registered. Please check your email for activation link."
+  "register.success.content": "You have successfully registered. Please check your email for activation link.",
+  "account.activated": "Account activated",
+  "account.activated.message": "Your account has been activated. You can now login."
 }

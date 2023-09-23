@@ -34,6 +34,7 @@ formsStore.setForm('register', {
   activationUrl: window.location.origin + router.resolve({ name: 'Activate' }).href,
 } as RegisterInput);
 const form: ComputedRef<RegisterInput> = computed(() => formsStore.getForm('register') as RegisterInput);
+
 const fields: Field[] = [
   fieldsLibrary.EMAIL,
   fieldsLibrary.NAME,
@@ -46,7 +47,6 @@ const fields: Field[] = [
     type: 'password',
   },
 ];
-
 const links: TextWithLink[] = [linksLibrary.LOGIN, linksLibrary.FORGOT_PASSWORD];
 
 const cardForm = ref<typeof CardForm | null>(null);
@@ -70,9 +70,6 @@ onDone(() => {
   } as Modal);
 });
 function register() {
-  if (!cardForm.value) {
-    return;
-  }
   mutate({
     userInput: {
       email: form.value.email,

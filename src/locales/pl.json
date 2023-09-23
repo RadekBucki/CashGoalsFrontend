@@ -18,5 +18,7 @@
   "password.confirmation.validation.error": "Hasła muszą być takie same.",
   "activate.account": "Aktywuj konto",
   "register.success.title": "Rejestracja zakończona sukcesem.",
-  "register.success.content": "Na podany adres email został wysłany link aktywacyjny."
+  "register.success.content": "Na podany adres email został wysłany link aktywacyjny.",
+  "account.activated": "Konto aktywowane",
+  "account.activated.message": "Twoje konto zostało aktywowane. Możesz się zalogować."
 }
