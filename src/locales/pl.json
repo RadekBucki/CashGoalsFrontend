@@ -16,9 +16,14 @@
   "name.length.validation.error": "Imię musi mieć pomiędzy 3 a 100 znaków.",
   "password.format.validation.error": "Hasło musi mieć co najmniej 8 znaków, zawierać co najmniej jedną cyfrę, dużą i małą literę oraz znak specjalny.",
   "password.confirmation.validation.error": "Hasła muszą być takie same.",
+  "required.validation.error": "Pole jest wymagane.",
   "activate.account": "Aktywuj konto",
   "register.success.title": "Rejestracja zakończona sukcesem.",
   "register.success.content": "Na podany adres email został wysłany link aktywacyjny.",
   "account.activated": "Konto aktywowane",
-  "account.activated.message": "Twoje konto zostało aktywowane. Możesz się zalogować."
+  "account.activated.message": "Twoje konto zostało aktywowane. Możesz się zalogować.",
+  "password.reset.requested": "Reset hasła",
+  "password.reset.requested.message": "Na podany adres email został wysłany kod do resetu hasła.",
+  "password.reset": "Reset hasła",
+  "password.reset.message": "Hasło zostało zresetowane. Możesz się zalogować."
 }

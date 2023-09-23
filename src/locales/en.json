@@ -16,9 +16,14 @@
   "name.length.validation.error": "Name must be between 3 and 100 characters",
   "password.format.validation.error": "Password must be at least 8 characters long, contain at least one number, upper and lower case letter and special character.",
   "password.confirmation.validation.error": "Password confirmation must match password.",
+  "required.validation.error": "This field is required.",
   "activate.account": "Activate account",
   "register.success.title": "Registration successful",
   "register.success.content": "You have successfully registered. Please check your email for activation link.",
   "account.activated": "Account activated",
-  "account.activated.message": "Your account has been activated. You can now login."
+  "account.activated.message": "Your account has been activated. You can now login.",
+  "password.reset.requested": "Password reset",
+  "password.reset.requested.message": "Reset password code has been sent to your email address.",
+  "password.reset": "Reset password",
+  "password.reset.message": "Your password has been reset. You can now login."
 }

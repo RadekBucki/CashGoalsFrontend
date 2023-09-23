@@ -49,8 +49,8 @@ onDone(() => {
     },
   } as Modal);
 });
-function activateUser() {
-  mutate(form.value);
+async function activateUser() {
+  await mutate(form.value);
 }
 </script>
 
