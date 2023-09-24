@@ -24,11 +24,17 @@ export default function fields() {
     required: true,
     type: 'password',
   };
+  const PASSWORD_WITHOUT_VALIDATION: Field = {
+    label: t('password'),
+    name: 'password',
+    required: true,
+    type: 'password',
+  };
   const TOKEN: Field = {
     label: t('token'),
     name: 'token',
     required: true,
   };
 
-  return { EMAIL, NAME, PASSWORD, TOKEN };
+  return { EMAIL, NAME, PASSWORD, PASSWORD_WITHOUT_VALIDATION, TOKEN };
 }

@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { computed, ComputedRef } from 'vue';
+import { computed, ComputedRef, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useLocale } from 'vuetify';
 
 import { CardForm, Field, useFormsStore, TextWithLink, useFieldsLibrary, useLinksLibrary } from '@/components/CardForm';
+import { useLoginMutation, LoginMutationVariables } from '@/graphql';
 import CenteredLayout from '@/layouts/content/CenteredLayout.vue';
 
 const { t } = useLocale();
@@ -12,30 +13,30 @@ const fieldsLibrary = useFieldsLibrary();
 const linksLibrary = useLinksLibrary();
 const router = useRouter();
 
-type LoginInput = {
-  email: string;
-  password: string;
-};
-
 formsStore.setForm('login', {
   email: router.currentRoute.value.query.user ?? '',
   password: '',
-} as LoginInput);
-const form: ComputedRef<LoginInput> = computed(() => formsStore.getForm('login') as LoginInput);
+} as LoginMutationVariables);
+const form: ComputedRef<LoginMutationVariables> = computed(
+  () => formsStore.getForm('login') as LoginMutationVariables,
+);
+const cardForm = ref<typeof CardForm | null>(null);
 
-const fields: Field[] = [
-  fieldsLibrary.EMAIL,
-  {
-    label: t('password'),
-    name: 'password',
-    required: true,
-    type: 'password',
-  },
-];
+const fields: Field[] = [fieldsLibrary.EMAIL, fieldsLibrary.PASSWORD_WITHOUT_VALIDATION];
 const links: TextWithLink[] = [linksLibrary.FORGOT_PASSWORD, linksLibrary.REGISTER];
 
+const { mutate, onError, onDone } = useLoginMutation();
+onError(({ graphQLErrors }) => {
+  if (!cardForm.value) {
+    return;
+  }
+  cardForm.value.handleValidationErrors(graphQLErrors);
+});
+onDone(() => {
+  router.push({ name: 'Dashboard' });
+});
 async function login() {
-  console.log('login', form.value);
+  await mutate(form.value);
 }
 </script>
 
@@ -47,6 +48,7 @@ async function login() {
       :links="links"
       formName="login"
       :submitFunction="login"
+      ref="cardForm"
     />
   </CenteredLayout>
 </template>

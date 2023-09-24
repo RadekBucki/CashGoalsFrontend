@@ -5,18 +5,19 @@ import { CodegenConfig } from '@graphql-codegen/cli';
 
 const config: CodegenConfig = {
   schema: 'http://localhost:8080/graphql',
+  documents: './src/graphql/**/*.graphql',
   generates: {
-    './src/graphql/types.ts': {
+    './src/graphql/index.ts': {
       plugins: [
         'typescript',
         'typescript-operations',
-        'typescript-vue-apollo-smart-ops',
         'typescript-vue-apollo',
         {
           add: {
             content: '/* eslint-disable */\n' +
-              '// noinspection ES6UnusedImports,JSUnusedGlobalSymbols',
-          }
+              '// noinspection ES6UnusedImports,JSUnusedGlobalSymbols\n' +
+              '// noinspection JSUnusedGlobalSymbols\n',
+          },
         }
       ],
       config: {
@@ -25,9 +26,6 @@ const config: CodegenConfig = {
         onlyOperationTypes: true,
         avoidOptionals: true,
         enumsAsTypes: true,
-        withSmartOperationFunctions: false,
-        withCompositionFunctions: true,
-        vueApolloComposableImportFrom: 'vue',
       },
     },
   },

@@ -3,11 +3,9 @@ import { computed, ComputedRef, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useLocale } from 'vuetify';
 
-import { useMutation } from '@vue/apollo-composable';
-
 import { CardForm, Field, useFieldsLibrary, useFormsStore } from '@/components/CardForm';
 import { Modal, useModalStore } from '@/components/Modal';
-import ResetPasswordMutation from '@/graphql/user/ResetPasswordMutation.ts';
+import { ResetPasswordMutationVariables, useResetPasswordMutation } from '@/graphql';
 import CenteredLayout from '@/layouts/content/CenteredLayout.vue';
 
 const { t } = useLocale();
@@ -16,23 +14,19 @@ const formsStore = useFormsStore();
 const modalStore = useModalStore();
 const fieldsLibrary = useFieldsLibrary();
 
-type ResetPasswordInput = {
-  email: string;
-  token: string;
-  password: string;
-};
-
 formsStore.setForm('resetPassword', {
   email: router.currentRoute.value.query.user ?? '',
   token: router.currentRoute.value.query.code ?? '',
   password: '',
-} as ResetPasswordInput);
-const form: ComputedRef<ResetPasswordInput> = computed(() => formsStore.getForm('resetPassword') as ResetPasswordInput);
+} as ResetPasswordMutationVariables);
+const form: ComputedRef<ResetPasswordMutationVariables> = computed(
+  () => formsStore.getForm('resetPassword') as ResetPasswordMutationVariables,
+);
 const cardForm = ref<typeof CardForm | null>(null);
 
 const fields: Field[] = [fieldsLibrary.EMAIL, fieldsLibrary.TOKEN, fieldsLibrary.PASSWORD];
 
-const { mutate, onError, onDone } = useMutation(ResetPasswordMutation);
+const { mutate, onError, onDone } = useResetPasswordMutation();
 onError(({ graphQLErrors }) => {
   if (!cardForm.value) {
     return;

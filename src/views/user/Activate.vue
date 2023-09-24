@@ -3,11 +3,9 @@ import { computed, ComputedRef, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useLocale } from 'vuetify';
 
-import { useMutation } from '@vue/apollo-composable';
-
 import { CardForm, Field, useFieldsLibrary, useFormsStore } from '@/components/CardForm';
 import { Modal, useModalStore } from '@/components/Modal';
-import ActivateUserMutation from '@/graphql/user/ActivateUserMutation.ts';
+import { useActivateUserMutation, ActivateUserMutationVariables } from '@/graphql';
 import CenteredLayout from '@/layouts/content/CenteredLayout.vue';
 
 const { t } = useLocale();
@@ -16,21 +14,18 @@ const formsStore = useFormsStore();
 const fieldsLibrary = useFieldsLibrary();
 const modalStore = useModalStore();
 
-type ActivateUserInput = {
-  email: string;
-  token: string;
-};
-
 formsStore.setForm('activateUser', {
   email: router.currentRoute.value.query.user ?? '',
   token: router.currentRoute.value.query.code ?? '',
-} as ActivateUserInput);
-const form: ComputedRef<ActivateUserInput> = computed(() => formsStore.getForm('activateUser') as ActivateUserInput);
+} as ActivateUserMutationVariables);
+const form: ComputedRef<ActivateUserMutationVariables> = computed(
+  () => formsStore.getForm('activateUser') as ActivateUserMutationVariables,
+);
 const cardForm = ref<typeof CardForm | null>(null);
 
 const fields: Field[] = [fieldsLibrary.EMAIL, fieldsLibrary.TOKEN];
 
-const { mutate, onError, onDone } = useMutation(ActivateUserMutation);
+const { mutate, onError, onDone } = useActivateUserMutation();
 onError(({ graphQLErrors }) => {
   if (!cardForm.value) {
     return;

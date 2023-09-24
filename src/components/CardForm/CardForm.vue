@@ -46,6 +46,7 @@ const props = defineProps({
 const formRef: Ref<VForm | null> = ref(null);
 const formValues = computed(() => formsStore.getForm(props.formName));
 const fieldsModifiable: Ref<Field[]> = ref([]);
+const requiredFieldRule = [(v) => !!v || t('required.validation.error')];
 onMounted(() => {
   fieldsModifiable.value = props.fields.map((field) => ({ ...field }));
 });
@@ -103,7 +104,7 @@ defineExpose({
           :key="field.label"
           v-model="formValues[field.name]"
           :label="field.label"
-          :rules="field.rules ?? field.required ? [v => !!v || t('required.validation.error')] : []"
+          :rules="field.rules?.length ? field.rules : (field.required ? requiredFieldRule : [])"
           :validateOn="field.validateOn ?? 'blur'"
           :required="field.required ?? false"
           :type="field.type ?? 'text'"

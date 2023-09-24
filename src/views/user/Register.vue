@@ -3,12 +3,9 @@ import { computed, ComputedRef, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useLocale } from 'vuetify';
 
-import { useMutation } from '@vue/apollo-composable';
-
 import { CardForm, Field, useFormsStore, TextWithLink, useFieldsLibrary, useLinksLibrary } from '@/components/CardForm';
 import { useModalStore, Modal } from '@/components/Modal';
-import { CreateUserInput } from '@/graphql/types';
-import CreateUserMutation from '@/graphql/user/CreateUserMutation.ts';
+import { useCreateUserMutation, CreateUserInput } from '@/graphql';
 import CenteredLayout from '@/layouts/content/CenteredLayout.vue';
 
 const { t } = useLocale();
@@ -50,7 +47,7 @@ const fields: Field[] = [
 const links: TextWithLink[] = [linksLibrary.LOGIN, linksLibrary.FORGOT_PASSWORD];
 
 const cardForm = ref<typeof CardForm | null>(null);
-const { mutate, onError, onDone } = useMutation(CreateUserMutation);
+const { mutate, onError, onDone } = useCreateUserMutation();
 onError(({ graphQLErrors }) => {
   if (!cardForm.value) {
     return;
