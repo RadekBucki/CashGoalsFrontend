@@ -20,7 +20,7 @@ const items = [
 
 <template>
   <VAppBar app color="primary" dark flat prominent>
-    <VToolbarTitle>
+    <VToolbarTitle style="flex: auto">
       <Logo />
     </VToolbarTitle>
     <VSpacer />
@@ -30,8 +30,8 @@ const items = [
     <VMenu open-on-hover>
       <template v-slot:activator="{ props }">
         <VBtn variant="text" v-bind="props">
-          <VIcon>mdi-account</VIcon>
-          {{ t('your.account') }}
+          <VIcon size="25">mdi-account</VIcon>
+          <span class="d-none d-sm-inline">{{ t('your.account') }}</span>
         </VBtn>
       </template>
 

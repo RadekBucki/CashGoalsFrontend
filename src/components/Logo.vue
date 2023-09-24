@@ -8,13 +8,19 @@ defineProps({
     type: String,
     default: 'Home',
   },
+  slim: {
+    type: Boolean,
+    default: false,
+  },
 });
 </script>
 
 <template>
   <RouterLink style="color: inherit; text-decoration: none" :to="{ name: routeName }">
-    <span class="font-weight-light" :style="`font-size: ${size}px`">Cash</span>
-    <span class="font-weight-bold goals-text-shadow text-accent" :style="`font-size: ${size}px`">Goals</span>
+    <span class="font-weight-light" :style="`font-size: ${size}px`">{{ slim ? 'C' : 'Cash' }}</span>
+    <span class="font-weight-bold goals-text-shadow text-accent" :style="`font-size: ${size}px`">
+      {{ slim ? 'G' : 'Goals' }}
+    </span>
   </RouterLink>
 </template>
 
