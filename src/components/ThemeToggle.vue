@@ -1,11 +1,11 @@
 <template>
-  <VSwitch color="yellow" v-model="isThemeDark" @change="toggleTheme">
+  <VSwitch color="accent" v-model="isThemeDark" @change="toggleTheme">
     <template #prepend>
-      <VIcon :color="isThemeDark ? 'yellow' : 'grey'" left>mdi-weather-sunny</VIcon>
+      <VIcon :color="isThemeDark ? 'accent' : 'grey'" left>mdi-weather-sunny</VIcon>
     </template>
 
     <template #label>
-      <VIcon :color="isThemeDark ? 'yellow' : 'grey'" right>mdi-weather-night</VIcon>
+      <VIcon :color="isThemeDark ? 'accent' : 'grey'" right>mdi-weather-night</VIcon>
     </template>
   </VSwitch>
 </template>

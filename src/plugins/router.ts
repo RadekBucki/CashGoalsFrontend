@@ -1,5 +1,8 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 
+import LeftNavBarLayout from '@/layouts/view/LeftNavbar/LeftNavbar.vue';
+import TopNavBarLayout from '@/layouts/view/TopNavbar/TopNavbar.vue';
+import Dashboard from '@/views/Dashboard.vue';
 import Home from '@/views/Home.vue';
 import Activate from '@/views/user/Activate.vue';
 import ForgotPassword from '@/views/user/ForgotPassword.vue';
@@ -11,6 +14,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     props: true,
+    component: TopNavBarLayout,
     children: [
       { path: '', name: 'Home', component: Home },
       { path: 'register', name: 'Register', component: Register },
@@ -18,6 +22,14 @@ const routes: Array<RouteRecordRaw> = [
       { path: 'forgot-password', name: 'ForgotPassword', component: ForgotPassword },
       { path: 'reset-password', name: 'ResetPassword', component: ResetPassword, props: true },
       { path: 'activate', name: 'Activate', component: Activate, props: true },
+    ],
+  },
+  {
+    path: '/dashboard',
+    props: true,
+    component: LeftNavBarLayout,
+    children: [
+      { path: '', name: 'Dashboard', component: Dashboard },
     ],
   },
 ];
