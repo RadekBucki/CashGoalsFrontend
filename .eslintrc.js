@@ -115,5 +115,12 @@ module.exports = {
     'import/extensions': 'off',
     'object-curly-newline': 'off',
     'vue/max-len': 'off',
+    'import/no-extraneous-dependencies': [
+      'error',
+      {
+        peerDependencies: true,
+      },
+    ],
+    'no-case-declarations': 'off',
   },
 };

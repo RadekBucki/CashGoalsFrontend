@@ -1,9 +1,6 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { LocaleInstance } from 'vuetify';
 
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { ApolloClient, ApolloLink, createHttpLink, InMemoryCache } from '@apollo/client/core';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { onError } from '@apollo/client/link/error';
 
 import { useModalStore } from '@/components/Modal';
@@ -16,17 +13,14 @@ export default function useApolloClient(locale: LocaleInstance) {
   const modalStore = useModalStore();
   const authorization = useAuthorization();
   const { t } = locale;
-  function getApolloClient() {
-    const httpLink = createHttpLink({
-      uri: import.meta.env.VITE_BACKEND_GRAPHQL_URL,
-    });
 
-    const errorHandler = onError(async (errorResponse) => {
+  function getErrorHander() {
+    return onError((errorResponse) => {
       if (errorResponse.networkError) {
         modalStore.showModal({
           title: t('network.error.title'),
           type: 'error',
-          message: errorResponse.networkError.message,
+          content: errorResponse.networkError.message,
         });
       }
       if (errorResponse.graphQLErrors?.length !== 1) {
@@ -43,25 +37,45 @@ export default function useApolloClient(locale: LocaleInstance) {
           break;
         case 'UNAUTHORIZED':
         case 'FORBIDDEN':
-          if (await authorization.authorize()) {
-            errorResponse.forward(errorResponse.operation);
-          } else {
-            await router.push({ name: 'Login' });
-          }
+          authorization.authorize()
+            .then((r: boolean) => {
+              if (r) {
+                errorResponse.forward(errorResponse.operation);
+              } else {
+                router.push({ name: 'Login' })
+                  .then(() => router.go(0));
+              }
+            });
           break;
         default:
+          const stacktrace: {
+            fileName: string;
+            methodName: string;
+            lineNumber: number;
+          }[] = [];
+          if (import.meta.env.DEV) {
+            stacktrace.push(...(error.extensions?.stacktrace as []));
+          }
           modalStore.showModal({
             type: 'error',
-            title: import.meta.env.DEV ? `${error.extensions.exception} - ${error.extensions.message}` : error.message,
-            content: import.meta.env.DEV
-              ? error.extensions.stacktrace
-                .map((line: string) => `${line.fileName}::${line.methodName}():${line.lineNumber}`)
-                .slice(0, 10)
-                .join('\n')
-              : undefined,
+            title: import.meta.env.DEV
+              ? `${error.extensions.exception} - ${error.extensions.message}`
+              : error.message,
+            content: stacktrace
+              .map((line) => `${line.fileName}::${line.methodName}():${line.lineNumber}`)
+              .slice(0, 10)
+              .join('\n'),
           });
       }
     });
+  }
+
+  function getApolloClient() {
+    const httpLink = createHttpLink({
+      uri: import.meta.env.VITE_BACKEND_GRAPHQL_URL,
+    });
+
+    const errorHandler = getErrorHander();
 
     const authMiddleware = new ApolloLink((operation, forward) => {
       const headersCopy = { ...operation.getContext().headers };

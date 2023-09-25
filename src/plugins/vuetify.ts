@@ -1,7 +1,6 @@
 import '@mdi/font/css/materialdesignicons.css';
 import 'vuetify/styles';
 
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { createI18n, useI18n } from 'vue-i18n';
 import { createVuetify } from 'vuetify';
 

@@ -2,7 +2,6 @@
 import { computed, onMounted, PropType, Ref, ref } from 'vue';
 import { useLocale } from 'vuetify';
 
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { GraphQLErrors } from '@apollo/client/errors';
 import { VForm } from 'vuetify/components';
 
@@ -46,7 +45,7 @@ const props = defineProps({
 const formRef: Ref<VForm | null> = ref(null);
 const formValues = computed(() => formsStore.getForm(props.formName));
 const fieldsModifiable: Ref<Field[]> = ref([]);
-const requiredFieldRule = [(v) => !!v || t('required.validation.error')];
+const requiredFieldRule = [(v: string) => !!v || t('required.validation.error')];
 onMounted(() => {
   fieldsModifiable.value = props.fields.map((field) => ({ ...field }));
 });

@@ -1,6 +1,5 @@
 import type { App } from 'vue';
 
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { DefaultApolloClient } from '@vue/apollo-composable';
 
 import useApolloClient from './apollo';

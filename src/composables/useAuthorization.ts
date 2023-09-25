@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import jwtDecode from 'jwt-decode';
 
 import { useRefreshTokenMutation } from '@/graphql';
