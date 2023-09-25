@@ -49,8 +49,7 @@ const requiredFieldRule = [(v: string) => !!v || t('required.validation.error')]
 onMounted(() => {
   fieldsModifiable.value = props.fields.map((field) => ({ ...field }));
 });
-// eslint-disable-next-line
-const formCustomErrorMessages: Ref<any> = ref({});
+const formCustomErrorMessages: Ref<string[][]> = ref({});
 
 async function submit() {
   if (!formRef.value) {

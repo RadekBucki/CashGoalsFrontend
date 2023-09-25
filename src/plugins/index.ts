@@ -11,7 +11,6 @@ import loadFonts from './webfontloader';
 export default function registerPlugins(app: App) {
   // noinspection JSIgnoredPromiseFromCall
   loadFonts();
-  // noinspection TypeScriptValidateTypes
   app.use(i18n)
     .use(vuetify)
     .use(router)

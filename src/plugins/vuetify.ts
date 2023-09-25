@@ -19,7 +19,6 @@ export const i18n = createI18n({
   },
 });
 
-// noinspection TypeScriptValidateTypes
 export const vuetify = createVuetify({
   ssr: true,
   locale: {

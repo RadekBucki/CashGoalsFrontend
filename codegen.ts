@@ -1,6 +1,3 @@
-/* eslint-disable */
-// noinspection TypeScriptUnresolvedVariable
-
 import { CodegenConfig } from '@graphql-codegen/cli';
 
 const config: CodegenConfig = {
@@ -14,11 +11,10 @@ const config: CodegenConfig = {
         'typescript-operations',
         {
           add: {
-            content: '/* eslint-disable */\n' +
-              '// noinspection ES6UnusedImports,JSUnusedGlobalSymbols\n' +
-              '// noinspection JSUnusedGlobalSymbols\n',
+            content: '/* eslint-disable */\n'
+              + '// noinspection ES6UnusedImports,JSUnusedGlobalSymbols,JSUnusedGlobalSymbols\n',
           },
-        }
+        },
       ],
       config: {
         useTypeImports: true,
