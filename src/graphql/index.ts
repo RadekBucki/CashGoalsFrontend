@@ -1,6 +1,5 @@
 /* eslint-disable */
-// noinspection ES6UnusedImports,JSUnusedGlobalSymbols
-// noinspection JSUnusedGlobalSymbols
+// noinspection ES6UnusedImports,JSUnusedGlobalSymbols,JSUnusedGlobalSymbols
 
 import gql from 'graphql-tag';
 import * as VueApolloComposable from '@vue/apollo-composable';
