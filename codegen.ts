@@ -21,6 +21,7 @@ const config: CodegenConfig = {
         enumsAsTypes: true,
         operationResultSuffix: 'Output',
         skipTypename: true,
+        vueCompositionApiImportFrom: 'vue',
       },
     },
   },

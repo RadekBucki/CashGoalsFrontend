@@ -49,7 +49,7 @@ const requiredFieldRule = [(v: string) => !!v || t('required.validation.error')]
 onMounted(() => {
   fieldsModifiable.value = props.fields.map((field) => ({ ...field }));
 });
-const formCustomErrorMessages: Ref<string[][]> = ref({});
+const formCustomErrorMessages: Ref<Record<string, string[]>> = ref({});
 
 async function submit() {
   if (!formRef.value) {
