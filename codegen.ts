@@ -9,9 +9,9 @@ const config: CodegenConfig = {
   generates: {
     './src/graphql/index.ts': {
       plugins: [
+        'typescript-vue-apollo',
         'typescript',
         'typescript-operations',
-        'typescript-vue-apollo',
         {
           add: {
             content: '/* eslint-disable */\n' +
@@ -22,10 +22,9 @@ const config: CodegenConfig = {
       ],
       config: {
         useTypeImports: true,
-        preResolveTypes: true,
-        onlyOperationTypes: true,
-        avoidOptionals: true,
         enumsAsTypes: true,
+        operationResultSuffix: 'Output',
+        skipTypename: true,
       },
     },
   },

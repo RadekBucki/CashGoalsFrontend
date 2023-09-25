@@ -32,7 +32,7 @@ function close() {
           <VIcon v-if="modal.type === 'info'" color="info" size="50">mdi-information-outline</VIcon>
           <VIcon v-if="modal.type === 'warning'" color="warning" size="50">mdi-alert-outline</VIcon>
         </VCardItem>
-        <VCardTitle class="mt-10 text-center">{{ modal.title }}</VCardTitle>
+        <VCardTitle class="mt-10 text-center text-wrap">{{ modal.title }}</VCardTitle>
         <VCardText class="d-flex flex-column justify-center mt-10 text-center">{{ modal.content }}</VCardText>
       </VCard>
     </CenteredLayout>

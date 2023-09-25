@@ -4,11 +4,13 @@ import { useRouter } from 'vue-router';
 import { useLocale } from 'vuetify';
 
 import { CardForm, Field, useFormsStore, TextWithLink, useFieldsLibrary, useLinksLibrary } from '@/components/CardForm';
-import { useLoginMutation, LoginMutationVariables } from '@/graphql';
+import { useLoginMutation, LoginMutationVariables, LoginOutput } from '@/graphql';
 import CenteredLayout from '@/layouts/content/CenteredLayout.vue';
+import useAppStore from '@/stores/app.ts';
 
 const { t } = useLocale();
 const formsStore = useFormsStore();
+const appStore = useAppStore();
 const fieldsLibrary = useFieldsLibrary();
 const linksLibrary = useLinksLibrary();
 const router = useRouter();
@@ -32,7 +34,8 @@ onError(({ graphQLErrors }) => {
   }
   cardForm.value.handleValidationErrors(graphQLErrors);
 });
-onDone(() => {
+onDone((result) => {
+  appStore.setLoginOutput(result.data?.login as LoginOutput);
   router.push({ name: 'Dashboard' });
 });
 async function login() {

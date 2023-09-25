@@ -5,20 +5,29 @@ import { LoginOutput } from '@/graphql';
 export default defineStore('app', {
   state: () => ({
     isDarkMode: window.matchMedia('(prefers-color-scheme: dark)').matches,
-    user: null as LoginOutput | null,
+    loginOutput: null as LoginOutput | null,
   }),
   actions: {
     toggleDarkMode() {
       this.isDarkMode = !this.isDarkMode;
     },
-    setUser(user: LoginOutput) {
-      this.user = user;
+    setLoginOutput(loginOutput: LoginOutput) {
+      this.loginOutput = loginOutput;
+    },
+    getUserName(): string | undefined {
+      return this.loginOutput?.user?.name;
+    },
+    getAccessToken(): string | undefined {
+      return this.loginOutput?.accessToken;
+    },
+    getRefreshToken(): string | undefined {
+      return this.loginOutput?.refreshToken;
     },
     logout() {
-      this.user = null;
+      this.loginOutput = null;
     },
     isUserLoggedIn() {
-      return !!this.user;
+      return !!this.loginOutput;
     },
   },
   persist: true,

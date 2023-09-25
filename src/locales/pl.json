@@ -25,5 +25,7 @@
   "password.reset.requested": "Reset hasła",
   "password.reset.requested.message": "Na podany adres email został wysłany kod do resetu hasła.",
   "password.reset": "Reset hasła",
-  "password.reset.message": "Hasło zostało zresetowane. Możesz się zalogować."
+  "password.reset.message": "Hasło zostało zresetowane. Możesz się zalogować.",
+  "hello.username": "Cześć {0}!",
+  "network.error.title": "Błąd sieci, spróbuj ponownie później."
 }

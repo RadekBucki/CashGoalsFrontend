@@ -25,5 +25,7 @@
   "password.reset.requested": "Password reset",
   "password.reset.requested.message": "Reset password code has been sent to your email address.",
   "password.reset": "Reset password",
-  "password.reset.message": "Your password has been reset. You can now login."
+  "password.reset.message": "Your password has been reset. You can now login.",
+  "hello.username": "Hello {username}!",
+  "network.error.title": "Network error, please try again later."
 }

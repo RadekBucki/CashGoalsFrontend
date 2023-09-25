@@ -45,7 +45,7 @@ module.exports = {
     'newline-per-chained-call': [
       'error',
       {
-        ignoreChainWithDepth: 1,
+        ignoreChainWithDepth: 3,
       },
     ],
     'import/no-relative-parent-imports': [

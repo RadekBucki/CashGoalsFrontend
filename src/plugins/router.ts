@@ -25,7 +25,7 @@ const routes: Array<RouteRecordRaw> = [
     ],
   },
   {
-    path: '/dashboard',
+    path: '/',
     props: true,
     component: LeftNavBarLayout,
     children: [
