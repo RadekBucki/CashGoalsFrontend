@@ -45,7 +45,7 @@ module.exports = {
     'newline-per-chained-call': [
       'error',
       {
-        ignoreChainWithDepth: 1,
+        ignoreChainWithDepth: 3,
       },
     ],
     'import/no-relative-parent-imports': [
@@ -104,16 +104,23 @@ module.exports = {
     'vue/no-empty-component-block': 'error',
     'vue/no-potential-component-option-typo': 'error',
     'vue/padding-line-between-blocks': 'error',
-    'vue/padding-lines-in-component-definition': 'error',
     'vue/prefer-separate-static-class': 'error',
     'vue/prefer-true-attribute-shorthand': 'error',
     'vue/require-direct-export': 'error',
     'vue/require-name-property': 'error',
     'vue/require-typed-ref': 'error',
     'vue/static-class-names-order': 'error',
-    'vue/v-on-handler-style': 'error',
     'import/no-unresolved': 'off',
     'vue/multi-word-component-names': 'off',
     'import/extensions': 'off',
+    'object-curly-newline': 'off',
+    'vue/max-len': 'off',
+    'import/no-extraneous-dependencies': [
+      'error',
+      {
+        peerDependencies: true,
+      },
+    ],
+    'no-case-declarations': 'off',
   },
 };

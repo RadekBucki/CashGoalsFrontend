@@ -1,33 +1,27 @@
-/* eslint-disable */
-// noinspection TypeScriptUnresolvedVariable
-
 import { CodegenConfig } from '@graphql-codegen/cli';
 
 const config: CodegenConfig = {
   schema: 'http://localhost:8080/graphql',
+  documents: './src/graphql/**/*.graphql',
   generates: {
-    './src/graphql/types.ts': {
+    './src/graphql/index.ts': {
       plugins: [
+        'typescript-vue-apollo',
         'typescript',
         'typescript-operations',
-        'typescript-vue-apollo-smart-ops',
-        'typescript-vue-apollo',
         {
           add: {
-            content: '/* eslint-disable */\n' +
-              '// noinspection ES6UnusedImports,JSUnusedGlobalSymbols',
-          }
-        }
+            content: '/* eslint-disable */\n'
+              + '// noinspection ES6UnusedImports,JSUnusedGlobalSymbols,JSUnusedGlobalSymbols\n',
+          },
+        },
       ],
       config: {
         useTypeImports: true,
-        preResolveTypes: true,
-        onlyOperationTypes: true,
-        avoidOptionals: true,
         enumsAsTypes: true,
-        withSmartOperationFunctions: false,
-        withCompositionFunctions: true,
-        vueApolloComposableImportFrom: 'vue',
+        operationResultSuffix: 'Output',
+        skipTypename: true,
+        vueCompositionApiImportFrom: 'vue',
       },
     },
   },

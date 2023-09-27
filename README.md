@@ -16,12 +16,12 @@
 
 ### Run for development
 
-1. Run `npm install` to install all dependencies
-2. Run `npm run dev` to start the application
+1. Run `pnpm install` to install all dependencies
+2. Run `pnpm run dev` to start the application
 
 ### Run for production
 
-1. Run `npm install` to install all dependencies
-2. Run `npm run build` to build the application
-3. Run `npm run start` to start the application
-   (it could be necessary tu run `npm install -g http-server` if you run production mode locally)
+1. Run `pnpm install` to install all dependencies
+2. Run `pnpm run build` to build the application
+3. Run `pnpm run start` to start the application
+   (it could be necessary tu run `pnpm install -g http-server` if you run production mode locally)

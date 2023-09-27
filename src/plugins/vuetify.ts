@@ -1,7 +1,6 @@
 import '@mdi/font/css/materialdesignicons.css';
 import 'vuetify/styles';
 
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { createI18n, useI18n } from 'vue-i18n';
 import { createVuetify } from 'vuetify';
 
@@ -20,7 +19,6 @@ export const i18n = createI18n({
   },
 });
 
-// noinspection TypeScriptValidateTypes
 export const vuetify = createVuetify({
   ssr: true,
   locale: {
@@ -35,26 +33,26 @@ export const vuetify = createVuetify({
       light: {
         dark: false,
         colors: {
-          primary: '#1867C0',
-          secondary: '#5CBBF6',
+          primary: '#FFFFFF',
+          secondary: '#F2F2F2',
           accent: '#FFC107',
-          error: '#FF5252',
+          error: '#FF5722',
           info: '#2196F3',
           success: '#4CAF50',
-          warning: '#FFC107',
-          background: '#FFFFFF',
+          warning: '#FF9800',
+          background: '#F9F9F9',
         },
       },
       dark: {
         dark: true,
         colors: {
-          primary: '#1867C0',
-          secondary: '#5CBBF6',
+          primary: '#212121',
+          secondary: '#303030',
           accent: '#FFC107',
-          error: '#FF5252',
+          error: '#FF5722',
           info: '#2196F3',
           success: '#4CAF50',
-          warning: '#FFC107',
+          warning: '#FF9800',
           background: '#121212',
         },
       },

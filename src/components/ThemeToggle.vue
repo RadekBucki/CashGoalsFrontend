@@ -1,34 +1,20 @@
 <template>
-  <v-switch
-    color="yellow"
-    v-model="isThemeDark"
-    @change="toggleTheme"
-  >
+  <VSwitch color="accent" v-model="isThemeDark" @change="toggleTheme">
     <template #prepend>
-      <v-icon
-        :color="isThemeDark ? 'yellow' : 'grey'"
-        left
-      >
-        mdi-weather-sunny
-      </v-icon>
+      <VIcon :color="isThemeDark ? 'accent' : 'grey'" left>mdi-weather-sunny</VIcon>
     </template>
 
     <template #label>
-      <v-icon
-        :color="isThemeDark ? 'yellow' : 'grey'"
-        right
-      >
-        mdi-weather-night
-      </v-icon>
+      <VIcon :color="isThemeDark ? 'accent' : 'grey'" right>mdi-weather-night</VIcon>
     </template>
-  </v-switch>
+  </VSwitch>
 </template>
 
 <script setup lang="ts">
 import { computed, ComputedRef } from 'vue';
 import { useTheme } from 'vuetify';
 
-import useAppStore from '@/store/app';
+import useAppStore from '@/stores/app';
 
 const theme = useTheme();
 const appStore = useAppStore();
