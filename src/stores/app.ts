@@ -6,10 +6,14 @@ export default defineStore('app', {
   state: () => ({
     isDarkMode: window.matchMedia('(prefers-color-scheme: dark)').matches,
     loginOutput: null as LoginOutput | null,
+    locale: navigator.language ?? import.meta.env.VITE_I18N_LOCALE,
   }),
   actions: {
     toggleDarkMode() {
       this.isDarkMode = !this.isDarkMode;
+    },
+    setLocale(locale: string) {
+      this.locale = locale;
     },
     setLoginOutput(loginOutput: LoginOutput) {
       this.loginOutput = loginOutput;

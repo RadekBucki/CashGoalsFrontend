@@ -41,6 +41,9 @@ dependencies:
   vue-i18n:
     specifier: ^9.4.1
     version: 9.4.1(vue@3.3.4)
+  vue-lang-code-flags:
+    specifier: ^1.0.13
+    version: 1.0.13
   vue-router:
     specifier: ^4.2.5
     version: 4.2.5(vue@3.3.4)
@@ -3451,6 +3454,11 @@ packages:
       path-exists: 4.0.0
     dev: true
 
+  /flag-icon-css@3.5.0:
+    resolution: {integrity: sha512-pgJnJLrtb0tcDgU1fzGaQXmR8h++nXvILJ+r5SmOXaaL/2pocunQo2a8TAXhjQnBpRLPtZ1KCz/TYpqeNuE2ew==}
+    deprecated: The project has been renamed to flag-icons
+    dev: false
+
   /flat-cache@3.1.0:
     resolution: {integrity: sha512-OHx4Qwrrt0E4jEIcI5/Xb+f+QmJYNj2rrK8wiIdQOIrB9WrrJL8cjZvXdXuBTkkEwEqLycb5BeZDV1o2i9bTew==}
     engines: {node: '>=12.0.0'}
@@ -5496,6 +5504,12 @@ packages:
       '@intlify/shared': 9.4.1
       '@vue/devtools-api': 6.5.0
       vue: 3.3.4
+
+  /vue-lang-code-flags@1.0.13:
+    resolution: {integrity: sha512-s0MuSMFuf8oN83TNXxSjidrQp9aVKJS1GE2bf/6mNPTHyER8pAD49R9JSH/Xry793z93/G1vGZDAw9fdnfUfLQ==}
+    dependencies:
+      flag-icon-css: 3.5.0
+    dev: false
 
   /vue-router@4.2.5(vue@3.3.4):
     resolution: {integrity: sha512-DIUpKcyg4+PTQKfFPX88UWhlagBEBEfJ5A8XDXRJLUnZOvcpMF8o/dnL90vpVkGaPbjvXazV/rC1qBKrZlFugw==}

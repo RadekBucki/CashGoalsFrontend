@@ -27,5 +27,7 @@
   "password.reset": "Reset hasła",
   "password.reset.message": "Hasło zostało zresetowane. Możesz się zalogować.",
   "hello.username": "Cześć {0}!",
-  "network.error.title": "Błąd sieci, spróbuj ponownie później."
+  "network.error.title": "Błąd sieci, spróbuj ponownie później.",
+  "logout": "Wyloguj się",
+  "hide": "Ukryj"
 }

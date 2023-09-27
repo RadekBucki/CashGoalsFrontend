@@ -9,14 +9,13 @@ import { createVueI18nAdapter } from 'vuetify/locale/adapters/vue-i18n';
 import en from '@/locales/en.json';
 import pl from '@/locales/pl.json';
 
+const messages = { en, pl };
+export const localeNames: string[] = Object.keys(messages);
 export const i18n = createI18n({
   legacy: false,
   locale: navigator.language ?? import.meta.env.VITE_I18N_LOCALE,
   fallbackLocale: navigator.language ?? import.meta.env.VITE_I18N_FALLBACK_LOCALE,
-  messages: {
-    en,
-    pl,
-  },
+  messages,
 });
 
 export const vuetify = createVuetify({

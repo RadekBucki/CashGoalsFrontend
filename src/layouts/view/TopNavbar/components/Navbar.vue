@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useLocale } from 'vuetify';
 
+import LanguageSwitcher from '@/components/LanguageSwitcher.vue';
 import Logo from '@/components/Logo.vue';
 import ThemeToggle from '@/components/ThemeToggle.vue';
 
@@ -21,13 +22,21 @@ const items = [
 <template>
   <VAppBar app color="primary" dark flat prominent>
     <VToolbarTitle style="flex: auto">
-      <Logo />
+      <div class="d-none d-sm-inline">
+        <Logo />
+      </div>
+      <div class="d-inline d-sm-none">
+        <Logo :size="20" />
+      </div>
     </VToolbarTitle>
     <VSpacer />
     <div class="my-auto">
       <ThemeToggle />
     </div>
-    <VMenu open-on-hover>
+    <div class="ml-4 my-auto">
+      <LanguageSwitcher />
+    </div>
+    <VMenu open-on-hover open-on-click>
       <template v-slot:activator="{ props }">
         <VBtn variant="text" v-bind="props">
           <VIcon size="25">mdi-account</VIcon>

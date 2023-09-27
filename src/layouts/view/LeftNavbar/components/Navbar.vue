@@ -2,6 +2,7 @@
 import { ref, Ref } from 'vue';
 import { useLocale } from 'vuetify';
 
+import LanguageSwitcher from '@/components/LanguageSwitcher.vue';
 import Logo from '@/components/Logo.vue';
 import ThemeToggle from '@/components/ThemeToggle.vue';
 import useAppStore from '@/stores/app.ts';
@@ -33,14 +34,17 @@ const showFullNavigation: Ref<boolean> = ref(true);
 
     <template v-slot:append>
       <VList>
-        <VListItem v-if="showFullNavigation" class="d-flex flex-column justify-center">
+        <VListItem v-if="showFullNavigation" class="d-flex justify-center">
           <ThemeToggle class="mx-auto" />
         </VListItem>
-        <VListItem prepend-icon="mdi-logout" :to="{ name: 'Home' }" @click="appStore.logout()" title="Logout" />
+        <VListItem v-if="showFullNavigation" class="d-flex justify-center">
+          <LanguageSwitcher class="mx-auto" />
+        </VListItem>
+        <VListItem prepend-icon="mdi-logout" :to="{ name: 'Home' }" @click="appStore.logout()" :title="t('logout')" />
         <VListItem
           :prepend-icon="showFullNavigation ? 'mdi-arrow-collapse-left' : 'mdi-arrow-expand-right'"
           @click="showFullNavigation = !showFullNavigation"
-          title="Hide"
+          :title="t('hide')"
         />
       </VList>
     </template>
