@@ -2,7 +2,7 @@ import { useLocale } from 'vuetify';
 
 import { Field } from './types.ts';
 
-export default function fields() {
+export default function useFieldsLibrary() {
   const { t } = useLocale();
 
   const EMAIL: Field = {

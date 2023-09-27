@@ -1,8 +1,8 @@
 import CardForm from './CardForm.vue';
-import useFieldsLibrary from './fields.ts';
-import useLinksLibrary from './links.ts';
 import useFormsStore from './store.ts';
 import { Field, TextWithLink } from './types.ts';
+import useFieldsLibrary from './useFieldsLibrary.ts';
+import useLinksLibrary from './useLinksLibrary.ts';
 
 export {
   type Field,

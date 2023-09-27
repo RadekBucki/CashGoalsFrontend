@@ -2,7 +2,7 @@ import { useLocale } from 'vuetify';
 
 import { TextWithLink } from './types.ts';
 
-export default function links() {
+export default function useLinksLibrary() {
   const { t } = useLocale();
 
   const LOGIN: TextWithLink = {
