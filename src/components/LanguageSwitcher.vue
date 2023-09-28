@@ -3,7 +3,6 @@ import { ref, Ref } from 'vue';
 import LangFlag from 'vue-lang-code-flags';
 import { useLocale } from 'vuetify';
 
-import { localeNames } from '@/plugins/vuetify.ts';
 import useAppStore from '@/stores/app.ts';
 
 const { current } = useLocale();
@@ -14,7 +13,7 @@ function updateLocale(locale: string) {
   current.value = locale;
 }
 
-const locales: Ref<string[]> = ref(localeNames);
+const locales: Ref<string[]> = ref(appStore.localeNames);
 </script>
 
 <template>

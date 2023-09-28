@@ -1,15 +1,3 @@
-<template>
-  <VSwitch color="accent" v-model="isThemeDark" @change="toggleTheme">
-    <template #prepend>
-      <VIcon :color="isThemeDark ? 'accent' : 'grey'" left>mdi-weather-sunny</VIcon>
-    </template>
-
-    <template #label>
-      <VIcon :color="isThemeDark ? 'accent' : 'grey'" right>mdi-weather-night</VIcon>
-    </template>
-  </VSwitch>
-</template>
-
 <script setup lang="ts">
 import { computed, ComputedRef } from 'vue';
 import { useTheme } from 'vuetify';
@@ -27,3 +15,15 @@ function toggleTheme() {
   appStore.toggleDarkMode();
 }
 </script>
+
+<template>
+  <VSwitch color="accent" v-model="isThemeDark" @change="toggleTheme">
+    <template #prepend>
+      <VIcon :color="isThemeDark ? 'accent' : 'grey'" left>mdi-weather-sunny</VIcon>
+    </template>
+
+    <template #label>
+      <VIcon :color="isThemeDark ? 'accent' : 'grey'" right>mdi-weather-night</VIcon>
+    </template>
+  </VSwitch>
+</template>
