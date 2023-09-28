@@ -14,7 +14,7 @@ export default function useApolloClient(locale: LocaleInstance) {
   const authorization = useAuthorization();
   const { t } = locale;
 
-  function getErrorHander() {
+  function getErrorHandler() {
     return onError((errorResponse) => {
       if (errorResponse.networkError) {
         modalStore.showModal({
@@ -73,9 +73,11 @@ export default function useApolloClient(locale: LocaleInstance) {
   function getApolloClient() {
     const httpLink = createHttpLink({
       uri: import.meta.env.VITE_BACKEND_GRAPHQL_URL,
+      headers: {
+        'Accept-Language': appStore.locale,
+      },
     });
-
-    const errorHandler = getErrorHander();
+    const errorHandler = getErrorHandler();
 
     const authMiddleware = new ApolloLink((operation, forward) => {
       const headersCopy = { ...operation.getContext().headers };
@@ -85,6 +87,7 @@ export default function useApolloClient(locale: LocaleInstance) {
       }
       return forward(operation);
     });
+
     return new ApolloClient({
       link: authMiddleware.concat(errorHandler).concat(httpLink),
       cache: new InMemoryCache(),
