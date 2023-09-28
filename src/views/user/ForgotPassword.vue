@@ -14,12 +14,12 @@ const formsStore = useFormsStore();
 const fieldsLibrary = useFieldsLibrary();
 const modalStore = useModalStore();
 
-formsStore.setForm('forgotPassword', {
+formsStore.setForm('forgot.password', {
   email: '',
   resetUrl: window.location.origin + router.resolve({ name: 'ResetPassword' }).href,
 } as RequestPasswordResetMutationVariables);
 const form: ComputedRef<RequestPasswordResetMutationVariables> = computed(
-  () => formsStore.getForm('forgotPassword') as RequestPasswordResetMutationVariables,
+  () => formsStore.getForm('forgot.password') as RequestPasswordResetMutationVariables,
 );
 const cardForm = ref<typeof CardForm | null>(null);
 
@@ -53,9 +53,8 @@ async function requestPasswordReset() {
 <template>
   <CenteredLayout>
     <CardForm
-      :title="t('forgot.password')"
+      formName="forgot.password"
       :fields="fields"
-      formName="forgotPassword"
       :submitFunction="requestPasswordReset"
       ref="cardForm"
     />

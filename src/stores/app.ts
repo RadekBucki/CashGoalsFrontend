@@ -1,15 +1,21 @@
 import { defineStore } from 'pinia';
 
 import { LoginOutput } from '@/graphql';
+import messages from '@/locales';
 
 export default defineStore('app', {
   state: () => ({
     isDarkMode: window.matchMedia('(prefers-color-scheme: dark)').matches,
     loginOutput: null as LoginOutput | null,
+    locale: navigator.language ?? import.meta.env.VITE_I18N_LOCALE,
+    localeNames: Object.keys(messages),
   }),
   actions: {
-    toggleDarkMode() {
+    toggleDarkMode(): void {
       this.isDarkMode = !this.isDarkMode;
+    },
+    setLocale(locale: string): void {
+      this.locale = locale;
     },
     setLoginOutput(loginOutput: LoginOutput) {
       this.loginOutput = loginOutput;
@@ -23,10 +29,10 @@ export default defineStore('app', {
     getRefreshToken(): string | undefined {
       return this.loginOutput?.refreshToken;
     },
-    logout() {
+    logout(): void {
       this.loginOutput = null;
     },
-    isUserLoggedIn() {
+    isUserLoggedIn(): boolean {
       return !!this.loginOutput;
     },
   },

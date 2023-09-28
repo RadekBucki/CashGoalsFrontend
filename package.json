@@ -25,6 +25,7 @@
     "vue": "^3.3.4",
     "vue-apollo": "^3.1.1",
     "vue-i18n": "^9.4.1",
+    "vue-lang-code-flags": "^1.0.13",
     "vue-router": "^4.2.5",
     "vuetify": "^3.3.17",
     "webfontloader": "^1.6.28"

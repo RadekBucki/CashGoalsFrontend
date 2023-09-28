@@ -52,9 +52,8 @@ async function activateUser() {
 <template>
   <CenteredLayout>
     <CardForm
-      :title="t('activate.account')"
+      formName="activate.account"
       :fields="fields"
-      formName="activateUser"
       :submitFunction="activateUser"
       :auto-submit="Boolean(form.email && form.token)"
       ref="cardForm"
