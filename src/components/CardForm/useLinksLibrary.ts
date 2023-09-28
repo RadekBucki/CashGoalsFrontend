@@ -1,23 +1,19 @@
-import { useLocale } from 'vuetify';
-
 import { TextWithLink } from './types.ts';
 
 export default function useLinksLibrary() {
-  const { t } = useLocale();
-
   const LOGIN: TextWithLink = {
-    textBefore: t('already.have.account'),
-    text: t('login'),
+    textBefore: 'already.have.account',
+    text: 'login',
     routeName: 'Login',
   };
   const FORGOT_PASSWORD: TextWithLink = {
-    textBefore: t('forgot.password'),
-    text: t('reset.password'),
+    textBefore: 'forgot.password',
+    text: 'reset.password',
     routeName: 'ForgotPassword',
   };
   const REGISTER: TextWithLink = {
-    textBefore: t('dont.have.account'),
-    text: t('register'),
+    textBefore: 'dont.have.account',
+    text: 'register',
     routeName: 'Register',
   };
 

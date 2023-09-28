@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed, ComputedRef } from 'vue';
 import { useLocale } from 'vuetify';
 
 import LanguageSwitcher from '@/components/LanguageSwitcher.vue';
@@ -7,7 +8,7 @@ import ThemeToggle from '@/components/ThemeToggle.vue';
 
 const { t } = useLocale();
 
-const items = [
+const items: ComputedRef<{title: string, routeName: string}[]> = computed(() => [
   {
     title: t('register'),
     routeName: 'Register',
@@ -16,7 +17,7 @@ const items = [
     title: t('login'),
     routeName: 'Login',
   },
-];
+]);
 </script>
 
 <template>

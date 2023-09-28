@@ -1,14 +1,12 @@
 <script setup lang="ts">
 import { computed, ComputedRef, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { useLocale } from 'vuetify';
 
 import { CardForm, Field, useFormsStore, TextWithLink, useFieldsLibrary, useLinksLibrary } from '@/components/CardForm';
 import { useLoginMutation, LoginMutationVariables, LoginOutput } from '@/graphql';
 import CenteredLayout from '@/layouts/content/CenteredLayout.vue';
 import useAppStore from '@/stores/app.ts';
 
-const { t } = useLocale();
 const formsStore = useFormsStore();
 const appStore = useAppStore();
 const fieldsLibrary = useFieldsLibrary();
@@ -46,10 +44,9 @@ async function login() {
 <template>
   <CenteredLayout>
     <CardForm
-      :title="t('login')"
+      formName="login"
       :fields="fields"
       :links="links"
-      formName="login"
       :submitFunction="login"
       ref="cardForm"
     />

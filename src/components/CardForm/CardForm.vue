@@ -13,7 +13,8 @@ const { t } = useLocale();
 const props = defineProps({
   title: {
     type: String,
-    required: true,
+    required: false,
+    default: () => null,
   },
   fields: {
     type: Array as () => Field[],
@@ -93,15 +94,15 @@ defineExpose({
 
 <template>
   <VCard>
-    <VCardTitle class="text-center">{{ title }}</VCardTitle>
+    <VCardTitle class="text-center">{{ t(formName ?? title) }}</VCardTitle>
 
     <VForm ref="formRef" @submit.prevent="submit">
       <VCardText>
         <VTextField
           v-for="(field, index) in fieldsModifiable"
-          :key="field.label"
+          :key="field.name"
           v-model="formValues[field.name]"
-          :label="field.label"
+          :label="t(field.name)"
           :rules="field.rules?.length ? field.rules : (field.required ? requiredFieldRule : [])"
           :validateOn="field.validateOn ?? 'blur'"
           :required="field.required ?? false"
@@ -110,14 +111,18 @@ defineExpose({
           clearable
           :append-inner-icon="fields[index].type === 'password' ? (field.type === 'password' ? 'mdi-eye' : 'mdi-eye-off') : ''"
           @click:append-inner="field.type = field.type === 'password' ? 'text' : 'password'"
-        />
+        >
+          <template v-slot:message="{ message }">
+            {{ t(message) }}
+          </template>
+        </VTextField>
         <div v-for="link in links" :key="link.routeName">
-          {{ link.textBefore }}
-          <RouterLink :to="{ name: link.routeName }">{{ link.text }}</RouterLink>
+          {{ t(link.textBefore) }}
+          <RouterLink :to="{ name: link.routeName }">{{ t(link.text) }}</RouterLink>
         </div>
       </VCardText>
       <VCardActions class="justify-center">
-        <VBtn type="submit" color="secondary" variant="elevated">{{ submitText ?? title }}</VBtn>
+        <VBtn type="submit" color="secondary" variant="elevated">{{ t(formName ?? submitText ?? title) }}</VBtn>
       </VCardActions>
     </VForm>
   </VCard>

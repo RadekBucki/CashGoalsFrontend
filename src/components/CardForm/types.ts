@@ -7,7 +7,6 @@ type ValidationRule =
   | ((value: any) => PromiseLike<ValidationResult>);
 
 export type Field = {
-  label: string;
   name: string;
   rules?: ValidationRule[];
   validateOn?: 'lazy' | ('input' | 'blur' | 'submit') | 'input lazy' | 'blur lazy' | 'submit lazy' | 'lazy input' | 'lazy blur' | 'lazy submit';

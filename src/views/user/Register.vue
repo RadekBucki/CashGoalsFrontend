@@ -37,9 +37,8 @@ const fields: Field[] = [
   fieldsLibrary.NAME,
   fieldsLibrary.PASSWORD,
   {
-    label: t('password.confirmation'),
-    name: 'passwordConfirmation',
-    rules: [(v: string) => v === form.value.password || t('password.confirmation.validation.error')],
+    name: 'password.confirmation',
+    rules: [(v: string) => v === form.value.password || 'password.confirmation.validation.error'],
     required: true,
     type: 'password',
   },
@@ -81,10 +80,9 @@ function register() {
 <template>
   <CenteredLayout>
     <CardForm
-      :title="t('register')"
+      form-name="register"
       :fields="fields"
       :links="links"
-      form-name="register"
       :submit-function="register"
       ref="cardForm"
     />
