@@ -4,7 +4,7 @@ import LangFlag from 'vue-lang-code-flags';
 import { useLocale } from 'vuetify';
 
 import { localeNames } from '@/plugins/vuetify.ts';
-import useAppStore from '@/stores/app';
+import useAppStore from '@/stores/app.ts';
 
 const { current } = useLocale();
 const appStore = useAppStore();
