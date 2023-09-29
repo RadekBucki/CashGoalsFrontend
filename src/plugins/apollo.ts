@@ -90,7 +90,7 @@ export default function useApolloClient(locale: LocaleInstance) {
 
     return new ApolloClient({
       link: authMiddleware.concat(errorHandler).concat(httpLink),
-      cache: new InMemoryCache(),
+      cache: new InMemoryCache({ addTypename: false }),
       connectToDevTools: true,
     });
   }

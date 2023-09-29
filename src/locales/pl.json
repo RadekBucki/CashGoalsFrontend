@@ -29,5 +29,17 @@
   "hello.username": "Cześć {0}!",
   "network.error.title": "Błąd sieci, spróbuj ponownie później.",
   "logout": "Wyloguj się",
-  "hide": "Ukryj"
+  "hide": "Ukryj",
+  "dashboard": "Strona główna",
+  "profile": "Profil użytkownika",
+  "update": "Wyślij",
+  "theme": "Motyw",
+  "locale": "Język",
+  "DARK": "Ciemny",
+  "LIGHT": "Jasny",
+  "SYSTEM": "Systemowy",
+  "en": "Angielski (English)",
+  "pl": "Polski (Polish)",
+  "profile.updated.title": "Dane zaktualizowane",
+  "profile.updated.content": "Twoje dane zostały zaktualizowane."
 }

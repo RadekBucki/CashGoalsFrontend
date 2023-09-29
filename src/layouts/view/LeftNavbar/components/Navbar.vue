@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, Ref } from 'vue';
+import { useRouter } from 'vue-router';
 import { useLocale } from 'vuetify';
 
 import LanguageSwitcher from '@/components/LanguageSwitcher.vue';
@@ -9,6 +10,7 @@ import useAppStore from '@/stores/app.ts';
 
 const appStore = useAppStore();
 const { t } = useLocale();
+const { currentRoute } = useRouter();
 
 const showFullNavigation: Ref<boolean> = ref(true);
 </script>
@@ -27,9 +29,8 @@ const showFullNavigation: Ref<boolean> = ref(true);
     <VSpacer />
 
     <VList>
-      <VListItem prepend-icon="mdi-view-dashboard" title="Dashboard" :to="{ name: 'Dashboard' }" />
-      <VListItem prepend-icon="mdi-account-box" title="Account" />
-      <VListItem prepend-icon="mdi-gavel" title="Admin" />
+      <VListItem :active="currentRoute.fullPath === '/'" prepend-icon="mdi-view-dashboard" :title="t('dashboard')" :to="{ name: 'Dashboard' }" />
+      <VListItem prepend-icon="mdi-account-edit" :title="t('profile')" :to="{ name: 'Profile' }" />
     </VList>
 
     <template v-slot:append>

@@ -24,7 +24,7 @@ export default function authorization() {
       appStore.logout();
       return false;
     }
-    appStore.setLoginOutput(result.data.refreshToken);
+    appStore.setAuthorizationOutput(result.data.refreshToken);
     return true;
   }
   async function authorize(): Promise<boolean> {

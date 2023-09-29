@@ -29,5 +29,17 @@
   "hello.username": "Hello {0}!",
   "network.error.title": "Network error, please try again later.",
   "logout": "Logout",
-  "hide": "Hide"
+  "hide": "Hide",
+  "dashboard": "Dashboard",
+  "profile": "User profile",
+  "update": "Update",
+  "theme": "Theme",
+  "locale": "Language",
+  "DARK": "Dark",
+  "LIGHT": "Light",
+  "SYSTEM": "System",
+  "en": "English",
+  "pl": "Polish",
+  "profile.updated.title": "Data updated",
+  "profile.updated.content": "Your data has been updated."
 }

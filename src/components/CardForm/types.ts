@@ -12,6 +12,7 @@ export type Field = {
   validateOn?: 'lazy' | ('input' | 'blur' | 'submit') | 'input lazy' | 'blur lazy' | 'submit lazy' | 'lazy input' | 'lazy blur' | 'lazy submit';
   required?: boolean;
   type?: string;
+  items?: string[];
 };
 
 export type TextWithLink = {

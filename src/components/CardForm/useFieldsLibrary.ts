@@ -1,6 +1,9 @@
 import { Field } from './types.ts';
+import useAppStore from '@/stores/app.ts';
 
 export default function useFieldsLibrary() {
+  const appStore = useAppStore();
+
   const EMAIL: Field = {
     name: 'email',
     rules: [(v: string) => /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(v) || 'email.format.validation.error'],
@@ -26,6 +29,17 @@ export default function useFieldsLibrary() {
     name: 'token',
     required: true,
   };
+  const THEME: Field = {
+    name: 'theme',
+    type: 'select',
+    items: ['LIGHT', 'DARK', 'SYSTEM'],
+    required: true,
+  };
+  const LOCALE: Field = {
+    name: 'locale',
+    type: 'select',
+    items: appStore.localeNames,
+  };
 
-  return { EMAIL, NAME, PASSWORD, PASSWORD_WITHOUT_VALIDATION, TOKEN };
+  return { EMAIL, NAME, PASSWORD, PASSWORD_WITHOUT_VALIDATION, TOKEN, THEME, LOCALE };
 }

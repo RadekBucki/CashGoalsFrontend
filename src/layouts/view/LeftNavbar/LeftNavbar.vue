@@ -1,7 +1,7 @@
 <template>
   <VApp>
     <Navbar />
-    <RouterView />
+    <RouterView class="ml-3" />
     <Modal />
   </VApp>
 </template>
