@@ -14,12 +14,12 @@ const formsStore = useFormsStore();
 const fieldsLibrary = useFieldsLibrary();
 const modalStore = useModalStore();
 
-formsStore.setForm('activateUser', {
+formsStore.setForm('activate.account', {
   email: router.currentRoute.value.query.user ?? '',
   token: router.currentRoute.value.query.code ?? '',
 } as ActivateUserMutationVariables);
 const form: ComputedRef<ActivateUserMutationVariables> = computed(
-  () => formsStore.getForm('activateUser') as ActivateUserMutationVariables,
+  () => formsStore.getForm('activate.account') as ActivateUserMutationVariables,
 );
 const cardForm = ref<typeof CardForm | null>(null);
 

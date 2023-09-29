@@ -79,6 +79,8 @@ export const LoginDocument = gql`
     user {
       name
       email
+      theme
+      locale
     }
   }
 }
@@ -114,6 +116,8 @@ export const RefreshTokenDocument = gql`
     user {
       name
       email
+      theme
+      locale
     }
   }
 }
@@ -214,6 +218,7 @@ export type CreateUserInput = {
   email: Scalars['String']['input'];
   name: Scalars['String']['input'];
   password: Scalars['String']['input'];
+  theme: Theme;
 };
 
 export type LoginOutput = {
@@ -276,15 +281,23 @@ export type Query = {
   user: User;
 };
 
+export type Theme =
+  | 'DARK'
+  | 'LIGHT'
+  | 'SYSTEM';
+
 export type User = {
   email: Scalars['String']['output'];
+  locale: Scalars['String']['output'];
   name: Scalars['String']['output'];
+  theme: Theme;
 };
 
 export type UserInput = {
   email: Scalars['String']['input'];
   name: Scalars['String']['input'];
   password: Scalars['String']['input'];
+  theme: Theme;
 };
 
 export type ActivateUserMutationVariables = Exact<{
@@ -308,14 +321,14 @@ export type LoginMutationVariables = Exact<{
 }>;
 
 
-export type LoginMutationOutput = { login: { refreshToken: string, accessToken: string, user: { name: string, email: string } } };
+export type LoginMutationOutput = { login: { refreshToken: string, accessToken: string, user: { name: string, email: string, theme: Theme, locale: string } } };
 
 export type RefreshTokenMutationVariables = Exact<{
   refreshToken: Scalars['String']['input'];
 }>;
 
 
-export type RefreshTokenMutationOutput = { refreshToken: { refreshToken: string, accessToken: string, user: { name: string, email: string } } };
+export type RefreshTokenMutationOutput = { refreshToken: { refreshToken: string, accessToken: string, user: { name: string, email: string, theme: Theme, locale: string } } };
 
 export type RequestPasswordResetMutationVariables = Exact<{
   email: Scalars['String']['input'];

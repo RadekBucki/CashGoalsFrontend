@@ -7,11 +7,13 @@ import { CardForm, Field, useFormsStore, TextWithLink, useFieldsLibrary, useLink
 import { useModalStore, Modal } from '@/components/Modal';
 import { useCreateUserMutation, CreateUserInput } from '@/graphql';
 import CenteredLayout from '@/layouts/content/CenteredLayout.vue';
+import useAppStore from '@/stores/app';
 
 const { t } = useLocale();
 const router = useRouter();
 const modalStore = useModalStore();
 const formsStore = useFormsStore();
+const appStore = useAppStore();
 const fieldsLibrary = useFieldsLibrary();
 const linksLibrary = useLinksLibrary();
 
@@ -20,7 +22,6 @@ type RegisterInput = {
   password: string;
   passwordConfirmation: string;
   name: string;
-  activationUrl: string;
 };
 
 formsStore.setForm('register', {
@@ -28,7 +29,6 @@ formsStore.setForm('register', {
   password: '',
   passwordConfirmation: '',
   name: '',
-  activationUrl: window.location.origin + router.resolve({ name: 'Activate' }).href,
 } as RegisterInput);
 const form: ComputedRef<RegisterInput> = computed(() => formsStore.getForm('register') as RegisterInput);
 
@@ -71,7 +71,8 @@ function register() {
       email: form.value.email,
       password: form.value.password,
       name: form.value.name,
-      activationUrl: form.value.activationUrl,
+      theme: appStore.isDarkMode ? 'DARK' : 'LIGHT',
+      activationUrl: window.location.origin + router.resolve({ name: 'Activate' }).href,
     } as CreateUserInput,
   });
 }

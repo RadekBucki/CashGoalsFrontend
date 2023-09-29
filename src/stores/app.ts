@@ -19,6 +19,12 @@ export default defineStore('app', {
     },
     setLoginOutput(loginOutput: LoginOutput) {
       this.loginOutput = loginOutput;
+      this.locale = loginOutput.user?.locale ?? this.locale;
+      this.isDarkMode = loginOutput.user?.theme === 'DARK'
+        || (
+          loginOutput.user?.theme === 'SYSTEM'
+          && window.matchMedia('(prefers-color-scheme: dark)').matches
+        );
     },
     getUserName(): string | undefined {
       return this.loginOutput?.user?.name;
