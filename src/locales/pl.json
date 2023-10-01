@@ -5,7 +5,7 @@
   "login": "Zaloguj się",
   "have.account": "Masz już konto?",
   "password": "Hasło",
-  "password.confirmation": "Potwierdź hasło",
+  "passwordConfirmation": "Potwierdź hasło",
   "forgot.password": "Zapomniałeś hasła?",
   "reset.password": "Zresetuj hasło",
   "token": "Kod",
@@ -31,7 +31,7 @@
   "logout": "Wyloguj się",
   "hide": "Ukryj",
   "dashboard": "Strona główna",
-  "profile": "Profil użytkownika",
+  "profile.data": "Profil użytkownika",
   "update": "Wyślij",
   "theme": "Motyw",
   "locale": "Język",
@@ -41,5 +41,8 @@
   "en": "Angielski (English)",
   "pl": "Polski (Polish)",
   "profile.updated.title": "Dane zaktualizowane",
-  "profile.updated.content": "Twoje dane zostały zaktualizowane."
+  "profile.updated.content": "Twoje dane zostały zaktualizowane.",
+  "profile.password": "Zmień hasło",
+  "oldPassword": "Obecne hasło",
+  "newPassword": "Nowe hasło"
 }

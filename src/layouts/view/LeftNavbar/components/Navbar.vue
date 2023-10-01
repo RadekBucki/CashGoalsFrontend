@@ -30,7 +30,7 @@ const showFullNavigation: Ref<boolean> = ref(true);
 
     <VList>
       <VListItem :active="currentRoute.fullPath === '/'" prepend-icon="mdi-view-dashboard" :title="t('dashboard')" :to="{ name: 'Dashboard' }" />
-      <VListItem prepend-icon="mdi-account-edit" :title="t('profile')" :to="{ name: 'Profile' }" />
+      <VListItem prepend-icon="mdi-account-edit" :title="t('profile.data')" :to="{ name: 'Profile' }" />
     </VList>
 
     <template v-slot:append>

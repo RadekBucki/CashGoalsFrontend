@@ -2,11 +2,12 @@
 import { computed, ComputedRef, ref } from 'vue';
 import { useLocale, useTheme } from 'vuetify';
 
+import { ApolloQueryResult, FetchResult } from '@apollo/client';
+
 import { CardForm, Field, useFieldsLibrary, useFormsStore } from '@/components/CardForm';
 import { useModalStore } from '@/components/Modal';
 import {
-  GetUserQueryOutput, UpdateUserMutationOutput,
-  UpdateUserMutationVariables,
+  GetUserQueryOutput, UpdateUserInput, UpdateUserMutationOutput,
   useGetUserQuery,
   useUpdateUserMutation,
 } from '@/graphql';
@@ -25,27 +26,27 @@ const fields: Field[] = [
   fieldsLibrary.NAME,
   fieldsLibrary.THEME,
   fieldsLibrary.LOCALE,
-  fieldsLibrary.PASSWORD,
+  fieldsLibrary.PASSWORD_WITHOUT_VALIDATION,
 ];
 const cardForm = ref<typeof CardForm | null>(null);
 
-const form: ComputedRef<UpdateUserMutationVariables> = computed(
-  () => formsStore.getForm('profile') as UpdateUserMutationVariables,
-);
-formsStore.setForm('profile', {
+formsStore.setForm('profile.data', {
   email: '',
   name: '',
   theme: '',
   locale: '',
   password: '',
 });
+const form: ComputedRef<UpdateUserInput> = computed(
+  () => formsStore.getForm('profile.data') as UpdateUserInput,
+);
 const { onResult } = useGetUserQuery();
-onResult((result: GetUserQueryOutput) => {
+onResult((result: ApolloQueryResult<GetUserQueryOutput>) => {
   if (result.data?.user) {
-    formsStore.setForm('profile', {
+    formsStore.setForm('profile.data', {
       ...result.data.user,
       password: '',
-    } as UpdateUserMutationVariables);
+    } as UpdateUserInput);
   }
 });
 
@@ -56,7 +57,7 @@ onError(({ graphQLErrors }) => {
   }
   cardForm.value.handleValidationErrors(graphQLErrors);
 });
-onDone((result: UpdateUserMutationOutput) => {
+onDone((result: FetchResult<UpdateUserMutationOutput>) => {
   if (!result.data?.updateUser) {
     return;
   }
@@ -75,14 +76,12 @@ function updateUserData() {
 </script>
 
 <template>
-  <VMain>
-    <CardForm
-      :submit-function="updateUserData"
-      form-name="profile"
-      :fields="fields"
-      submit-text="update"
-      variant="dashboard"
-      ref="cardForm"
-    />
-  </VMain>
+  <CardForm
+    :submit-function="updateUserData"
+    form-name="profile.data"
+    :fields="fields"
+    submit-text="update"
+    variant="dashboard"
+    ref="cardForm"
+  />
 </template>

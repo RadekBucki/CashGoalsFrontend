@@ -5,7 +5,7 @@
   "login": "Login",
   "have.account": "Already have an account?",
   "password": "Password",
-  "password.confirmation": "Password confirmation",
+  "passwordConfirmation": "Password confirmation",
   "forgot.password": "Forgot password?",
   "reset.password": "Reset password",
   "token": "Code",
@@ -31,7 +31,7 @@
   "logout": "Logout",
   "hide": "Hide",
   "dashboard": "Dashboard",
-  "profile": "User profile",
+  "profile.data": "User profile",
   "update": "Update",
   "theme": "Theme",
   "locale": "Language",
@@ -41,5 +41,8 @@
   "en": "English",
   "pl": "Polish",
   "profile.updated.title": "Data updated",
-  "profile.updated.content": "Your data has been updated."
+  "profile.updated.content": "Your data has been updated.",
+  "profile.password": "Change password",
+  "oldPassword": "Current password",
+  "newPassword": "New password"
 }

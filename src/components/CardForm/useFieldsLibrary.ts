@@ -41,5 +41,20 @@ export default function useFieldsLibrary() {
     items: appStore.localeNames,
   };
 
-  return { EMAIL, NAME, PASSWORD, PASSWORD_WITHOUT_VALIDATION, TOKEN, THEME, LOCALE };
+  function getWithNewName(field: Field, name: string): Field {
+    const newField: Field = { ...field };
+    newField.name = name;
+    return newField;
+  }
+
+  return {
+    EMAIL,
+    NAME,
+    PASSWORD,
+    PASSWORD_WITHOUT_VALIDATION,
+    TOKEN,
+    THEME,
+    LOCALE,
+    getWithNewName,
+  };
 }

@@ -37,7 +37,7 @@ const fields: Field[] = [
   fieldsLibrary.NAME,
   fieldsLibrary.PASSWORD,
   {
-    name: 'password.confirmation',
+    name: 'passwordConfirmation',
     rules: [(v: string) => v === form.value.password || 'password.confirmation.validation.error'],
     required: true,
     type: 'password',
