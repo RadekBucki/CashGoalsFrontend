@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { UserData, UserPassword } from './components';
+import LeftLayout from '@/layouts/content/LeftLayout.vue';
 </script>
 
 <template>
-  <VMain>
+  <LeftLayout :sm="12">
     <UserData />
     <UserPassword />
-  </VMain>
+  </LeftLayout>
 </template>
