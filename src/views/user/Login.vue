@@ -3,7 +3,7 @@ import { computed, ComputedRef, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 import { CardForm, Field, useFormsStore, TextWithLink, useFieldsLibrary, useLinksLibrary } from '@/components/CardForm';
-import { useLoginMutation, LoginMutationVariables, LoginOutput } from '@/graphql';
+import { useLoginMutation, LoginMutationVariables, AuthorizationOutput } from '@/graphql';
 import CenteredLayout from '@/layouts/content/CenteredLayout.vue';
 import useAppStore from '@/stores/app.ts';
 
@@ -33,7 +33,7 @@ onError(({ graphQLErrors }) => {
   cardForm.value.handleValidationErrors(graphQLErrors);
 });
 onDone((result) => {
-  appStore.setLoginOutput(result.data?.login as LoginOutput);
+  appStore.setAuthorizationOutput(result.data?.login as AuthorizationOutput);
   router.push({ name: 'Dashboard' });
 });
 async function login() {

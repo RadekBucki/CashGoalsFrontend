@@ -71,6 +71,36 @@ export function useCreateUserMutation(options: VueApolloComposable.UseMutationOp
   return VueApolloComposable.useMutation<CreateUserMutationOutput, CreateUserMutationVariables>(CreateUserDocument, options);
 }
 export type CreateUserMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<CreateUserMutationOutput, CreateUserMutationVariables>;
+export const GetUserDocument = gql`
+    query getUser {
+  user {
+    name
+    email
+    theme
+    locale
+  }
+}
+    `;
+
+/**
+ * __useGetUserQuery__
+ *
+ * To run a query within a Vue component, call `useGetUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useGetUserQuery();
+ */
+export function useGetUserQuery(options: VueApolloComposable.UseQueryOptions<GetUserQueryOutput, GetUserQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<GetUserQueryOutput, GetUserQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<GetUserQueryOutput, GetUserQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<GetUserQueryOutput, GetUserQueryVariables>(GetUserDocument, {}, options);
+}
+export function useGetUserLazyQuery(options: VueApolloComposable.UseQueryOptions<GetUserQueryOutput, GetUserQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<GetUserQueryOutput, GetUserQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<GetUserQueryOutput, GetUserQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<GetUserQueryOutput, GetUserQueryVariables>(GetUserDocument, {}, options);
+}
+export type GetUserQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<GetUserQueryOutput, GetUserQueryVariables>;
 export const LoginDocument = gql`
     mutation login($email: String!, $password: String!) {
   login(email: $email, password: $password) {
@@ -79,6 +109,8 @@ export const LoginDocument = gql`
     user {
       name
       email
+      theme
+      locale
     }
   }
 }
@@ -114,6 +146,8 @@ export const RefreshTokenDocument = gql`
     user {
       name
       email
+      theme
+      locale
     }
   }
 }
@@ -197,6 +231,66 @@ export function useResetPasswordMutation(options: VueApolloComposable.UseMutatio
   return VueApolloComposable.useMutation<ResetPasswordMutationOutput, ResetPasswordMutationVariables>(ResetPasswordDocument, options);
 }
 export type ResetPasswordMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<ResetPasswordMutationOutput, ResetPasswordMutationVariables>;
+export const UpdateUserDocument = gql`
+    mutation updateUser($input: UpdateUserInput!) {
+  updateUser(input: $input) {
+    name
+    email
+    theme
+    locale
+  }
+}
+    `;
+
+/**
+ * __useUpdateUserMutation__
+ *
+ * To run a mutation, you first call `useUpdateUserMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateUserMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useUpdateUserMutation({
+ *   variables: {
+ *     input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateUserMutation(options: VueApolloComposable.UseMutationOptions<UpdateUserMutationOutput, UpdateUserMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<UpdateUserMutationOutput, UpdateUserMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<UpdateUserMutationOutput, UpdateUserMutationVariables>(UpdateUserDocument, options);
+}
+export type UpdateUserMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<UpdateUserMutationOutput, UpdateUserMutationVariables>;
+export const UpdateUserPasswordDocument = gql`
+    mutation updateUserPassword($oldPassword: String!, $newPassword: String!) {
+  updateUserPassword(oldPassword: $oldPassword, newPassword: $newPassword)
+}
+    `;
+
+/**
+ * __useUpdateUserPasswordMutation__
+ *
+ * To run a mutation, you first call `useUpdateUserPasswordMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateUserPasswordMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useUpdateUserPasswordMutation({
+ *   variables: {
+ *     oldPassword: // value for 'oldPassword'
+ *     newPassword: // value for 'newPassword'
+ *   },
+ * });
+ */
+export function useUpdateUserPasswordMutation(options: VueApolloComposable.UseMutationOptions<UpdateUserPasswordMutationOutput, UpdateUserPasswordMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<UpdateUserPasswordMutationOutput, UpdateUserPasswordMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<UpdateUserPasswordMutationOutput, UpdateUserPasswordMutationVariables>(UpdateUserPasswordDocument, options);
+}
+export type UpdateUserPasswordMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<UpdateUserPasswordMutationOutput, UpdateUserPasswordMutationVariables>;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: { input: string; output: string; }
@@ -209,27 +303,29 @@ export type Scalars = {
   Time: { input: any; output: any; }
 };
 
-export type CreateUserInput = {
-  activationUrl: Scalars['String']['input'];
-  email: Scalars['String']['input'];
-  name: Scalars['String']['input'];
-  password: Scalars['String']['input'];
-};
-
-export type LoginOutput = {
+export type AuthorizationOutput = {
   accessToken: Scalars['String']['output'];
   refreshToken: Scalars['String']['output'];
   user: User;
 };
 
+export type CreateUserInput = {
+  activationUrl: Scalars['String']['input'];
+  email: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+  password: Scalars['String']['input'];
+  theme: Theme;
+};
+
 export type Mutation = {
   activateUser: Scalars['Boolean']['output'];
   createUser: User;
-  login: LoginOutput;
-  refreshToken: LoginOutput;
+  login: AuthorizationOutput;
+  refreshToken: AuthorizationOutput;
   requestPasswordReset: Scalars['Boolean']['output'];
   resetPassword: Scalars['Boolean']['output'];
   updateUser: User;
+  updateUserPassword: Scalars['Boolean']['output'];
 };
 
 
@@ -269,22 +365,37 @@ export type MutationResetPasswordArgs = {
 
 
 export type MutationUpdateUserArgs = {
-  input: UserInput;
+  input: UpdateUserInput;
+};
+
+
+export type MutationUpdateUserPasswordArgs = {
+  newPassword: Scalars['String']['input'];
+  oldPassword: Scalars['String']['input'];
 };
 
 export type Query = {
   user: User;
 };
 
-export type User = {
-  email: Scalars['String']['output'];
-  name: Scalars['String']['output'];
-};
+export type Theme =
+  | 'DARK'
+  | 'LIGHT'
+  | 'SYSTEM';
 
-export type UserInput = {
+export type UpdateUserInput = {
   email: Scalars['String']['input'];
+  locale: Scalars['String']['input'];
   name: Scalars['String']['input'];
   password: Scalars['String']['input'];
+  theme: Theme;
+};
+
+export type User = {
+  email: Scalars['String']['output'];
+  locale: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+  theme: Theme;
 };
 
 export type ActivateUserMutationVariables = Exact<{
@@ -302,20 +413,25 @@ export type CreateUserMutationVariables = Exact<{
 
 export type CreateUserMutationOutput = { createUser: { name: string, email: string } };
 
+export type GetUserQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetUserQueryOutput = { user: { name: string, email: string, theme: Theme, locale: string } };
+
 export type LoginMutationVariables = Exact<{
   email: Scalars['String']['input'];
   password: Scalars['String']['input'];
 }>;
 
 
-export type LoginMutationOutput = { login: { refreshToken: string, accessToken: string, user: { name: string, email: string } } };
+export type LoginMutationOutput = { login: { refreshToken: string, accessToken: string, user: { name: string, email: string, theme: Theme, locale: string } } };
 
 export type RefreshTokenMutationVariables = Exact<{
   refreshToken: Scalars['String']['input'];
 }>;
 
 
-export type RefreshTokenMutationOutput = { refreshToken: { refreshToken: string, accessToken: string, user: { name: string, email: string } } };
+export type RefreshTokenMutationOutput = { refreshToken: { refreshToken: string, accessToken: string, user: { name: string, email: string, theme: Theme, locale: string } } };
 
 export type RequestPasswordResetMutationVariables = Exact<{
   email: Scalars['String']['input'];
@@ -333,3 +449,18 @@ export type ResetPasswordMutationVariables = Exact<{
 
 
 export type ResetPasswordMutationOutput = { resetPassword: boolean };
+
+export type UpdateUserMutationVariables = Exact<{
+  input: UpdateUserInput;
+}>;
+
+
+export type UpdateUserMutationOutput = { updateUser: { name: string, email: string, theme: Theme, locale: string } };
+
+export type UpdateUserPasswordMutationVariables = Exact<{
+  oldPassword: Scalars['String']['input'];
+  newPassword: Scalars['String']['input'];
+}>;
+
+
+export type UpdateUserPasswordMutationOutput = { updateUserPassword: boolean };

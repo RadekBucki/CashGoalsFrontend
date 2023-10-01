@@ -7,6 +7,7 @@ import Home from '@/views/Home.vue';
 import Activate from '@/views/user/Activate.vue';
 import ForgotPassword from '@/views/user/ForgotPassword.vue';
 import Login from '@/views/user/Login.vue';
+import Profile from '@/views/user/Profile/Profile.vue';
 import Register from '@/views/user/Register.vue';
 import ResetPassword from '@/views/user/ResetPassword.vue';
 
@@ -30,6 +31,7 @@ const routes: Array<RouteRecordRaw> = [
     component: LeftNavBarLayout,
     children: [
       { path: '', name: 'Dashboard', component: Dashboard },
+      { path: 'profile', name: 'Profile', component: Profile },
     ],
   },
 ];

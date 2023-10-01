@@ -1,12 +1,12 @@
 import { defineStore } from 'pinia';
 
-import { LoginOutput } from '@/graphql';
+import { AuthorizationOutput, User } from '@/graphql';
 import messages from '@/locales';
 
 export default defineStore('app', {
   state: () => ({
     isDarkMode: window.matchMedia('(prefers-color-scheme: dark)').matches,
-    loginOutput: null as LoginOutput | null,
+    authorizationOutput: null as AuthorizationOutput | null,
     locale: navigator.language ?? import.meta.env.VITE_I18N_LOCALE,
     localeNames: Object.keys(messages),
   }),
@@ -17,23 +17,41 @@ export default defineStore('app', {
     setLocale(locale: string): void {
       this.locale = locale;
     },
-    setLoginOutput(loginOutput: LoginOutput) {
-      this.loginOutput = loginOutput;
+    setAuthorizationOutput(authorizationOutput: AuthorizationOutput) {
+      this.authorizationOutput = authorizationOutput;
+      this.locale = authorizationOutput.user?.locale ?? this.locale;
+      this.isDarkMode = authorizationOutput.user?.theme === 'DARK'
+        || (
+          authorizationOutput.user?.theme === 'SYSTEM'
+          && window.matchMedia('(prefers-color-scheme: dark)').matches
+        );
+    },
+    setUser(user: User) {
+      if (!this.authorizationOutput) {
+        return;
+      }
+      this.authorizationOutput.user = user;
+      this.locale = user?.locale ?? this.locale;
+      this.isDarkMode = user?.theme === 'DARK'
+        || (
+          user?.theme === 'SYSTEM'
+          && window.matchMedia('(prefers-color-scheme: dark)').matches
+        );
     },
     getUserName(): string | undefined {
-      return this.loginOutput?.user?.name;
+      return this.authorizationOutput?.user?.name;
     },
     getAccessToken(): string | undefined {
-      return this.loginOutput?.accessToken;
+      return this.authorizationOutput?.accessToken;
     },
     getRefreshToken(): string | undefined {
-      return this.loginOutput?.refreshToken;
+      return this.authorizationOutput?.refreshToken;
     },
     logout(): void {
-      this.loginOutput = null;
+      this.authorizationOutput = null;
     },
     isUserLoggedIn(): boolean {
-      return !!this.loginOutput;
+      return !!this.authorizationOutput;
     },
   },
   persist: true,

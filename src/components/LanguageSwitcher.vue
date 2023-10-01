@@ -23,8 +23,6 @@ const locales: Ref<string[]> = ref(appStore.localeNames);
     v-model="appStore.locale"
     @update:model-value="updateLocale"
     :items="locales"
-    item-text="name"
-    item-value="locale"
   >
     <template v-slot:selection="{ item }">
       <LangFlag :iso="item.value" :squared="false" />

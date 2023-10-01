@@ -5,6 +5,8 @@ mutation login($email: String!, $password: String!) {
         user {
             name
             email
+            theme
+            locale
         }
     }
 }
