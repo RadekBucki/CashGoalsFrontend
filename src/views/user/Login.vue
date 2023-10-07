@@ -2,7 +2,7 @@
 import { computed, ComputedRef, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
-import { CardForm, Field, useFormsStore, TextWithLink, useFieldsLibrary, useLinksLibrary } from '@/components/CardForm';
+import { CardForm, Field, useFormsStore, Link, useFieldsLibrary, useLinksLibrary } from '@/components/CardForm';
 import { useLoginMutation, LoginMutationVariables, AuthorizationOutput } from '@/graphql';
 import CenteredLayout from '@/layouts/content/CenteredLayout.vue';
 import useAppStore from '@/stores/app.ts';
@@ -23,7 +23,7 @@ const form: ComputedRef<LoginMutationVariables> = computed(
 const cardForm = ref<typeof CardForm | null>(null);
 
 const fields: Field[] = [fieldsLibrary.EMAIL, fieldsLibrary.PASSWORD_WITHOUT_VALIDATION];
-const links: TextWithLink[] = [linksLibrary.FORGOT_PASSWORD, linksLibrary.REGISTER];
+const links: Link[] = [linksLibrary.FORGOT_PASSWORD, linksLibrary.REGISTER];
 
 const { mutate, onError, onDone } = useLoginMutation();
 onError(({ graphQLErrors }) => {
