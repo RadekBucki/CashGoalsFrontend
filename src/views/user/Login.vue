@@ -3,9 +3,9 @@ import { computed, ComputedRef, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 import { CardForm, Field, useFormsStore, Link, useFieldsLibrary, useLinksLibrary } from '@/components/CardForm';
+import useAppStore from '@/configuration/appStore.ts';
 import { useLoginMutation, LoginMutationVariables, AuthorizationOutput } from '@/graphql';
 import CenteredLayout from '@/layouts/content/CenteredLayout.vue';
-import useAppStore from '@/stores/app.ts';
 
 const formsStore = useFormsStore();
 const appStore = useAppStore();

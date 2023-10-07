@@ -6,7 +6,7 @@ import { useLocale } from 'vuetify';
 import LanguageSwitcher from '@/components/LanguageSwitcher.vue';
 import Logo from '@/components/Logo.vue';
 import ThemeToggle from '@/components/ThemeToggle.vue';
-import useAppStore from '@/stores/app.ts';
+import useAppStore from '@/configuration/appStore.ts';
 
 const appStore = useAppStore();
 const { t } = useLocale();

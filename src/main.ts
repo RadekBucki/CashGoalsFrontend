@@ -1,7 +1,7 @@
 import { createApp } from 'vue';
 
 import App from './App.vue';
-import registerPlugins from '@/plugins';
+import registerPlugins from '@/configuration/plugins';
 
 const app = createApp(App);
 

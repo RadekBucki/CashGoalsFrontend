@@ -2,7 +2,7 @@
 import { computed, ComputedRef } from 'vue';
 import { useTheme } from 'vuetify';
 
-import useAppStore from '@/stores/app';
+import useAppStore from '@/configuration/appStore.ts';
 
 const theme = useTheme();
 const appStore = useAppStore();

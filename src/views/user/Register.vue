@@ -5,9 +5,9 @@ import { useLocale } from 'vuetify';
 
 import { CardForm, Field, useFormsStore, Link, useFieldsLibrary, useLinksLibrary } from '@/components/CardForm';
 import { useModalStore, Modal } from '@/components/Modal';
+import useAppStore from '@/configuration/appStore.ts';
 import { useCreateUserMutation, CreateUserInput } from '@/graphql';
 import CenteredLayout from '@/layouts/content/CenteredLayout.vue';
-import useAppStore from '@/stores/app';
 
 const { t } = useLocale();
 const router = useRouter();

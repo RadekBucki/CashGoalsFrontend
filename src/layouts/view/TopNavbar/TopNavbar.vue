@@ -12,7 +12,7 @@ import { useRouter } from 'vue-router';
 
 import Navbar from './components/Navbar.vue';
 import Modal from '@/components/Modal/Modal.vue';
-import useAppStore from '@/stores/app.ts';
+import useAppStore from '@/configuration/appStore.ts';
 
 const appStore = useAppStore();
 const router = useRouter();

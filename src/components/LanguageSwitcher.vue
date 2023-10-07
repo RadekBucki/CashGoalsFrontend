@@ -3,7 +3,7 @@ import { ref, Ref } from 'vue';
 import LangFlag from 'vue-lang-code-flags';
 import { useLocale } from 'vuetify';
 
-import useAppStore from '@/stores/app.ts';
+import useAppStore from '@/configuration/appStore.ts';
 
 const { current } = useLocale();
 const appStore = useAppStore();

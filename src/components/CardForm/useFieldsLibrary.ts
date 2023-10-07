@@ -1,5 +1,5 @@
 import { Field } from './types.ts';
-import useAppStore from '@/stores/app.ts';
+import useAppStore from '@/configuration/appStore.ts';
 
 export default function useFieldsLibrary() {
   const appStore = useAppStore();

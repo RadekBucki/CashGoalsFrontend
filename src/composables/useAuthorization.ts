@@ -1,7 +1,7 @@
 import jwtDecode from 'jwt-decode';
 
+import useAppStore from '@/configuration/appStore.ts';
 import { useRefreshTokenMutation } from '@/graphql';
-import useAppStore from '@/stores/app.ts';
 
 export default function authorization() {
   const appStore = useAppStore();

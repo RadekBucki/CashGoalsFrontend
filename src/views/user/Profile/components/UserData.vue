@@ -6,12 +6,12 @@ import { ApolloQueryResult, FetchResult } from '@apollo/client';
 
 import { CardForm, Field, useFieldsLibrary, useFormsStore } from '@/components/CardForm';
 import { useModalStore } from '@/components/Modal';
+import useAppStore from '@/configuration/appStore.ts';
 import {
   GetUserQueryOutput, UpdateUserInput, UpdateUserMutationOutput,
   useGetUserQuery,
   useUpdateUserMutation,
 } from '@/graphql';
-import useAppStore from '@/stores/app.ts';
 
 const fieldsLibrary = useFieldsLibrary();
 const formsStore = useFormsStore();
