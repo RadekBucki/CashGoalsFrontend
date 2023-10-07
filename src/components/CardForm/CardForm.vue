@@ -5,7 +5,7 @@ import { useLocale } from 'vuetify';
 import { GraphQLErrors } from '@apollo/client/errors';
 import { VForm } from 'vuetify/components';
 
-import { Field, TextWithLink } from '@/components/CardForm';
+import { Field, Link } from './components';
 
 const { t } = useLocale();
 
@@ -20,7 +20,7 @@ const props = defineProps({
     default: () => [],
   },
   links: {
-    type: Array as () => TextWithLink[],
+    type: Array as () => Link[],
     default: () => [],
   },
   formName: {
@@ -109,10 +109,11 @@ defineExpose({
           :index="index"
           :field="field"
         />
-        <div v-for="link in links" :key="link.routeName">
-          {{ t(link.textBefore) }}
-          <RouterLink :to="{ name: link.routeName }">{{ t(link.text) }}</RouterLink>
-        </div>
+        <Link
+          v-for="link in links"
+          :key="link.routeName"
+          :link="link"
+        />
       </VCardText>
       <VCardActions :class="{ 'justify-center': variant == 'centered' }">
         <VBtn type="submit" color="secondary" variant="elevated">{{ t(submitText ?? title ?? formName) }}</VBtn>

@@ -15,8 +15,9 @@ export type Field = {
   items?: string[];
 };
 
-export type TextWithLink = {
-  textBefore: string;
+export type Link = {
+  textBefore?: string;
+  textAfter: string;
   text: string;
   routeName: string;
 };
