@@ -1,5 +1,5 @@
-import Field from './Field';
-import Link from './Link';
+import Field from './Field.vue';
+import Link from './Link.vue';
 
 export {
   Link,

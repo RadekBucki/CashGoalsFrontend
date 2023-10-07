@@ -17,7 +17,7 @@ export type Field = {
 
 export type Link = {
   textBefore?: string;
-  textAfter: string;
+  textAfter?: string;
   text: string;
   routeName: string;
 };

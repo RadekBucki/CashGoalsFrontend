@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, Ref, ref, WritableComputedRef } from 'vue';
+import { computed, onMounted, Ref, ref, WritableComputedOptions, WritableComputedRef } from 'vue';
 import { useLocale } from 'vuetify';
 
 import { Field, useFormsStore } from '@/components/CardForm';
@@ -28,10 +28,10 @@ const props = defineProps({
 const value: WritableComputedRef<string> = computed({
   get: () => formsStore.getFormValue(props.formName, props.field.name),
   set: (newValue: string) => formsStore.setFormValue(props.formName, props.field.name, newValue),
-});
+} as WritableComputedOptions<string>);
 const modifiableType: Ref<string> = ref('text');
 onMounted(() => {
-  modifiableType.value = props.field.type;
+  modifiableType.value = props.field.type ?? 'text';
 });
 
 const requiredFieldRule = [(v: string) => !!v || 'required.validation.error'];

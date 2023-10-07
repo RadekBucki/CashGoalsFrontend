@@ -6,6 +6,7 @@ import { GraphQLErrors } from '@apollo/client/errors';
 import { VForm } from 'vuetify/components';
 
 import { Field, Link } from './components';
+import { Field as FieldType, Link as LinkType } from './types.ts';
 
 const { t } = useLocale();
 
@@ -16,11 +17,11 @@ const props = defineProps({
     default: () => null,
   },
   fields: {
-    type: Array as () => Field[],
+    type: Array as () => FieldType[],
     default: () => [],
   },
   links: {
-    type: Array as () => Link[],
+    type: Array as () => LinkType[],
     default: () => [],
   },
   formName: {
@@ -49,10 +50,6 @@ const color = computed(() => (props.variant === 'dashboard' ? 'background' : 'pr
 const cardVariant = computed(() => (props.variant === 'dashboard' ? 'flat' : 'elevated'));
 
 const formRef: Ref<VForm | null> = ref(null);
-const fieldsModifiable: Ref<Field[]> = ref([]);
-onMounted(() => {
-  fieldsModifiable.value = props.fields.map((field) => ({ ...field }));
-});
 const formCustomErrorMessages: Ref<Record<string, string[]>> = ref({});
 
 async function submit() {
@@ -102,7 +99,7 @@ defineExpose({
     <VForm ref="formRef" @submit.prevent="submit">
       <VCardText>
         <Field
-          v-for="(field, index) in fieldsModifiable"
+          v-for="(field, index) in fields"
           :key="field.name"
           :form-name="formName"
           :custom-error-messages="formCustomErrorMessages[field.name] ?? []"

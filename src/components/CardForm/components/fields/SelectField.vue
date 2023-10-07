@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, WritableComputedRef } from 'vue';
+import { computed, WritableComputedRef, WritableComputedOptions } from 'vue';
 import LangFlag from 'vue-lang-code-flags';
 import { useLocale } from 'vuetify';
 
@@ -29,7 +29,7 @@ const props = defineProps({
 const value: WritableComputedRef<string> = computed({
   get: () => formsStore.getFormValue(props.formName, props.field.name),
   set: (newValue: string) => formsStore.setFormValue(props.formName, props.field.name, newValue),
-});
+} as WritableComputedOptions<string>);
 
 const requiredFieldRule = [(v: string) => !!v || 'required.validation.error'];
 </script>
