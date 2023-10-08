@@ -3,6 +3,7 @@
     <Navbar />
     <RouterView />
     <Modal />
+    <Loader />
   </VApp>
 </template>
 
@@ -11,6 +12,7 @@ import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 
 import Navbar from './components/Navbar.vue';
+import Loader from '@/components/Loader/Loader.vue';
 import Modal from '@/components/Modal/Modal.vue';
 import useApp from '@/composables/useApp';
 
