@@ -2,11 +2,11 @@ import type { App } from 'vue';
 
 import { DefaultApolloClient } from '@vue/apollo-composable';
 
-import useApolloClient from './apollo';
+import useApolloClient from './apollo.ts';
 import pinia from './pinia.ts';
 import router from './router.ts';
-import useVuetify from './vuetify';
-import loadFonts from './webfontloader';
+import useVuetify from './vuetify.ts';
+import loadFonts from './webfontloader.ts';
 
 export default function registerPlugins(app: App) {
   // noinspection JSIgnoredPromiseFromCall

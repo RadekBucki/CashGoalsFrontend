@@ -5,15 +5,15 @@ import { useLocale } from 'vuetify';
 
 import { CardForm, Field, useFormsStore, Link, useFieldsLibrary, useLinksLibrary } from '@/components/CardForm';
 import { useModalStore, Modal } from '@/components/Modal';
+import useApp from '@/composables/useApp';
 import { useCreateUserMutation, CreateUserInput } from '@/graphql';
 import CenteredLayout from '@/layouts/content/CenteredLayout.vue';
-import useAppStore from '@/stores/app';
 
 const { t } = useLocale();
 const router = useRouter();
 const modalStore = useModalStore();
 const formsStore = useFormsStore();
-const appStore = useAppStore();
+const app = useApp();
 const fieldsLibrary = useFieldsLibrary();
 const linksLibrary = useLinksLibrary();
 
@@ -71,7 +71,7 @@ function register() {
       email: form.value.email,
       password: form.value.password,
       name: form.value.name,
-      theme: appStore.isDarkMode ? 'DARK' : 'LIGHT',
+      theme: app.isDarkMode() ? 'DARK' : 'LIGHT',
       activationUrl: window.location.origin + router.resolve({ name: 'Activate' }).href,
     } as CreateUserInput,
   });

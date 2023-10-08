@@ -1,27 +1,20 @@
 <script setup lang="ts">
 import { ref, Ref } from 'vue';
 import LangFlag from 'vue-lang-code-flags';
-import { useLocale } from 'vuetify';
 
-import useAppStore from '@/stores/app.ts';
+import useApp from '@/composables/useApp';
 
-const { current } = useLocale();
-const appStore = useAppStore();
-current.value = appStore.locale;
-function updateLocale(locale: string) {
-  appStore.setLocale(locale);
-  current.value = locale;
-}
-
-const locales: Ref<string[]> = ref(appStore.localeNames);
+const { setLocale, localeNames, locale } = useApp();
+const locales: Ref<string[]> = ref(localeNames);
+const localeRef: Ref<string> = ref(locale);
 </script>
 
 <template>
   <VSelect
     variant="plain"
     density="comfortable"
-    v-model="appStore.locale"
-    @update:model-value="updateLocale"
+    v-model="localeRef"
+    @update:model-value="setLocale"
     :items="locales"
   >
     <template v-slot:selection="{ item }">

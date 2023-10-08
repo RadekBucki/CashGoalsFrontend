@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 
+import messages from '@/configuration/locales';
 import { AuthorizationOutput, User } from '@/graphql';
-import messages from '@/locales';
 
 export default defineStore('app', {
   state: () => ({

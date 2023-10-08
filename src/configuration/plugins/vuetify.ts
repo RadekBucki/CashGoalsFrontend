@@ -6,8 +6,8 @@ import { createVuetify } from 'vuetify';
 
 import { createVueI18nAdapter } from 'vuetify/locale/adapters/vue-i18n';
 
-import messages from '@/locales';
-import useAppStore from '@/stores/app.ts';
+import useAppStore from '@/configuration/appStore.ts';
+import messages from '@/configuration/locales';
 
 export default function useVuetify() {
   const appStore = useAppStore();

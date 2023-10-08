@@ -6,9 +6,9 @@ import { useLocale } from 'vuetify';
 import LanguageSwitcher from '@/components/LanguageSwitcher.vue';
 import Logo from '@/components/Logo.vue';
 import ThemeToggle from '@/components/ThemeToggle.vue';
-import useAppStore from '@/stores/app.ts';
+import useApp from '@/composables/useApp';
 
-const appStore = useAppStore();
+const app = useApp();
 const { t } = useLocale();
 const { currentRoute } = useRouter();
 
@@ -22,7 +22,7 @@ const showFullNavigation: Ref<boolean> = ref(true);
         <Logo :size="showFullNavigation ? 40 : 20" route-name="Dashboard" :slim="!showFullNavigation" />
       </VListItem>
       <VListItem v-show="showFullNavigation" class="text-center">
-        {{ t('hello.username', appStore.getUserName()) }}
+        {{ t('hello.username', app.getUserName()) }}
       </VListItem>
     </VList>
 
@@ -41,7 +41,7 @@ const showFullNavigation: Ref<boolean> = ref(true);
         <VListItem v-if="showFullNavigation" class="d-flex justify-center">
           <LanguageSwitcher class="mx-auto" />
         </VListItem>
-        <VListItem prepend-icon="mdi-logout" :to="{ name: 'Home' }" @click="appStore.logout()" :title="t('logout')" />
+        <VListItem prepend-icon="mdi-logout" :to="{ name: 'Home' }" @click="app.logout()" :title="t('logout')" />
         <VListItem
           :prepend-icon="showFullNavigation ? 'mdi-arrow-collapse-left' : 'mdi-arrow-expand-right'"
           @click="showFullNavigation = !showFullNavigation"

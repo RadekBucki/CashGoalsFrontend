@@ -4,9 +4,9 @@ import { ApolloClient, ApolloLink, createHttpLink, InMemoryCache } from '@apollo
 import { onError } from '@apollo/client/link/error';
 
 import { useModalStore } from '@/components/Modal';
-import useAuthorization from '@/composables/useAuthorization.ts';
-import router from '@/plugins/router.ts';
-import useAppStore from '@/stores/app.ts';
+import useAuthorization from '@/composables/useApp/useAuthorization.ts';
+import useAppStore from '@/configuration/appStore.ts';
+import router from '@/configuration/plugins/router.ts';
 
 export default function useApolloClient(locale: LocaleInstance) {
   const appStore = useAppStore();

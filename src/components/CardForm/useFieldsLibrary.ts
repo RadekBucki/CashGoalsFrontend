@@ -1,8 +1,8 @@
 import { Field } from './types.ts';
-import useAppStore from '@/stores/app.ts';
+import useApp from '@/composables/useApp';
 
 export default function useFieldsLibrary() {
-  const appStore = useAppStore();
+  const app = useApp();
 
   const EMAIL: Field = {
     name: 'email',
@@ -38,7 +38,7 @@ export default function useFieldsLibrary() {
   const LOCALE: Field = {
     name: 'locale',
     type: 'select',
-    items: appStore.localeNames,
+    items: app.localeNames,
   };
 
   function getWithNewName(field: Field, name: string): Field {
