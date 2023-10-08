@@ -4,10 +4,10 @@ import 'vuetify/styles';
 import { createI18n, useI18n } from 'vue-i18n';
 import { createVuetify } from 'vuetify';
 
-import messages from 'src/configuration/locales';
 import { createVueI18nAdapter } from 'vuetify/locale/adapters/vue-i18n';
 
 import useAppStore from '@/configuration/appStore.ts';
+import messages from '@/configuration/locales';
 
 export default function useVuetify() {
   const appStore = useAppStore();

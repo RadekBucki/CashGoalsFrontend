@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { computed, ComputedRef, ref } from 'vue';
-import { useLocale, useTheme } from 'vuetify';
+import { useLocale } from 'vuetify';
 
 import { ApolloQueryResult, FetchResult } from '@apollo/client';
 
 import { CardForm, Field, useFieldsLibrary, useFormsStore } from '@/components/CardForm';
 import { useModalStore } from '@/components/Modal';
-import useAppStore from '@/configuration/appStore.ts';
+import useApp from '@/composables/useApp';
 import {
   GetUserQueryOutput, UpdateUserInput, UpdateUserMutationOutput,
   useGetUserQuery,
@@ -15,10 +15,8 @@ import {
 
 const fieldsLibrary = useFieldsLibrary();
 const formsStore = useFormsStore();
-const appStore = useAppStore();
+const app = useApp();
 const modalStore = useModalStore();
-const { current } = useLocale();
-const theme = useTheme();
 const { t } = useLocale();
 
 const fields: Field[] = [
@@ -61,9 +59,7 @@ onDone((result: FetchResult<UpdateUserMutationOutput>) => {
   if (!result.data?.updateUser) {
     return;
   }
-  appStore.setUser(result.data.updateUser);
-  current.value = appStore.locale;
-  theme.global.name.value = appStore.isDarkMode ? 'dark' : 'light';
+  app.setUser(result.data.updateUser);
   modalStore.showModal({
     title: t('profile.updated.title'),
     content: t('profile.updated.content'),

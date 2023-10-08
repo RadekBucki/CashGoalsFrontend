@@ -12,13 +12,13 @@ import { useRouter } from 'vue-router';
 
 import Navbar from './components/Navbar.vue';
 import Modal from '@/components/Modal/Modal.vue';
-import useAppStore from '@/configuration/appStore.ts';
+import useApp from '@/composables/useApp';
 
-const appStore = useAppStore();
+const app = useApp();
 const router = useRouter();
 
 onMounted(async () => {
-  if (appStore.isUserLoggedIn()) {
+  if (app.isUserLoggedIn()) {
     await router.push({ name: 'Dashboard' });
   }
 });

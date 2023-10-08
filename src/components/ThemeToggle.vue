@@ -1,29 +1,20 @@
 <script setup lang="ts">
-import { computed, ComputedRef } from 'vue';
-import { useTheme } from 'vuetify';
+import { Ref, ref } from 'vue';
 
-import useAppStore from '@/configuration/appStore.ts';
+import useApp from '@/composables/useApp';
 
-const theme = useTheme();
-const appStore = useAppStore();
-
-const isThemeDark: ComputedRef<boolean> = computed(() => appStore.isDarkMode);
-theme.global.name.value = isThemeDark.value ? 'dark' : 'light';
-
-function toggleTheme() {
-  theme.global.name.value = isThemeDark.value ? 'light' : 'dark';
-  appStore.toggleDarkMode();
-}
+const app = useApp();
+const isDark: Ref<boolean> = ref<boolean>(app.isDarkMode());
 </script>
 
 <template>
-  <VSwitch color="accent" v-model="isThemeDark" @change="toggleTheme">
+  <VSwitch color="accent" v-model="isDark" @change="app.toggleDarkMode()">
     <template #prepend>
-      <VIcon :color="isThemeDark ? 'accent' : 'grey'" left>mdi-weather-sunny</VIcon>
+      <VIcon :color="app.isDarkMode() ? 'accent' : 'grey'" left>mdi-weather-sunny</VIcon>
     </template>
 
     <template #label>
-      <VIcon :color="isThemeDark ? 'accent' : 'grey'" right>mdi-weather-night</VIcon>
+      <VIcon :color="app.isDarkMode() ? 'accent' : 'grey'" right>mdi-weather-night</VIcon>
     </template>
   </VSwitch>
 </template>

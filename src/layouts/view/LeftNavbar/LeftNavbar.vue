@@ -12,10 +12,10 @@ import { useRouter } from 'vue-router';
 
 import Navbar from './components/Navbar.vue';
 import Modal from '@/components/Modal/Modal.vue';
-import useAuthorization from '@/composables/useAuthorization';
+import useApp from '@/composables/useApp';
 
 const router = useRouter();
-const { authorize } = useAuthorization();
+const { authorize } = useApp();
 onMounted(async () => {
   if (!await authorize()) {
     await router.push({ name: 'Login' });
