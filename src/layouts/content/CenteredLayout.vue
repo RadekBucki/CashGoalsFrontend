@@ -19,7 +19,7 @@ const props = defineProps({
   <VMain class="d-flex flex-column justify-center">
     <VContainer fluid>
       <VRow justify="center">
-        <VCol :cols="props.cols" :sm="props.sm" :md="props.md">
+        <VCol :cols="props.cols" :sm="props.sm" :md="props.md" class="text-center">
           <slot />
         </VCol>
       </VRow>
