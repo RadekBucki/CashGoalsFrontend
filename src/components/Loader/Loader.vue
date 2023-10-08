@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ComputedRef } from 'vue';
 
-import useLoaderStore from '@/components/Loader';
+import { useLoaderStore } from '@/components/Loader';
 import CenteredLayout from '@/layouts/content/CenteredLayout.vue';
 
 const loaderStore = useLoaderStore();
