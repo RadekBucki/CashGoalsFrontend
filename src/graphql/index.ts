@@ -13,6 +13,35 @@ export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> =
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 export type ReactiveFunction<TParam> = () => TParam;
 
+export const BudgetsDocument = gql`
+    query Budgets {
+  budgets {
+    id
+    name
+    initializationStep
+  }
+}
+    `;
+
+/**
+ * __useBudgetsQuery__
+ *
+ * To run a query within a Vue component, call `useBudgetsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useBudgetsQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useBudgetsQuery();
+ */
+export function useBudgetsQuery(options: VueApolloComposable.UseQueryOptions<BudgetsQueryOutput, BudgetsQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<BudgetsQueryOutput, BudgetsQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<BudgetsQueryOutput, BudgetsQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<BudgetsQueryOutput, BudgetsQueryVariables>(BudgetsDocument, {}, options);
+}
+export function useBudgetsLazyQuery(options: VueApolloComposable.UseQueryOptions<BudgetsQueryOutput, BudgetsQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<BudgetsQueryOutput, BudgetsQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<BudgetsQueryOutput, BudgetsQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<BudgetsQueryOutput, BudgetsQueryVariables>(BudgetsDocument, {}, options);
+}
+export type BudgetsQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<BudgetsQueryOutput, BudgetsQueryVariables>;
 export const ActivateUserDocument = gql`
     mutation activateUser($email: String!, $token: String!) {
   activateUser(email: $email, token: $token)
@@ -301,12 +330,36 @@ export type Scalars = {
   Date: { input: any; output: any; }
   DateTime: { input: any; output: any; }
   Time: { input: any; output: any; }
+  UUID: { input: any; output: any; }
 };
 
 export type AuthorizationOutput = {
   accessToken: Scalars['String']['output'];
   refreshToken: Scalars['String']['output'];
   user: User;
+};
+
+export type Budget = {
+  id: Scalars['UUID']['output'];
+  initializationStep?: Maybe<Step>;
+  name: Scalars['String']['output'];
+  rights?: Maybe<Array<Right>>;
+};
+
+export type Category = {
+  children: Array<Category>;
+  description: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  visible: Scalars['Boolean']['output'];
+};
+
+export type CategoryInput = {
+  description?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  name: Scalars['String']['input'];
+  parent?: InputMaybe<Scalars['ID']['input']>;
+  visible: Scalars['Boolean']['input'];
 };
 
 export type CreateUserInput = {
@@ -317,13 +370,68 @@ export type CreateUserInput = {
   theme: Theme;
 };
 
+export type Frequency = {
+  period: Period;
+  value: Scalars['Int']['output'];
+};
+
+export type FrequencyInput = {
+  period: Period;
+  value: Scalars['Int']['input'];
+};
+
+export type Goal = {
+  category: Category;
+  description: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  type: GoalType;
+  value: Scalars['Float']['output'];
+};
+
+export type GoalInput = {
+  category: Scalars['ID']['input'];
+  description?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  name: Scalars['String']['input'];
+  type: GoalType;
+  value: Scalars['Float']['input'];
+};
+
+export type GoalType =
+  | 'AMOUNT_MAX'
+  | 'AMOUNT_MIN'
+  | 'PERCENTAGE_MAX'
+  | 'PERCENTAGE_MIN';
+
+export type Income = {
+  amount: Scalars['Float']['output'];
+  description?: Maybe<Scalars['String']['output']>;
+  frequency: Frequency;
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+};
+
+export type IncomeInput = {
+  amount: Scalars['Float']['input'];
+  description?: InputMaybe<Scalars['String']['input']>;
+  frequency?: InputMaybe<FrequencyInput>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  name: Scalars['String']['input'];
+};
+
 export type Mutation = {
   activateUser: Scalars['Boolean']['output'];
+  createBudget: Budget;
   createUser: User;
   login: AuthorizationOutput;
   refreshToken: AuthorizationOutput;
   requestPasswordReset: Scalars['Boolean']['output'];
   resetPassword: Scalars['Boolean']['output'];
+  setUsersRights: Array<UserRights>;
+  updateCategories: Array<Category>;
+  updateGoals: Array<Goal>;
+  updateIncomes: Array<Income>;
   updateUser: User;
   updateUserPassword: Scalars['Boolean']['output'];
 };
@@ -332,6 +440,11 @@ export type Mutation = {
 export type MutationActivateUserArgs = {
   email: Scalars['String']['input'];
   token: Scalars['String']['input'];
+};
+
+
+export type MutationCreateBudgetArgs = {
+  name: Scalars['String']['input'];
 };
 
 
@@ -364,6 +477,30 @@ export type MutationResetPasswordArgs = {
 };
 
 
+export type MutationSetUsersRightsArgs = {
+  budgetId: Scalars['UUID']['input'];
+  usersRights: Array<UserRightsInput>;
+};
+
+
+export type MutationUpdateCategoriesArgs = {
+  budgetId: Scalars['UUID']['input'];
+  categories: Array<CategoryInput>;
+};
+
+
+export type MutationUpdateGoalsArgs = {
+  budgetId: Scalars['UUID']['input'];
+  goals: Array<GoalInput>;
+};
+
+
+export type MutationUpdateIncomesArgs = {
+  budgetId: Scalars['UUID']['input'];
+  incomes: Array<IncomeInput>;
+};
+
+
 export type MutationUpdateUserArgs = {
   input: UpdateUserInput;
 };
@@ -374,9 +511,68 @@ export type MutationUpdateUserPasswordArgs = {
   oldPassword: Scalars['String']['input'];
 };
 
+export type Period =
+  | 'DAY'
+  | 'MONTH'
+  | 'WEEK'
+  | 'YEAR';
+
 export type Query = {
+  budget?: Maybe<Budget>;
+  budgets: Array<Budget>;
+  categories: Array<Category>;
+  goals: Array<Goal>;
+  incomes: Array<Income>;
   user: User;
+  usersRights: Array<UserRights>;
+  visibleCategories: Array<Category>;
 };
+
+
+export type QueryBudgetArgs = {
+  id: Scalars['UUID']['input'];
+};
+
+
+export type QueryCategoriesArgs = {
+  budgetId: Scalars['UUID']['input'];
+};
+
+
+export type QueryGoalsArgs = {
+  budgetId: Scalars['UUID']['input'];
+};
+
+
+export type QueryIncomesArgs = {
+  budgetId: Scalars['UUID']['input'];
+};
+
+
+export type QueryUsersRightsArgs = {
+  budgetId: Scalars['UUID']['input'];
+};
+
+
+export type QueryVisibleCategoriesArgs = {
+  budgetId: Scalars['UUID']['input'];
+};
+
+export type Right =
+  | 'EDIT_CATEGORIES'
+  | 'EDIT_EXPENSES'
+  | 'EDIT_GOALS'
+  | 'EDIT_INCOMES'
+  | 'EDIT_USERS_AND_RIGHTS'
+  | 'OWNER'
+  | 'VIEW';
+
+export type Step =
+  | 'EXPENSES_CATEGORIES'
+  | 'FINISHED'
+  | 'GOALS'
+  | 'INCOMES'
+  | 'USERS_AND_RIGHTS';
 
 export type Theme =
   | 'DARK'
@@ -397,6 +593,21 @@ export type User = {
   name: Scalars['String']['output'];
   theme: Theme;
 };
+
+export type UserRights = {
+  rights: Array<Right>;
+  user: User;
+};
+
+export type UserRightsInput = {
+  email: Scalars['String']['input'];
+  rights: Array<Right>;
+};
+
+export type BudgetsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type BudgetsQueryOutput = { budgets: Array<{ id: any, name: string, initializationStep?: Step | null }> };
 
 export type ActivateUserMutationVariables = Exact<{
   email: Scalars['String']['input'];

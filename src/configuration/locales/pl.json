@@ -44,5 +44,7 @@
   "profile.updated.content": "Twoje dane zostały zaktualizowane.",
   "profile.password": "Zmień hasło",
   "oldPassword": "Obecne hasło",
-  "newPassword": "Nowe hasło"
+  "newPassword": "Nowe hasło",
+  "budgets": "Budżety",
+  "budget.create": "Utwórz budżet"
 }

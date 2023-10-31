@@ -44,5 +44,7 @@
   "profile.updated.content": "Your data has been updated.",
   "profile.password": "Change password",
   "oldPassword": "Current password",
-  "newPassword": "New password"
+  "newPassword": "New password",
+  "budgets": "Budgets",
+  "budget.create": "Create budget"
 }
