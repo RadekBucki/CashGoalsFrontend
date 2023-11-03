@@ -16,7 +16,7 @@ const { currentRoute } = useRouter();
 const showFullNavigation: Ref<boolean> = ref(true);
 
 const budgets: Ref<Budget[]> = ref<Budget[]>([]);
-const { onResult } = useBudgetsQuery();
+const { onResult } = useBudgetsQuery({ fetchPolicy: 'cache-first' });
 onResult((result) => {
   if (!result.data?.budgets) {
     return;

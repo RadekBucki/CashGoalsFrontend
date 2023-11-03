@@ -1,9 +1,12 @@
 <script setup lang="ts">
+import { PropType } from 'vue';
+
+import { Budget } from '@/graphql';
 import LeftLayout from '@/layouts/content/LeftLayout.vue';
 
 const props = defineProps({
   id: {
-    type: String,
+    type: Object as PropType<Budget>,
     required: true,
   },
 });

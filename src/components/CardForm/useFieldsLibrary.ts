@@ -40,6 +40,12 @@ export default function useFieldsLibrary() {
     type: 'select',
     items: app.localeNames,
   };
+  const BUDGET_NAME: Field = {
+    name: 'name',
+    displayName: 'budget.name',
+    rules: [(v: string) => /^.{1,100}$/.test(v) || 'budget.name.length.validation.error'],
+    required: true,
+  };
 
   function getWithNewName(field: Field, name: string): Field {
     const newField: Field = { ...field };
@@ -55,6 +61,7 @@ export default function useFieldsLibrary() {
     TOKEN,
     THEME,
     LOCALE,
+    BUDGET_NAME,
     getWithNewName,
   };
 }

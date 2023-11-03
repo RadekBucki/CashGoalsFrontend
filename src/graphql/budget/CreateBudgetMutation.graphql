@@ -1,0 +1,5 @@
+mutation CreateBudget($name: String!) {
+    createBudget(name: $name) {
+        id
+    }
+}

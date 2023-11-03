@@ -42,6 +42,35 @@ export function useBudgetsLazyQuery(options: VueApolloComposable.UseQueryOptions
   return VueApolloComposable.useLazyQuery<BudgetsQueryOutput, BudgetsQueryVariables>(BudgetsDocument, {}, options);
 }
 export type BudgetsQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<BudgetsQueryOutput, BudgetsQueryVariables>;
+export const CreateBudgetDocument = gql`
+    mutation CreateBudget($name: String!) {
+  createBudget(name: $name) {
+    id
+  }
+}
+    `;
+
+/**
+ * __useCreateBudgetMutation__
+ *
+ * To run a mutation, you first call `useCreateBudgetMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useCreateBudgetMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useCreateBudgetMutation({
+ *   variables: {
+ *     name: // value for 'name'
+ *   },
+ * });
+ */
+export function useCreateBudgetMutation(options: VueApolloComposable.UseMutationOptions<CreateBudgetMutationOutput, CreateBudgetMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<CreateBudgetMutationOutput, CreateBudgetMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<CreateBudgetMutationOutput, CreateBudgetMutationVariables>(CreateBudgetDocument, options);
+}
+export type CreateBudgetMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<CreateBudgetMutationOutput, CreateBudgetMutationVariables>;
 export const ActivateUserDocument = gql`
     mutation activateUser($email: String!, $token: String!) {
   activateUser(email: $email, token: $token)
@@ -608,6 +637,13 @@ export type BudgetsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type BudgetsQueryOutput = { budgets: Array<{ id: any, name: string, initializationStep?: Step | null }> };
+
+export type CreateBudgetMutationVariables = Exact<{
+  name: Scalars['String']['input'];
+}>;
+
+
+export type CreateBudgetMutationOutput = { createBudget: { id: any } };
 
 export type ActivateUserMutationVariables = Exact<{
   email: Scalars['String']['input'];

@@ -46,5 +46,9 @@
   "oldPassword": "Current password",
   "newPassword": "New password",
   "budgets": "Budgets",
-  "budget.create": "Create budget"
+  "budget.create": "Create budget",
+  "budget.create.name": "Set budget name",
+  "budget.name": "Budget name",
+  "budget.name.validation.error": "Budget name must be between 1 and 100 characters",
+  "next": "Next"
 }
