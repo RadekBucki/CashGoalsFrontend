@@ -4,8 +4,8 @@ import { PropType } from 'vue';
 import { Budget } from '@/graphql';
 import LeftLayout from '@/layouts/content/LeftLayout.vue';
 
-const props = defineProps({
-  id: {
+defineProps({
+  budget: {
     type: Object as PropType<Budget>,
     required: true,
   },
@@ -13,7 +13,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <LeftLayout :sm="12" :md="12" :lg="12">
-    <h1>Budget {{ props.id }}</h1>
+  <LeftLayout>
+    <h1>BudgetView</h1>
   </LeftLayout>
 </template>

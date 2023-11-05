@@ -13,6 +13,38 @@ export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> =
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 export type ReactiveFunction<TParam> = () => TParam;
 
+export const BudgetDocument = gql`
+    query Budget($id: UUID!) {
+  budget(id: $id) {
+    id
+    name
+    initializationStep
+  }
+}
+    `;
+
+/**
+ * __useBudgetQuery__
+ *
+ * To run a query within a Vue component, call `useBudgetQuery` and pass it any options that fit your needs.
+ * When your component renders, `useBudgetQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param variables that will be passed into the query
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useBudgetQuery({
+ *   id: // value for 'id'
+ * });
+ */
+export function useBudgetQuery(variables: BudgetQueryVariables | VueCompositionApi.Ref<BudgetQueryVariables> | ReactiveFunction<BudgetQueryVariables>, options: VueApolloComposable.UseQueryOptions<BudgetQueryOutput, BudgetQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<BudgetQueryOutput, BudgetQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<BudgetQueryOutput, BudgetQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<BudgetQueryOutput, BudgetQueryVariables>(BudgetDocument, variables, options);
+}
+export function useBudgetLazyQuery(variables: BudgetQueryVariables | VueCompositionApi.Ref<BudgetQueryVariables> | ReactiveFunction<BudgetQueryVariables>, options: VueApolloComposable.UseQueryOptions<BudgetQueryOutput, BudgetQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<BudgetQueryOutput, BudgetQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<BudgetQueryOutput, BudgetQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<BudgetQueryOutput, BudgetQueryVariables>(BudgetDocument, variables, options);
+}
+export type BudgetQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<BudgetQueryOutput, BudgetQueryVariables>;
 export const BudgetsDocument = gql`
     query Budgets {
   budgets {
@@ -370,7 +402,7 @@ export type AuthorizationOutput = {
 
 export type Budget = {
   id: Scalars['UUID']['output'];
-  initializationStep?: Maybe<Step>;
+  initializationStep: Step;
   name: Scalars['String']['output'];
   rights?: Maybe<Array<Right>>;
 };
@@ -633,10 +665,17 @@ export type UserRightsInput = {
   rights: Array<Right>;
 };
 
+export type BudgetQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type BudgetQueryOutput = { budget?: { id: any, name: string, initializationStep: Step } | null };
+
 export type BudgetsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type BudgetsQueryOutput = { budgets: Array<{ id: any, name: string, initializationStep?: Step | null }> };
+export type BudgetsQueryOutput = { budgets: Array<{ id: any, name: string, initializationStep: Step }> };
 
 export type CreateBudgetMutationVariables = Exact<{
   name: Scalars['String']['input'];

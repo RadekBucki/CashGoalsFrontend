@@ -3,11 +3,13 @@ import { ref, Ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useLocale } from 'vuetify';
 
+import { ApolloQueryResult } from '@apollo/client';
+
 import LanguageSwitcher from '@/components/LanguageSwitcher.vue';
 import Logo from '@/components/Logo.vue';
 import ThemeToggle from '@/components/ThemeToggle.vue';
 import useApp from '@/composables/useApp';
-import { Budget, useBudgetsQuery } from '@/graphql';
+import { Budget, BudgetsQueryOutput, useBudgetsQuery } from '@/graphql';
 
 const app = useApp();
 const { t } = useLocale();
@@ -17,7 +19,7 @@ const showFullNavigation: Ref<boolean> = ref(true);
 
 const budgets: Ref<Budget[]> = ref<Budget[]>([]);
 const { onResult } = useBudgetsQuery({ fetchPolicy: 'cache-first' });
-onResult((result) => {
+onResult((result: ApolloQueryResult<BudgetsQueryOutput>) => {
   if (!result.data?.budgets) {
     return;
   }

@@ -2,7 +2,7 @@ import { RouteRecordRaw } from 'vue-router';
 
 import LeftNavBarLayout from '@/layouts/view/LeftNavbar/LeftNavbar.vue';
 import TopNavBarLayout from '@/layouts/view/TopNavbar/TopNavbar.vue';
-import Budget from '@/views/budget/Budget.vue';
+import Budget from '@/views/budget/Budget/Budget.vue';
 import BudgetCreate from '@/views/budget/BudgetCreate.vue';
 import Dashboard from '@/views/Dashboard.vue';
 import Home from '@/views/Home.vue';
