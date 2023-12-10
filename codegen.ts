@@ -22,6 +22,16 @@ const config: CodegenConfig = {
         operationResultSuffix: 'Output',
         skipTypename: true,
         vueCompositionApiImportFrom: 'vue',
+        scalars: {
+          ID: {
+            input: 'number',
+            output: 'number',
+          },
+          UUID: {
+            input: 'string',
+            output: 'string',
+          },
+        },
       },
     },
   },

@@ -103,6 +103,72 @@ export function useCreateBudgetMutation(options: VueApolloComposable.UseMutation
   return VueApolloComposable.useMutation<CreateBudgetMutationOutput, CreateBudgetMutationVariables>(CreateBudgetDocument, options);
 }
 export type CreateBudgetMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<CreateBudgetMutationOutput, CreateBudgetMutationVariables>;
+export const IncomesDocument = gql`
+    query incomes($budgetId: UUID!) {
+  incomes(budgetId: $budgetId) {
+    id
+    name
+    description
+  }
+}
+    `;
+
+/**
+ * __useIncomesQuery__
+ *
+ * To run a query within a Vue component, call `useIncomesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useIncomesQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param variables that will be passed into the query
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useIncomesQuery({
+ *   budgetId: // value for 'budgetId'
+ * });
+ */
+export function useIncomesQuery(variables: IncomesQueryVariables | VueCompositionApi.Ref<IncomesQueryVariables> | ReactiveFunction<IncomesQueryVariables>, options: VueApolloComposable.UseQueryOptions<IncomesQueryOutput, IncomesQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<IncomesQueryOutput, IncomesQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<IncomesQueryOutput, IncomesQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<IncomesQueryOutput, IncomesQueryVariables>(IncomesDocument, variables, options);
+}
+export function useIncomesLazyQuery(variables: IncomesQueryVariables | VueCompositionApi.Ref<IncomesQueryVariables> | ReactiveFunction<IncomesQueryVariables>, options: VueApolloComposable.UseQueryOptions<IncomesQueryOutput, IncomesQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<IncomesQueryOutput, IncomesQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<IncomesQueryOutput, IncomesQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<IncomesQueryOutput, IncomesQueryVariables>(IncomesDocument, variables, options);
+}
+export type IncomesQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<IncomesQueryOutput, IncomesQueryVariables>;
+export const UpdateIncomesDocument = gql`
+    mutation updateIncomes($budgetId: UUID!, $removedIncomeIds: [ID!]!, $incomes: [IncomeInput!]!) {
+  deleteIncomes(budgetId: $budgetId, incomeIds: $removedIncomeIds)
+  updateIncomes(budgetId: $budgetId, incomes: $incomes) {
+    id
+    name
+    description
+  }
+}
+    `;
+
+/**
+ * __useUpdateIncomesMutation__
+ *
+ * To run a mutation, you first call `useUpdateIncomesMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateIncomesMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useUpdateIncomesMutation({
+ *   variables: {
+ *     budgetId: // value for 'budgetId'
+ *     removedIncomeIds: // value for 'removedIncomeIds'
+ *     incomes: // value for 'incomes'
+ *   },
+ * });
+ */
+export function useUpdateIncomesMutation(options: VueApolloComposable.UseMutationOptions<UpdateIncomesMutationOutput, UpdateIncomesMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<UpdateIncomesMutationOutput, UpdateIncomesMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<UpdateIncomesMutationOutput, UpdateIncomesMutationVariables>(UpdateIncomesDocument, options);
+}
+export type UpdateIncomesMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<UpdateIncomesMutationOutput, UpdateIncomesMutationVariables>;
 export const ActivateUserDocument = gql`
     mutation activateUser($email: String!, $token: String!) {
   activateUser(email: $email, token: $token)
@@ -383,7 +449,7 @@ export function useUpdateUserPasswordMutation(options: VueApolloComposable.UseMu
 export type UpdateUserPasswordMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<UpdateUserPasswordMutationOutput, UpdateUserPasswordMutationVariables>;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: { input: string; output: string; }
+  ID: { input: number; output: number; }
   String: { input: string; output: string; }
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
@@ -391,7 +457,7 @@ export type Scalars = {
   Date: { input: any; output: any; }
   DateTime: { input: any; output: any; }
   Time: { input: any; output: any; }
-  UUID: { input: any; output: any; }
+  UUID: { input: string; output: string; }
 };
 
 export type AuthorizationOutput = {
@@ -402,7 +468,7 @@ export type AuthorizationOutput = {
 
 export type Budget = {
   id: Scalars['UUID']['output'];
-  initializationStep: Step;
+  initializationStep?: Maybe<Step>;
   name: Scalars['String']['output'];
   rights?: Maybe<Array<Right>>;
 };
@@ -431,16 +497,6 @@ export type CreateUserInput = {
   theme: Theme;
 };
 
-export type Frequency = {
-  period: Period;
-  value: Scalars['Int']['output'];
-};
-
-export type FrequencyInput = {
-  period: Period;
-  value: Scalars['Int']['input'];
-};
-
 export type Goal = {
   category: Category;
   description: Scalars['String']['output'];
@@ -466,17 +522,13 @@ export type GoalType =
   | 'PERCENTAGE_MIN';
 
 export type Income = {
-  amount: Scalars['Float']['output'];
   description?: Maybe<Scalars['String']['output']>;
-  frequency: Frequency;
   id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
 };
 
 export type IncomeInput = {
-  amount: Scalars['Float']['input'];
   description?: InputMaybe<Scalars['String']['input']>;
-  frequency?: InputMaybe<FrequencyInput>;
   id?: InputMaybe<Scalars['ID']['input']>;
   name: Scalars['String']['input'];
 };
@@ -485,6 +537,9 @@ export type Mutation = {
   activateUser: Scalars['Boolean']['output'];
   createBudget: Budget;
   createUser: User;
+  deleteCategories: Scalars['Boolean']['output'];
+  deleteGoals: Scalars['Boolean']['output'];
+  deleteIncomes: Scalars['Boolean']['output'];
   login: AuthorizationOutput;
   refreshToken: AuthorizationOutput;
   requestPasswordReset: Scalars['Boolean']['output'];
@@ -511,6 +566,24 @@ export type MutationCreateBudgetArgs = {
 
 export type MutationCreateUserArgs = {
   input: CreateUserInput;
+};
+
+
+export type MutationDeleteCategoriesArgs = {
+  budgetId: Scalars['UUID']['input'];
+  categoryIds: Array<Scalars['ID']['input']>;
+};
+
+
+export type MutationDeleteGoalsArgs = {
+  budgetId: Scalars['UUID']['input'];
+  goalIds: Array<Scalars['ID']['input']>;
+};
+
+
+export type MutationDeleteIncomesArgs = {
+  budgetId: Scalars['UUID']['input'];
+  incomeIds: Array<Scalars['ID']['input']>;
 };
 
 
@@ -571,12 +644,6 @@ export type MutationUpdateUserPasswordArgs = {
   newPassword: Scalars['String']['input'];
   oldPassword: Scalars['String']['input'];
 };
-
-export type Period =
-  | 'DAY'
-  | 'MONTH'
-  | 'WEEK'
-  | 'YEAR';
 
 export type Query = {
   budget?: Maybe<Budget>;
@@ -670,19 +737,35 @@ export type BudgetQueryVariables = Exact<{
 }>;
 
 
-export type BudgetQueryOutput = { budget?: { id: any, name: string, initializationStep: Step } | null };
+export type BudgetQueryOutput = { budget?: { id: string, name: string, initializationStep?: Step | null } | null };
 
 export type BudgetsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type BudgetsQueryOutput = { budgets: Array<{ id: any, name: string, initializationStep: Step }> };
+export type BudgetsQueryOutput = { budgets: Array<{ id: string, name: string, initializationStep?: Step | null }> };
 
 export type CreateBudgetMutationVariables = Exact<{
   name: Scalars['String']['input'];
 }>;
 
 
-export type CreateBudgetMutationOutput = { createBudget: { id: any } };
+export type CreateBudgetMutationOutput = { createBudget: { id: string } };
+
+export type IncomesQueryVariables = Exact<{
+  budgetId: Scalars['UUID']['input'];
+}>;
+
+
+export type IncomesQueryOutput = { incomes: Array<{ id: number, name: string, description?: string | null }> };
+
+export type UpdateIncomesMutationVariables = Exact<{
+  budgetId: Scalars['UUID']['input'];
+  removedIncomeIds: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
+  incomes: Array<IncomeInput> | IncomeInput;
+}>;
+
+
+export type UpdateIncomesMutationOutput = { deleteIncomes: boolean, updateIncomes: Array<{ id: number, name: string, description?: string | null }> };
 
 export type ActivateUserMutationVariables = Exact<{
   email: Scalars['String']['input'];

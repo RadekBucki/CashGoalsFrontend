@@ -23,6 +23,7 @@ export default function useApolloClient(locale: LocaleInstance) {
           title: t('network.error.title'),
           type: 'error',
           content: errorResponse.networkError.message,
+          closeable: false,
         });
       }
       if (errorResponse.graphQLErrors?.length !== 1) {

@@ -27,6 +27,9 @@ const steps = Object.keys(stepsRefs) as Step[];
 
 const currentStep: Ref<Step> = ref<Step>('INCOMES');
 onMounted(() => {
+  if (!props.budget?.initializationStep) {
+    return;
+  }
   currentStep.value = props.budget.initializationStep;
 });
 const acceptCurrentStep = () => {
@@ -56,10 +59,10 @@ const previousStep = () => {
 
 <template>
   <LeftLayout :sm="12" :md="12" :lg="12">
-    <Incomes v-if="currentStep == 'INCOMES'" :budget="budget" :ref="stepsRefs.INCOMES" />
-    <ExpensesCategories v-if="currentStep == 'EXPENSES_CATEGORIES'" :budget="budget" :ref="stepsRefs.EXPENSES_CATEGORIES" />
-    <Goals v-if="currentStep == 'GOALS'" :budget="budget" :ref="stepsRefs.GOALS" />
-    <UsersRights v-if="currentStep == 'USERS_AND_RIGHTS'" :budget="budget" :ref="stepsRefs.USERS_AND_RIGHTS" />
+    <Incomes v-show="currentStep === 'INCOMES'" :budget="budget" :ref="stepsRefs.INCOMES" />
+    <ExpensesCategories v-show="currentStep == 'EXPENSES_CATEGORIES'" :budget="budget" :ref="stepsRefs.EXPENSES_CATEGORIES" />
+    <Goals v-show="currentStep == 'GOALS'" :budget="budget" :ref="stepsRefs.GOALS" />
+    <UsersRights v-show="currentStep == 'USERS_AND_RIGHTS'" :budget="budget" :ref="stepsRefs.USERS_AND_RIGHTS" />
     <VBtn
       v-if="currentStep != 'INCOMES'"
       @click="previousStep"
