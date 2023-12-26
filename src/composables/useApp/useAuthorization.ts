@@ -17,6 +17,7 @@ export default function useAuthorization() {
   async function tryRefreshToken(): Promise<boolean> {
     const refreshToken: string = appStore.getRefreshToken() ?? '';
     if (!verifyToken(appStore.getAccessToken()) && !verifyToken(refreshToken)) {
+      appStore.logout();
       return false;
     }
     const { mutate } = useRefreshTokenMutation();
