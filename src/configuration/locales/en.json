@@ -51,6 +51,7 @@
   "budget.name": "Budget name",
   "budget.name.validation.error": "Budget name must be between 1 and 100 characters",
   "next": "Next",
+  "back": "Back",
   "budget.incomes.define": "Define your incomes",
   "budget.incomes.add": "Add income",
   "budget.incomes.name": "Name",

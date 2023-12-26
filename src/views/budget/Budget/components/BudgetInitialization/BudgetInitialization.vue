@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onMounted, PropType, ref, Ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 import ExpensesCategories from './steps/ExpensesCategories.vue';
 import Goals from './steps/Goals.vue';
@@ -7,6 +8,8 @@ import Incomes from './steps/Incomes.vue';
 import UsersRights from './steps/UsersRights.vue';
 import { Budget, Step } from '@/graphql';
 import LeftLayout from '@/layouts/content/LeftLayout.vue';
+
+const { t } = useI18n();
 
 const props = defineProps({
   budget: {
@@ -70,10 +73,10 @@ const previousStep = () => {
       prepend-icon="mdi-chevron-left"
       location="center"
     >
-      Previous
+      {{ t('back') }}
     </VBtn>
     <VBtn @click="nextStep" color="primary" append-icon="mdi-chevron-right" location="center">
-      Next
+      {{ t('next') }}
     </VBtn>
   </LeftLayout>
 </template>

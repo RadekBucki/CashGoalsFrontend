@@ -51,6 +51,7 @@
   "budget.name": "Nazwa budżetu",
   "budget.name.validation.error": "Nazwa budżetu musi mieć pomiędzy 1 a 100 znaków.",
   "next": "Dalej",
+  "back": "Wstecz",
   "budget.incomes.define": "Zdefiniuj swoje przychody",
   "budget.incomes.add": "Dodaj przychód",
   "budget.incomes.name": "Nazwa",
