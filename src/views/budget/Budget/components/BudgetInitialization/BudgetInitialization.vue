@@ -2,7 +2,7 @@
 import { onMounted, PropType, ref, Ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-import ExpensesCategories from './steps/ExpensesCategories.vue';
+import ExpensesCategories from './steps/ExpensesCategories/ExpensesCategories.vue';
 import Goals from './steps/Goals.vue';
 import Incomes from './steps/Incomes.vue';
 import UsersRights from './steps/UsersRights.vue';

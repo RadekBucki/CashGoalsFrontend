@@ -58,5 +58,13 @@
   "budget.incomes.amount": "Amount",
   "budget.incomes.frequency": "Frequency",
   "budget.incomes.description": "Description",
-  "budget.incomes.new": "New income"
+  "budget.incomes.new": "New income",
+  "budget.expenses.categories.define": "Define your categories",
+  "budget.expenses.categories.new": "New category",
+  "budget.expenses.categories.add": "Add category",
+  "budget.expenses.categories.name": "Name",
+  "budget.expenses.categories.description": "Description",
+  "budget.expenses.categories.visible": "Visible",
+  "budget.expenses.categories.parent": "Parent category",
+  "budget.expenses.categories.no.parent": "No parent"
 }

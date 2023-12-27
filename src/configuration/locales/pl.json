@@ -58,5 +58,13 @@
   "budget.incomes.amount": "Kwota",
   "budget.incomes.frequency": "Częstotliwość",
   "budget.incomes.description": "Opis",
-  "budget.incomes.new": "Nowy przychód"
+  "budget.incomes.new": "Nowy przychód",
+  "budget.expenses.categories.define": "Zdefiniuj swoje kategorie wydatków",
+  "budget.expenses.categories.new": "Nowa kategoria",
+  "budget.expenses.categories.add": "Dodaj kategorię",
+  "budget.expenses.categories.name": "Nazwa",
+  "budget.expenses.categories.description": "Opis",
+  "budget.expenses.categories.visible": "Widoczna",
+  "budget.expenses.categories.parent": "Kategoria nadrzędna",
+  "budget.expenses.categories.no.parent": "Brak"
 }
