@@ -1,126 +1,151 @@
 query categories($budgetId: UUID!) {
     categories(budgetId: $budgetId) {
         id
+        parentId
         name
         description
         visible
         children {
             id
+            parentId
             name
             description
             visible
             children {
                 id
+                parentId
                 name
                 description
                 visible
                 children {
                     id
+                    parentId
                     name
                     description
                     visible
                     children {
                         id
+                        parentId
                         name
                         description
                         visible
                         children {
                             id
+                            parentId
                             name
                             description
                             visible
                             children {
                                 id
+                                parentId
                                 name
                                 description
                                 visible
                                 children {
                                     id
+                                    parentId
                                     name
                                     description
                                     visible
                                     children {
                                         id
+                                        parentId
                                         name
                                         description
                                         visible
                                         children {
                                             id
+                                            parentId
                                             name
                                             description
                                             visible
                                             children {
                                                 id
+                                                parentId
                                                 name
                                                 description
                                                 visible
                                                 children {
                                                     id
+                                                    parentId
                                                     name
                                                     description
                                                     visible
                                                     children {
                                                         id
+                                                        parentId
                                                         name
                                                         description
                                                         visible
                                                         children {
                                                             id
+                                                            parentId
                                                             name
                                                             description
                                                             visible
                                                             children {
                                                                 id
+                                                                parentId
                                                                 name
                                                                 description
                                                                 visible
                                                                 children {
                                                                     id
+                                                                    parentId
                                                                     name
                                                                     description
                                                                     visible
                                                                     children {
                                                                         id
+                                                                        parentId
                                                                         name
                                                                         description
                                                                         visible
                                                                         children {
                                                                             id
+                                                                            parentId
                                                                             name
                                                                             description
                                                                             visible
                                                                             children {
                                                                                 id
+                                                                                parentId
                                                                                 name
                                                                                 description
                                                                                 visible
                                                                                 children {
                                                                                     id
+                                                                                    parentId
                                                                                     name
                                                                                     description
                                                                                     visible
                                                                                     children {
                                                                                         id
+                                                                                        parentId
                                                                                         name
                                                                                         description
                                                                                         visible
                                                                                         children {
                                                                                             id
+                                                                                            parentId
                                                                                             name
                                                                                             description
                                                                                             visible
                                                                                             children {
                                                                                                 id
+                                                                                                parentId
                                                                                                 name
                                                                                                 description
                                                                                                 visible
                                                                                                 children {
                                                                                                     id
+                                                                                                    parentId
                                                                                                     name
                                                                                                     description
                                                                                                     visible
                                                                                                     children {
                                                                                                         id
+                                                                                                        parentId
                                                                                                         name
                                                                                                         description
                                                                                                         visible

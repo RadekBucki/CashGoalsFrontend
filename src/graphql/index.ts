@@ -107,126 +107,151 @@ export const CategoriesDocument = gql`
     query categories($budgetId: UUID!) {
   categories(budgetId: $budgetId) {
     id
+    parentId
     name
     description
     visible
     children {
       id
+      parentId
       name
       description
       visible
       children {
         id
+        parentId
         name
         description
         visible
         children {
           id
+          parentId
           name
           description
           visible
           children {
             id
+            parentId
             name
             description
             visible
             children {
               id
+              parentId
               name
               description
               visible
               children {
                 id
+                parentId
                 name
                 description
                 visible
                 children {
                   id
+                  parentId
                   name
                   description
                   visible
                   children {
                     id
+                    parentId
                     name
                     description
                     visible
                     children {
                       id
+                      parentId
                       name
                       description
                       visible
                       children {
                         id
+                        parentId
                         name
                         description
                         visible
                         children {
                           id
+                          parentId
                           name
                           description
                           visible
                           children {
                             id
+                            parentId
                             name
                             description
                             visible
                             children {
                               id
+                              parentId
                               name
                               description
                               visible
                               children {
                                 id
+                                parentId
                                 name
                                 description
                                 visible
                                 children {
                                   id
+                                  parentId
                                   name
                                   description
                                   visible
                                   children {
                                     id
+                                    parentId
                                     name
                                     description
                                     visible
                                     children {
                                       id
+                                      parentId
                                       name
                                       description
                                       visible
                                       children {
                                         id
+                                        parentId
                                         name
                                         description
                                         visible
                                         children {
                                           id
+                                          parentId
                                           name
                                           description
                                           visible
                                           children {
                                             id
+                                            parentId
                                             name
                                             description
                                             visible
                                             children {
                                               id
+                                              parentId
                                               name
                                               description
                                               visible
                                               children {
                                                 id
+                                                parentId
                                                 name
                                                 description
                                                 visible
                                                 children {
                                                   id
+                                                  parentId
                                                   name
                                                   description
                                                   visible
                                                   children {
                                                     id
+                                                    parentId
                                                     name
                                                     description
                                                     visible
@@ -285,126 +310,151 @@ export const UpdateCategoriesDocument = gql`
   deleteCategories(budgetId: $budgetId, categoryIds: $removedCategoryIds)
   updateCategories(budgetId: $budgetId, categories: $categories) {
     id
+    parentId
     name
     description
     visible
     children {
       id
+      parentId
       name
       description
       visible
       children {
         id
+        parentId
         name
         description
         visible
         children {
           id
+          parentId
           name
           description
           visible
           children {
             id
+            parentId
             name
             description
             visible
             children {
               id
+              parentId
               name
               description
               visible
               children {
                 id
+                parentId
                 name
                 description
                 visible
                 children {
                   id
+                  parentId
                   name
                   description
                   visible
                   children {
                     id
+                    parentId
                     name
                     description
                     visible
                     children {
                       id
+                      parentId
                       name
                       description
                       visible
                       children {
                         id
+                        parentId
                         name
                         description
                         visible
                         children {
                           id
+                          parentId
                           name
                           description
                           visible
                           children {
                             id
+                            parentId
                             name
                             description
                             visible
                             children {
                               id
+                              parentId
                               name
                               description
                               visible
                               children {
                                 id
+                                parentId
                                 name
                                 description
                                 visible
                                 children {
                                   id
+                                  parentId
                                   name
                                   description
                                   visible
                                   children {
                                     id
+                                    parentId
                                     name
                                     description
                                     visible
                                     children {
                                       id
+                                      parentId
                                       name
                                       description
                                       visible
                                       children {
                                         id
+                                        parentId
                                         name
                                         description
                                         visible
                                         children {
                                           id
+                                          parentId
                                           name
                                           description
                                           visible
                                           children {
                                             id
+                                            parentId
                                             name
                                             description
                                             visible
                                             children {
                                               id
+                                              parentId
                                               name
                                               description
                                               visible
                                               children {
                                                 id
+                                                parentId
                                                 name
                                                 description
                                                 visible
                                                 children {
                                                   id
+                                                  parentId
                                                   name
                                                   description
                                                   visible
                                                   children {
                                                     id
+                                                    parentId
                                                     name
                                                     description
                                                     visible
@@ -834,6 +884,7 @@ export type Category = {
   description: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
+  parentId?: Maybe<Scalars['ID']['output']>;
   visible: Scalars['Boolean']['output'];
 };
 
@@ -842,7 +893,7 @@ export type CategoryInput = {
   description?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['ID']['input']>;
   name: Scalars['String']['input'];
-  parent?: InputMaybe<Scalars['ID']['input']>;
+  parentId?: InputMaybe<Scalars['ID']['input']>;
   visible: Scalars['Boolean']['input'];
 };
 
@@ -1113,7 +1164,7 @@ export type CategoriesQueryVariables = Exact<{
 }>;
 
 
-export type CategoriesQueryOutput = { categories: Array<{ id: number, name: string, description: string, visible: boolean, children: Array<{ id: number, name: string, description: string, visible: boolean, children: Array<{ id: number, name: string, description: string, visible: boolean, children: Array<{ id: number, name: string, description: string, visible: boolean, children: Array<{ id: number, name: string, description: string, visible: boolean, children: Array<{ id: number, name: string, description: string, visible: boolean, children: Array<{ id: number, name: string, description: string, visible: boolean, children: Array<{ id: number, name: string, description: string, visible: boolean, children: Array<{ id: number, name: string, description: string, visible: boolean, children: Array<{ id: number, name: string, description: string, visible: boolean, children: Array<{ id: number, name: string, description: string, visible: boolean, children: Array<{ id: number, name: string, description: string, visible: boolean, children: Array<{ id: number, name: string, description: string, visible: boolean, children: Array<{ id: number, name: string, description: string, visible: boolean, children: Array<{ id: number, name: string, description: string, visible: boolean, children: Array<{ id: number, name: string, description: string, visible: boolean, children: Array<{ id: number, name: string, description: string, visible: boolean, children: Array<{ id: number, name: string, description: string, visible: boolean, children: Array<{ id: number, name: string, description: string, visible: boolean, children: Array<{ id: number, name: string, description: string, visible: boolean, children: Array<{ id: number, name: string, description: string, visible: boolean, children: Array<{ id: number, name: string, description: string, visible: boolean, children: Array<{ id: number, name: string, description: string, visible: boolean, children: Array<{ id: number, name: string, description: string, visible: boolean, children: Array<{ id: number, name: string, description: string, visible: boolean }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> };
+export type CategoriesQueryOutput = { categories: Array<{ id: number, parentId?: number | null, name: string, description: string, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description: string, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description: string, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description: string, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description: string, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description: string, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description: string, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description: string, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description: string, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description: string, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description: string, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description: string, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description: string, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description: string, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description: string, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description: string, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description: string, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description: string, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description: string, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description: string, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description: string, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description: string, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description: string, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description: string, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description: string, visible: boolean }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> };
 
 export type UpdateCategoriesMutationVariables = Exact<{
   budgetId: Scalars['UUID']['input'];
@@ -1122,7 +1173,7 @@ export type UpdateCategoriesMutationVariables = Exact<{
 }>;
 
 
-export type UpdateCategoriesMutationOutput = { deleteCategories: boolean, updateCategories: Array<{ id: number, name: string, description: string, visible: boolean, children: Array<{ id: number, name: string, description: string, visible: boolean, children: Array<{ id: number, name: string, description: string, visible: boolean, children: Array<{ id: number, name: string, description: string, visible: boolean, children: Array<{ id: number, name: string, description: string, visible: boolean, children: Array<{ id: number, name: string, description: string, visible: boolean, children: Array<{ id: number, name: string, description: string, visible: boolean, children: Array<{ id: number, name: string, description: string, visible: boolean, children: Array<{ id: number, name: string, description: string, visible: boolean, children: Array<{ id: number, name: string, description: string, visible: boolean, children: Array<{ id: number, name: string, description: string, visible: boolean, children: Array<{ id: number, name: string, description: string, visible: boolean, children: Array<{ id: number, name: string, description: string, visible: boolean, children: Array<{ id: number, name: string, description: string, visible: boolean, children: Array<{ id: number, name: string, description: string, visible: boolean, children: Array<{ id: number, name: string, description: string, visible: boolean, children: Array<{ id: number, name: string, description: string, visible: boolean, children: Array<{ id: number, name: string, description: string, visible: boolean, children: Array<{ id: number, name: string, description: string, visible: boolean, children: Array<{ id: number, name: string, description: string, visible: boolean, children: Array<{ id: number, name: string, description: string, visible: boolean, children: Array<{ id: number, name: string, description: string, visible: boolean, children: Array<{ id: number, name: string, description: string, visible: boolean, children: Array<{ id: number, name: string, description: string, visible: boolean, children: Array<{ id: number, name: string, description: string, visible: boolean }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> };
+export type UpdateCategoriesMutationOutput = { deleteCategories: boolean, updateCategories: Array<{ id: number, parentId?: number | null, name: string, description: string, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description: string, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description: string, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description: string, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description: string, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description: string, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description: string, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description: string, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description: string, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description: string, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description: string, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description: string, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description: string, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description: string, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description: string, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description: string, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description: string, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description: string, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description: string, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description: string, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description: string, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description: string, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description: string, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description: string, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description: string, visible: boolean }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> };
 
 export type IncomesQueryVariables = Exact<{
   budgetId: Scalars['UUID']['input'];

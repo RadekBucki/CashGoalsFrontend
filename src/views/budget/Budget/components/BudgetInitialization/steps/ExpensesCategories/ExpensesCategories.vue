@@ -75,7 +75,7 @@ const addCategory = (parentCategory: CategoryInput | null = null) => {
   selectedCategory.value = {
     name: t('budget.expenses.categories.new'),
     description: '',
-    parent: parentCategory?.id ?? null,
+    parentId: parentCategory?.id ?? null,
     visible: true,
     children: [],
   };
@@ -102,7 +102,7 @@ const updateSelectedCategoryParent = (category: CategoryInput | null) => {
   } else {
     categories.value.push(selectedCategory.value);
   }
-  selectedCategory.value.parent = category?.id ?? null;
+  selectedCategory.value.parentId = category?.id ?? null;
 };
 
 const { mutate, onDone } = useUpdateCategoriesMutation();
@@ -126,7 +126,7 @@ const acceptStep = () => {
         && category.name === initialCategory.name
         && category.description === initialCategory.description
         && category.visible === initialCategory.visible
-        && category.parent === initialCategory.parent
+        && category.parentId === initialCategory.parentId
       ) {
         filterModifiedCategories(category.children);
         return;
