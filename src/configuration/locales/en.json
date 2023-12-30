@@ -1,4 +1,8 @@
 {
+  "$vuetify": {
+    "open": "Open",
+    "close": "Close"
+  },
   "your.account": "Your account",
   "register": "Register",
   "dont.have.account": "Don't have an account?",
