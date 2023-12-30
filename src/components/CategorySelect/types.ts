@@ -1,7 +1,7 @@
-import { CategoryInput } from '@/graphql';
+import { Category, CategoryInput } from '@/graphql';
 
 export type CategoryInputWrapper = {
-  category: CategoryInput;
-  parent: CategoryInput | null;
+  category: CategoryInput | Category;
+  parent: CategoryInput | Category | null;
   level: number;
 }

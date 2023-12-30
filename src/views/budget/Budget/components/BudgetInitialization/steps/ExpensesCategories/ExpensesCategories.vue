@@ -1,13 +1,12 @@
 <script setup lang="ts">
-import { onMounted, PropType, ref, Ref } from 'vue';
+import { computed, onMounted, PropType, ref, Ref, WritableComputedRef } from 'vue';
 import { useLocale } from 'vuetify';
 
 import { ApolloQueryResult, FetchResult } from '@apollo/client';
 import { VList } from 'vuetify/components/VList';
 
 import { EditableCategoryTree } from './components';
-import { findCategory, findCategoryById, findCategoryParent } from './findCategoryById.ts';
-import CategorySelect from '@/components/CategorySelect/CategorySelect.vue';
+import { CategorySelect, findCategory, findCategoryById, findCategoryParent } from '@/components/CategorySelect';
 import {
   Budget,
   CategoriesQueryOutput,
@@ -30,6 +29,14 @@ const { t } = useLocale();
 const initialCategories: Ref<CategoryInput[]> = ref<CategoryInput[]>([]);
 const categories: Ref<CategoryInput[]> = ref<CategoryInput[]>([]);
 const selectedCategory: Ref<CategoryInput | null> = ref<CategoryInput | null>(null);
+const selectedCategoryParent: WritableComputedRef<CategoryInput | null> = computed<CategoryInput | null>(
+  () => {
+    if (!selectedCategory.value) {
+      return null;
+    }
+    return findCategoryParent(selectedCategory.value, categories.value);
+  },
+);
 const removedCategoriesIds: Ref<number[]> = ref<number[]>([]);
 
 onMounted(() => {
@@ -123,10 +130,10 @@ const acceptStep = () => {
       const initialCategory = findInitialCategory(category);
       if (
         initialCategory
-        && category.name === initialCategory.name
-        && category.description === initialCategory.description
-        && category.visible === initialCategory.visible
-        && category.parentId === initialCategory.parentId
+          && category.name === initialCategory.name
+          && category.description === initialCategory.description
+          && category.visible === initialCategory.visible
+          && category.parentId === initialCategory.parentId
       ) {
         filterModifiedCategories(category.children);
         return;
@@ -211,11 +218,12 @@ defineExpose({ acceptStep });
           outlined
         />
         <CategorySelect
-          :selectedCategory="selectedCategory"
+          :selectedCategory="selectedCategoryParent"
           :categories="categories"
+          :disabledCategories="[selectedCategory]"
           :label="t('budget.expenses.categories.parent')"
-          :noDataLabel="t('budget.expenses.categories.no.parent')"
-          :updateParent="updateSelectedCategoryParent"
+          :update="updateSelectedCategoryParent"
+          couldBeEmpty
         />
       </VCol>
     </VRow>

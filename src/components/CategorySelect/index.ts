@@ -1,3 +1,4 @@
 import CategorySelect from './CategorySelect.vue';
+import { findCategoryById, findCategoryParent, findCategory } from './functions.ts';
 
-export default { CategorySelect };
+export { CategorySelect, findCategoryById, findCategoryParent, findCategory };

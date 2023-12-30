@@ -1,9 +1,9 @@
-import { CategoryInput } from '@/graphql';
+import { Category, CategoryInput } from '@/graphql';
 
 const findCategoryById = (
   categoryIdToBeFound: number,
-  categoriesList: CategoryInput[],
-): CategoryInput|null => {
+  categoriesList: CategoryInput[] | Category[],
+): CategoryInput | Category | null => {
   // eslint-disable-next-line no-restricted-syntax
   for (const category of categoriesList) {
     if (category.id === categoryIdToBeFound) {
@@ -18,9 +18,9 @@ const findCategoryById = (
 };
 
 const findCategoryParent = (
-  category: CategoryInput | null,
-  categoriesList: CategoryInput[],
-): CategoryInput|null => {
+  category: CategoryInput | Category | null,
+  categoriesList: CategoryInput[] | Category[],
+): CategoryInput | Category | null => {
   if (!category) {
     return null;
   }
@@ -38,9 +38,9 @@ const findCategoryParent = (
 };
 
 const findCategory = (
-  category: CategoryInput | null,
-  categoriesList: CategoryInput[],
-): CategoryInput|null => {
+  category: CategoryInput | Category | null,
+  categoriesList: CategoryInput[] | Category[],
+): CategoryInput | Category | null => {
   if (!category) {
     return null;
   }

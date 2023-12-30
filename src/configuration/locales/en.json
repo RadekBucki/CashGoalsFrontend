@@ -66,5 +66,16 @@
   "budget.expenses.categories.description": "Description",
   "budget.expenses.categories.visible": "Visible",
   "budget.expenses.categories.parent": "Parent category",
-  "budget.expenses.categories.no.parent": "No parent"
+  "budget.expenses.categories.no.parent": "No parent",
+  "budget.goals.define": "Define your goals",
+  "budget.goals.add": "Add goal",
+  "budget.goals.name": "Name",
+  "budget.goals.description": "Description",
+  "budget.goals.type": "Type",
+  "budget.goals.types.amount": "Amount",
+  "budget.goals.types.percentage": "Percentage of income",
+  "budget.goals.min": "Minimum value",
+  "budget.goals.max": "Maximum value",
+  "budget.goals.category": "Category",
+  "budget.goals.new": "New goal"
 }

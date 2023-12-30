@@ -66,5 +66,15 @@
   "budget.expenses.categories.description": "Opis",
   "budget.expenses.categories.visible": "Widoczna",
   "budget.expenses.categories.parent": "Kategoria nadrzędna",
-  "budget.expenses.categories.no.parent": "Brak"
+  "budget.expenses.categories.no.parent": "Brak",
+  "budget.goals.define": "Zdefiniuj swoje cele",
+  "budget.goals.add": "Dodaj cel",
+  "budget.goals.name": "Nazwa",
+  "budget.goals.description": "Opis",
+  "budget.goals.type": "Typ",
+  "budget.goals.types.amount": "Kwota",
+  "budget.goals.types.percentage": "Procent przychodów",
+  "budget.goals.min": "Wartość minimalna",
+  "budget.goals.max": "Wartość maksymalna",
+  "budget.goals.new": "Nowy cel"
 }

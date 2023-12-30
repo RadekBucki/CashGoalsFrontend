@@ -12,7 +12,7 @@ const config: CodegenConfig = {
         {
           add: {
             content: '/* eslint-disable */\n'
-              + '// noinspection ES6UnusedImports,JSUnusedGlobalSymbols,JSUnusedGlobalSymbols\n',
+              + '// noinspection ES6UnusedImports,JSUnusedGlobalSymbols,JSUnusedGlobalSymbols,DuplicatedCode\n',
           },
         },
       ],

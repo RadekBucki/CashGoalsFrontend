@@ -1,34 +1,40 @@
 <script setup lang="ts">
-import { computed, ComputedRef, PropType, WritableComputedRef } from 'vue';
+import { computed, ComputedRef, PropType } from 'vue';
 
 import { CategoryInputWrapper } from './types.ts';
-import { CategoryInput } from '@/graphql';
+import { Category, CategoryInput } from '@/graphql';
 
 const props = defineProps({
   selectedCategory: {
-    type: Object as PropType<CategoryInput | null>,
+    type: Object as PropType<CategoryInput | Category | null>,
     required: false,
     default: null,
   },
+  disabledCategories: {
+    type: Array as PropType<CategoryInput[] | Category[]>,
+    required: false,
+    default: () => [],
+  },
   categories: {
-    type: Array as PropType<CategoryInput[]>,
+    type: Array as PropType<CategoryInput[] | Category[]>,
     required: true,
   },
   label: {
     type: String,
     required: true,
   },
-  noDataLabel: {
-    type: String,
-    required: true,
+  couldBeEmpty: {
+    type: Boolean,
+    required: false,
+    default: false,
   },
-  updateParent: {
-    type: Function as PropType<(category: CategoryInput | null) => void>,
+  update: {
+    type: Function as PropType<(category: CategoryInput | Category | null) => void>,
     required: true,
   },
 });
 
-const mapCategoryToWrappedCategory = (categories: CategoryInput[], parent: CategoryInput | null = null, level = 1) => {
+const mapCategoryToWrappedCategory = (categories: CategoryInput[], parent: CategoryInput | Category | null = null, level = 1) => {
   const wrappedCategories: CategoryInputWrapper[] = [];
   categories.forEach((category) => {
     wrappedCategories.push({
@@ -46,39 +52,37 @@ const mapCategoryToWrappedCategory = (categories: CategoryInput[], parent: Categ
 const wrappedCategories: ComputedRef<CategoryInputWrapper[]> = computed<CategoryInputWrapper[]>(
   () => mapCategoryToWrappedCategory(props.categories),
 );
-const selectedCategoryParent: WritableComputedRef<CategoryInputWrapper | null> = computed<CategoryInputWrapper | null>(
+const selectedCategoryWrapped: ComputedRef<CategoryInputWrapper | null> = computed<CategoryInputWrapper | null>(
   () => {
     if (!props.selectedCategory) {
       return null;
     }
     return wrappedCategories.value
-      .find((wrappedCategory) => wrappedCategory.category.children?.includes(props.selectedCategory as CategoryInput))
-      ?? null;
+      .find((wrappedCategory) => wrappedCategory.category === props.selectedCategory) ?? null;
   },
 );
 const updateModelValue = (category: CategoryInputWrapper | null) => {
-  props.updateParent(category?.category ?? null);
+  props.update(category?.category ?? null);
 };
 </script>
 
 <template>
   <!-- TODO: Simplify when https://github.com/vuetifyjs/vuetify/issues/3049 will be done -->
   <VAutocomplete
-    v-model="selectedCategoryParent"
+    v-model="selectedCategoryWrapped"
     @update:modelValue="updateModelValue"
     :label="label"
-    :noDataText="noDataLabel"
     outlined
     :items="wrappedCategories"
-    clearable
+    :clearable="couldBeEmpty"
     :itemChildren="item => item?.category?.children ?? []"
-    :itemTitle="item => item.category?.name ?? noDataLabel"
+    :itemTitle="item => item.category?.name"
     :itemValue="item => item"
   >
     <template v-slot:item="{ item, props }">
       <VListItem
         v-bind="props"
-        :disabled="item.value?.category === selectedCategory"
+        :disabled="disabledCategories.includes(item.value?.category)"
         :subtitle="item.value?.category.description ?? ''"
         :style="`padding-left: ${item.value?.level * 16}px`"
       />
