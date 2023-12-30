@@ -62,6 +62,7 @@ const updateModelValue = (category: CategoryInputWrapper | null) => {
 </script>
 
 <template>
+  <!-- TODO: Simplify when https://github.com/vuetifyjs/vuetify/issues/3049 will be done -->
   <VAutocomplete
     v-model="selectedCategoryParent"
     @update:modelValue="updateModelValue"
