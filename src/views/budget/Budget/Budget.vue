@@ -20,7 +20,7 @@ onResult((result: ApolloQueryResult<BudgetQueryOutput>) => {
   if (!result.data?.budget) {
     return;
   }
-  budget.value = result.data.budget;
+  budget.value = JSON.parse(JSON.stringify(result.data.budget));
 });
 
 const budgetInitialized = () => {
