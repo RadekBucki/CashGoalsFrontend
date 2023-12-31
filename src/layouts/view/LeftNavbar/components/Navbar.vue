@@ -52,13 +52,22 @@ onResult((result: ApolloQueryResult<BudgetsQueryOutput>) => {
         <template v-slot:activator="{ props }">
           <VListItem v-bind="props" prepend-icon="mdi-wallet-bifold" :title="t('budgets')" />
         </template>
-        <VListItem
-          v-for="budget in budgets"
-          :key="budget.id"
-          :title="budget.name"
-          :to="{ name: 'Budget', params: { id: budget.id } }"
-        />
-        <VListItem prepend-icon="mdi-plus" :title="t('budget.create')" :to="{ name: 'BudgetCreate' }" />
+        <template v-slot:default v-if="showFullNavigation">
+          <VListItem
+            v-for="budget in budgets"
+            :key="budget.id"
+            :title="budget.name"
+            :to="{ name: 'Budget', params: { id: budget.id } }"
+          />
+          <VListItem prepend-icon="mdi-plus" :title="t('budget.create')" :to="{ name: 'BudgetCreate' }" />
+          <VListItem
+            v-for="budget in budgets"
+            :key="budget.id"
+            :title="budget.name"
+            :to="{ name: 'Budget', params: { id: budget.id } }"
+          />
+          <VListItem prepend-icon="mdi-plus" :title="t('budget.create')" :to="{ name: 'BudgetCreate' }" />
+        </template>
       </VListGroup>
     </VList>
 
