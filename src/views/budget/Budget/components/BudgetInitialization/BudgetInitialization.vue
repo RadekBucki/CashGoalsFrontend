@@ -76,7 +76,7 @@ const previousStep = () => {
       {{ t('back') }}
     </VBtn>
     <VBtn @click="nextStep" color="primary" append-icon="mdi-chevron-right" location="center">
-      {{ t('next') }}
+      {{ currentStep === 'USERS_AND_RIGHTS' ? t('finish') : t('next') }}
     </VBtn>
   </LeftLayout>
 </template>
