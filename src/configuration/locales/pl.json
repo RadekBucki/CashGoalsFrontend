@@ -81,6 +81,7 @@
   "budget.goals.types.percentage": "Procent przychodów",
   "budget.goals.min": "Wartość minimalna",
   "budget.goals.max": "Wartość maksymalna",
+  "budget.goals.category": "Kategoria",
   "budget.goals.new": "Nowy cel",
   "budget.usersRights.define": "Zdefiniuj prawa użytkowników",
   "budget.usersRights.rights": "Prawa",
