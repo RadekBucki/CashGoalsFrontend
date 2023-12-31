@@ -81,5 +81,16 @@
   "budget.goals.min": "Minimum value",
   "budget.goals.max": "Maximum value",
   "budget.goals.category": "Category",
-  "budget.goals.new": "New goal"
+  "budget.goals.new": "New goal",
+  "budget.usersRights.define": "Define users rights",
+  "budget.usersRights.email": "Email",
+  "budget.usersRights.rights": "Rights",
+  "budget.usersRights.rights.editCategories": "Edit categories",
+  "budget.usersRights.rights.editExpenses": "Edit expenses",
+  "budget.usersRights.rights.editGoals": "Edit goals",
+  "budget.usersRights.rights.editIncomes": "Edit incomes",
+  "budget.usersRights.rights.editUsersAndRights": "Edit users and rights",
+  "budget.usersRights.rights.owner": "Owner",
+  "budget.usersRights.rights.view": "View",
+  "budget.usersRights.addUser": "Add user"
 }

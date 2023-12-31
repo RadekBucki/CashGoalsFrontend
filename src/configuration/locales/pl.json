@@ -80,5 +80,16 @@
   "budget.goals.types.percentage": "Procent przychodów",
   "budget.goals.min": "Wartość minimalna",
   "budget.goals.max": "Wartość maksymalna",
-  "budget.goals.new": "Nowy cel"
+  "budget.goals.new": "Nowy cel",
+  "budget.usersRights.define": "Zdefiniuj prawa użytkowników",
+  "budget.usersRights.rights": "Prawa",
+  "budget.usersRights.email": "Email",
+  "budget.usersRights.rights.editCategories": "Edycja kategorii",
+  "budget.usersRights.rights.editExpenses": "Edycja wydatków",
+  "budget.usersRights.rights.editGoals": "Edycja celów",
+  "budget.usersRights.rights.editIncomes": "Edycja przychodów",
+  "budget.usersRights.rights.editUsersAndRights": "Edycja użytkowników i praw",
+  "budget.usersRights.rights.owner": "Właściciel",
+  "budget.usersRights.rights.view": "Wyświetlanie",
+  "budget.usersRights.addUser": "Dodaj użytkownika"
 }

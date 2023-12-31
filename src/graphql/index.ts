@@ -887,6 +887,72 @@ export function useUpdateIncomesMutation(options: VueApolloComposable.UseMutatio
   return VueApolloComposable.useMutation<UpdateIncomesMutationOutput, UpdateIncomesMutationVariables>(UpdateIncomesDocument, options);
 }
 export type UpdateIncomesMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<UpdateIncomesMutationOutput, UpdateIncomesMutationVariables>;
+export const SetUsersRightsDocument = gql`
+    mutation setUsersRights($budgetId: UUID!, $usersRights: [UserRightsInput!]!) {
+  setUsersRights(budgetId: $budgetId, usersRights: $usersRights) {
+    user {
+      email
+    }
+    rights
+  }
+}
+    `;
+
+/**
+ * __useSetUsersRightsMutation__
+ *
+ * To run a mutation, you first call `useSetUsersRightsMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useSetUsersRightsMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useSetUsersRightsMutation({
+ *   variables: {
+ *     budgetId: // value for 'budgetId'
+ *     usersRights: // value for 'usersRights'
+ *   },
+ * });
+ */
+export function useSetUsersRightsMutation(options: VueApolloComposable.UseMutationOptions<SetUsersRightsMutationOutput, SetUsersRightsMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<SetUsersRightsMutationOutput, SetUsersRightsMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<SetUsersRightsMutationOutput, SetUsersRightsMutationVariables>(SetUsersRightsDocument, options);
+}
+export type SetUsersRightsMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<SetUsersRightsMutationOutput, SetUsersRightsMutationVariables>;
+export const UsersRightsDocument = gql`
+    query usersRights($budgetId: UUID!) {
+  usersRights(budgetId: $budgetId) {
+    user {
+      email
+    }
+    rights
+  }
+}
+    `;
+
+/**
+ * __useUsersRightsQuery__
+ *
+ * To run a query within a Vue component, call `useUsersRightsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUsersRightsQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param variables that will be passed into the query
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useUsersRightsQuery({
+ *   budgetId: // value for 'budgetId'
+ * });
+ */
+export function useUsersRightsQuery(variables: UsersRightsQueryVariables | VueCompositionApi.Ref<UsersRightsQueryVariables> | ReactiveFunction<UsersRightsQueryVariables>, options: VueApolloComposable.UseQueryOptions<UsersRightsQueryOutput, UsersRightsQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<UsersRightsQueryOutput, UsersRightsQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<UsersRightsQueryOutput, UsersRightsQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<UsersRightsQueryOutput, UsersRightsQueryVariables>(UsersRightsDocument, variables, options);
+}
+export function useUsersRightsLazyQuery(variables: UsersRightsQueryVariables | VueCompositionApi.Ref<UsersRightsQueryVariables> | ReactiveFunction<UsersRightsQueryVariables>, options: VueApolloComposable.UseQueryOptions<UsersRightsQueryOutput, UsersRightsQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<UsersRightsQueryOutput, UsersRightsQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<UsersRightsQueryOutput, UsersRightsQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<UsersRightsQueryOutput, UsersRightsQueryVariables>(UsersRightsDocument, variables, options);
+}
+export type UsersRightsQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<UsersRightsQueryOutput, UsersRightsQueryVariables>;
 export const ActivateUserDocument = gql`
     mutation activateUser($email: String!, $token: String!) {
   activateUser(email: $email, token: $token)
@@ -1518,6 +1584,21 @@ export type UpdateIncomesMutationVariables = Exact<{
 
 
 export type UpdateIncomesMutationOutput = { deleteIncomes: boolean, updateIncomes: Array<{ id: number, name: string, description?: string | null }> };
+
+export type SetUsersRightsMutationVariables = Exact<{
+  budgetId: Scalars['UUID']['input'];
+  usersRights: Array<UserRightsInput> | UserRightsInput;
+}>;
+
+
+export type SetUsersRightsMutationOutput = { setUsersRights: Array<{ rights: Array<Right>, user: { email: string } }> };
+
+export type UsersRightsQueryVariables = Exact<{
+  budgetId: Scalars['UUID']['input'];
+}>;
+
+
+export type UsersRightsQueryOutput = { usersRights: Array<{ rights: Array<Right>, user: { email: string } }> };
 
 export type ActivateUserMutationVariables = Exact<{
   email: Scalars['String']['input'];
