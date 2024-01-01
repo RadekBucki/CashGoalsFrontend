@@ -67,6 +67,7 @@
   "budget.create": "Create budget",
   "budget.create.name": "Set budget name",
   "budget.name": "Budget name",
+  "budget.currency": "zł",
   "budget.name.validation.error": "Budget name must be between 1 and 100 characters",
   "next": "Next",
   "back": "Back",

@@ -77,14 +77,7 @@ const editYear: Ref<boolean> = ref(false);
           <h3>{{ t('budget.goals') }}</h3>
         </VExpansionPanelTitle>
       </VExpansionPanel>
-      <VExpansionPanel value="incomes">
-        <VExpansionPanelTitle>
-          <h3>{{ t('budget.incomes') }}</h3>
-        </VExpansionPanelTitle>
-        <VExpansionPanelText>
-          <IncomesItems :budget="budget" :month="month" :year="year" />
-        </VExpansionPanelText>
-      </VExpansionPanel>
+      <IncomesItems :budget="budget" :month="month" :year="year" />
       <VExpansionPanel value="expenses">
         <VExpansionPanelTitle>
           <h3>{{ t('budget.expenses') }}</h3>

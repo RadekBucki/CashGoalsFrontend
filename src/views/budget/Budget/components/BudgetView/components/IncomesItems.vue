@@ -7,7 +7,7 @@ import { ApolloQueryResult } from '@apollo/client';
 import { useModalStore } from '@/components/Modal';
 import {
   Budget,
-  Income,
+  Income, IncomeItem,
   IncomeItemsOutput, IncomeItemsQueryOutput, useDeleteIncomeItemMutation,
   useIncomeItemsQuery,
 } from '@/graphql';
@@ -70,24 +70,43 @@ const deleteIncomeItem = (incomeItem: IncomeItemsOutput) => {
 </script>
 
 <template>
-  <div>
-    <div v-for="income in incomesItems" :key="income.id">
-      <h4>{{ income.name }} {{ income.description ? '-' : '' }} {{ income.description }}</h4>
-      <VDataTable
-        :headers="[
-          { title: t('budget.incomeItem.date'), value: 'date' },
-          { title: t('budget.incomeItem.name'), value: 'name' },
-          { title: t('budget.incomeItem.description'), value: 'description' },
-          { title: t('budget.incomeItem.amount'), value: 'amount' },
-          { value: 'actions', align: 'end' },
-        ]"
-        :items="income.incomeItems"
-      >
-        <template v-slot:[`item.actions`]="{ item }">
-          <VBtn icon="mdi-pencil" variant="plain" class="pa-0" style="min-width: 0;" @click="editIncomeItem(item)" />
-          <VBtn icon="mdi-delete" variant="plain" class="pa-0" style="min-width: 0;" @click="deleteIncomeItem(item)" />
-        </template>
-      </VDataTable>
-    </div>
-  </div>
+  <VExpansionPanel value="incomes">
+    <VExpansionPanelTitle>
+      <h3>{{
+        t('budget.incomes')
+          + ': '
+          + incomesItems
+            .map((incomeItemsOutput: IncomeItemsOutput) => incomeItemsOutput.incomeItems
+              .map((incomeItem: IncomeItem) => incomeItem.amount)
+              .reduce((a: number, b: number) => a + b, 0))
+            .reduce((a: number, b: number) => a + b, 0)
+          + ' ' + t('budget.currency')
+      }}</h3>
+    </VExpansionPanelTitle>
+    <VExpansionPanelText>
+      <div v-for="income in incomesItems" :key="income.id">
+        <h4>
+          {{ income.name }}: {{
+            income.incomeItems.map((incomeItem: IncomeItem) => incomeItem.amount).reduce((a: number, b: number) => a + b, 0)
+          }} {{ t('budget.currency') }}
+        </h4>
+        <p v-if="income.description">{{ income.description }}</p>
+        <VDataTable
+          :headers="[
+            { title: t('budget.incomeItem.date'), value: 'date' },
+            { title: t('budget.incomeItem.name'), value: 'name' },
+            { title: t('budget.incomeItem.description'), value: 'description' },
+            { title: `${t('budget.incomeItem.amount')} (${t('budget.currency')})`, value: 'amount' },
+            { value: 'actions', align: 'end' },
+          ]"
+          :items="income.incomeItems"
+        >
+          <template v-slot:[`item.actions`]="{ item }">
+            <VBtn icon="mdi-pencil" variant="plain" class="pa-0" style="min-width: 0;" @click="editIncomeItem(item)" />
+            <VBtn icon="mdi-delete" variant="plain" class="pa-0" style="min-width: 0;" @click="deleteIncomeItem(item)" />
+          </template>
+        </VDataTable>
+      </div>
+    </VExpansionPanelText>
+  </VExpansionPanel>
 </template>

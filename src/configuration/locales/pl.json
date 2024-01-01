@@ -67,6 +67,7 @@
   "budget.create": "Utwórz budżet",
   "budget.create.name": "Nadaj nazwę budżetowi",
   "budget.name": "Nazwa budżetu",
+  "budget.currency": "zł",
   "budget.name.validation.error": "Nazwa budżetu musi mieć pomiędzy 1 a 100 znaków.",
   "next": "Dalej",
   "back": "Wstecz",
