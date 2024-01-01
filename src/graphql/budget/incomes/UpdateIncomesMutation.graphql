@@ -1,0 +1,8 @@
+mutation updateIncomes($budgetId: UUID!, $removedIncomeIds: [ID!]!, $incomes: [IncomeInput!]!) {
+    deleteIncomes(budgetId: $budgetId, incomeIds: $removedIncomeIds)
+    updateIncomes(budgetId: $budgetId, incomes: $incomes) {
+        id
+        name
+        description
+    }
+}

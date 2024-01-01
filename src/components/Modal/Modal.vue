@@ -20,7 +20,7 @@ function close() {
   <VDialog v-model="visible" close-on-back close-on-content-click>
     <CenteredLayout :sm="12" :md="6">
       <VCard class="pa-10">
-        <VCardActions class="close-button">
+        <VCardActions class="close-button" v-if="modal.closeable !== false">
           <VSpacer />
           <VBtn icon @click="close">
             <VIcon>mdi-close</VIcon>

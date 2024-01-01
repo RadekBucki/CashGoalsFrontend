@@ -1,0 +1,245 @@
+query goals($budgetId: UUID!) {
+    goals(budgetId: $budgetId) {
+        id
+        name
+        description
+        type
+        min
+        max
+        category {
+            id
+            name
+            description
+        }
+    }
+    visibleCategories(budgetId: $budgetId) {
+        id
+        name
+        description
+        children {
+            id
+            name
+            description
+            children {
+                id
+                name
+                description
+                children {
+                    id
+                    name
+                    description
+                    children {
+                        id
+                        name
+                        description
+                        children {
+                            id
+                            name
+                            description
+                        }
+                        children {
+                            id
+                            name
+                            description
+                            children {
+                                id
+                                name
+                                description
+                            }
+                            children {
+                                id
+                                name
+                                description
+                                children {
+                                    id
+                                    name
+                                    description
+                                }
+                                children {
+                                    id
+                                    name
+                                    description
+                                    children {
+                                        id
+                                        name
+                                        description
+                                    }
+                                    children {
+                                        id
+                                        name
+                                        description
+                                        children {
+                                            id
+                                            name
+                                            description
+                                        }
+                                        children {
+                                            id
+                                            name
+                                            description
+                                            children {
+                                                id
+                                                name
+                                                description
+                                            }
+                                            children {
+                                                id
+                                                name
+                                                description
+                                                children {
+                                                    id
+                                                    name
+                                                    description
+                                                }
+                                                children {
+                                                    id
+                                                    name
+                                                    description
+                                                    children {
+                                                        id
+                                                        name
+                                                        description
+                                                    }
+                                                    children {
+                                                        id
+                                                        name
+                                                        description
+                                                        children {
+                                                            id
+                                                            name
+                                                            description
+                                                        }
+                                                        children {
+                                                            id
+                                                            name
+                                                            description
+                                                            children {
+                                                                id
+                                                                name
+                                                                description
+                                                            }
+                                                            children {
+                                                                id
+                                                                name
+                                                                description
+                                                                children {
+                                                                    id
+                                                                    name
+                                                                    description
+                                                                }
+                                                                children {
+                                                                    id
+                                                                    name
+                                                                    description
+                                                                    children {
+                                                                        id
+                                                                        name
+                                                                        description
+                                                                    }
+                                                                    children {
+                                                                        id
+                                                                        name
+                                                                        description
+                                                                        children {
+                                                                            id
+                                                                            name
+                                                                            description
+                                                                        }
+                                                                        children {
+                                                                            id
+                                                                            name
+                                                                            description
+                                                                            children {
+                                                                                id
+                                                                                name
+                                                                                description
+                                                                            }
+                                                                            children {
+                                                                                id
+                                                                                name
+                                                                                description
+                                                                                children {
+                                                                                    id
+                                                                                    name
+                                                                                    description
+                                                                                }
+                                                                                children {
+                                                                                    id
+                                                                                    name
+                                                                                    description
+                                                                                    children {
+                                                                                        id
+                                                                                        name
+                                                                                        description
+                                                                                    }
+                                                                                    children {
+                                                                                        id
+                                                                                        name
+                                                                                        description
+                                                                                        children {
+                                                                                            id
+                                                                                            name
+                                                                                            description
+                                                                                        }
+                                                                                        children {
+                                                                                            id
+                                                                                            name
+                                                                                            description
+                                                                                            children {
+                                                                                                id
+                                                                                                name
+                                                                                                description
+                                                                                            }
+                                                                                            children {
+                                                                                                id
+                                                                                                name
+                                                                                                description
+                                                                                                children {
+                                                                                                    id
+                                                                                                    name
+                                                                                                    description
+                                                                                                }
+                                                                                                children {
+                                                                                                    id
+                                                                                                    name
+                                                                                                    description
+                                                                                                    children {
+                                                                                                        id
+                                                                                                        name
+                                                                                                        description
+                                                                                                    }
+                                                                                                    children {
+                                                                                                        id
+                                                                                                        name
+                                                                                                        description
+                                                                                                        children {
+                                                                                                            id
+                                                                                                            name
+                                                                                                            description
+                                                                                                        }
+                                                                                                    }
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

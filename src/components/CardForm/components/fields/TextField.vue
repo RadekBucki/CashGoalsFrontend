@@ -40,7 +40,7 @@ const requiredFieldRule = [(v: string) => !!v || 'required.validation.error'];
 <template>
   <VTextField
     v-model="value"
-    :label="t(field.name)"
+    :label="t(field.displayName ?? field.name)"
     :rules="field.rules?.length ? field.rules : (field.required ? requiredFieldRule : [])"
     :validateOn="field.validateOn ?? 'blur'"
     :required="field.required ?? false"

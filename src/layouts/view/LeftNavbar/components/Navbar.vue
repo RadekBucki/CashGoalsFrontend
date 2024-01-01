@@ -3,16 +3,28 @@ import { ref, Ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useLocale } from 'vuetify';
 
+import { ApolloQueryResult } from '@apollo/client';
+
 import LanguageSwitcher from '@/components/LanguageSwitcher.vue';
 import Logo from '@/components/Logo.vue';
 import ThemeToggle from '@/components/ThemeToggle.vue';
 import useApp from '@/composables/useApp';
+import { Budget, BudgetsQueryOutput, useBudgetsQuery } from '@/graphql';
 
 const app = useApp();
 const { t } = useLocale();
 const { currentRoute } = useRouter();
 
 const showFullNavigation: Ref<boolean> = ref(true);
+
+const budgets: Ref<Budget[]> = ref<Budget[]>([]);
+const { onResult } = useBudgetsQuery({ fetchPolicy: 'cache-first' });
+onResult((result: ApolloQueryResult<BudgetsQueryOutput>) => {
+  if (!result.data?.budgets) {
+    return;
+  }
+  budgets.value = result.data.budgets;
+});
 </script>
 
 <template>
@@ -29,8 +41,27 @@ const showFullNavigation: Ref<boolean> = ref(true);
     <VSpacer />
 
     <VList>
-      <VListItem :active="currentRoute.fullPath === '/'" prepend-icon="mdi-view-dashboard" :title="t('dashboard')" :to="{ name: 'Dashboard' }" />
+      <VListItem
+        :active="currentRoute.fullPath === '/'"
+        prepend-icon="mdi-view-dashboard"
+        :title="t('dashboard')"
+        :to="{ name: 'Dashboard' }"
+      />
       <VListItem prepend-icon="mdi-account-edit" :title="t('profile.data')" :to="{ name: 'Profile' }" />
+      <VListGroup>
+        <template v-slot:activator="{ props }">
+          <VListItem v-bind="props" prepend-icon="mdi-wallet-bifold" :title="t('budgets')" />
+        </template>
+        <template v-slot:default v-if="showFullNavigation">
+          <VListItem
+            v-for="budget in budgets"
+            :key="budget.id"
+            :title="budget.name"
+            :to="{ name: 'Budget', params: { id: budget.id } }"
+          />
+          <VListItem prepend-icon="mdi-plus" :title="t('budget.create')" :to="{ name: 'BudgetCreate' }" />
+        </template>
+      </VListGroup>
     </VList>
 
     <template v-slot:append>

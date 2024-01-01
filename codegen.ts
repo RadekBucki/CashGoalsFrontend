@@ -12,7 +12,7 @@ const config: CodegenConfig = {
         {
           add: {
             content: '/* eslint-disable */\n'
-              + '// noinspection ES6UnusedImports,JSUnusedGlobalSymbols,JSUnusedGlobalSymbols\n',
+              + '// noinspection ES6UnusedImports,JSUnusedGlobalSymbols,JSUnusedGlobalSymbols,DuplicatedCode\n',
           },
         },
       ],
@@ -22,6 +22,16 @@ const config: CodegenConfig = {
         operationResultSuffix: 'Output',
         skipTypename: true,
         vueCompositionApiImportFrom: 'vue',
+        scalars: {
+          ID: {
+            input: 'number',
+            output: 'number',
+          },
+          UUID: {
+            input: 'string',
+            output: 'string',
+          },
+        },
       },
     },
   },

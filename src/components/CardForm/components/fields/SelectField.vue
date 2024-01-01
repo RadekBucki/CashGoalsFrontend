@@ -37,7 +37,7 @@ const requiredFieldRule = [(v: string) => !!v || 'required.validation.error'];
 <template>
   <VSelect
     v-model="value"
-    :label="t(field.name)"
+    :label="t(field.displayName ?? field.name)"
     :items="field.items ?? []"
     :rules="field.rules?.length ? field.rules : (field.required ? requiredFieldRule : [])"
     :validateOn="field.validateOn ?? 'blur'"

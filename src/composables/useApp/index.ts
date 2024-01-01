@@ -23,6 +23,8 @@ export default function useApp() {
 
   function setAuthorizationOutput(authorizationOutput: AuthorizationOutput): void {
     appStore.setAuthorizationOutput(authorizationOutput);
+    theme.global.name.value = appStore.isDarkMode ? 'dark' : 'light';
+    current.value = appStore.locale;
   }
 
   function toggleDarkMode(): void {

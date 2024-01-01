@@ -8,6 +8,7 @@ type ValidationRule =
 
 export type Field = {
   name: string;
+  displayName?: string;
   rules?: ValidationRule[];
   validateOn?: 'lazy' | ('input' | 'blur' | 'submit') | 'input lazy' | 'blur lazy' | 'submit lazy' | 'lazy input' | 'lazy blur' | 'lazy submit';
   required?: boolean;

@@ -1,5 +1,5 @@
 /* eslint-disable */
-// noinspection ES6UnusedImports,JSUnusedGlobalSymbols,JSUnusedGlobalSymbols
+// noinspection ES6UnusedImports,JSUnusedGlobalSymbols,JSUnusedGlobalSymbols,DuplicatedCode
 
 import gql from 'graphql-tag';
 import * as VueApolloComposable from '@vue/apollo-composable';
@@ -13,6 +13,946 @@ export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> =
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 export type ReactiveFunction<TParam> = () => TParam;
 
+export const BudgetDocument = gql`
+    query Budget($id: UUID!) {
+  budget(id: $id) {
+    id
+    name
+    initializationStep
+  }
+}
+    `;
+
+/**
+ * __useBudgetQuery__
+ *
+ * To run a query within a Vue component, call `useBudgetQuery` and pass it any options that fit your needs.
+ * When your component renders, `useBudgetQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param variables that will be passed into the query
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useBudgetQuery({
+ *   id: // value for 'id'
+ * });
+ */
+export function useBudgetQuery(variables: BudgetQueryVariables | VueCompositionApi.Ref<BudgetQueryVariables> | ReactiveFunction<BudgetQueryVariables>, options: VueApolloComposable.UseQueryOptions<BudgetQueryOutput, BudgetQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<BudgetQueryOutput, BudgetQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<BudgetQueryOutput, BudgetQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<BudgetQueryOutput, BudgetQueryVariables>(BudgetDocument, variables, options);
+}
+export function useBudgetLazyQuery(variables: BudgetQueryVariables | VueCompositionApi.Ref<BudgetQueryVariables> | ReactiveFunction<BudgetQueryVariables>, options: VueApolloComposable.UseQueryOptions<BudgetQueryOutput, BudgetQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<BudgetQueryOutput, BudgetQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<BudgetQueryOutput, BudgetQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<BudgetQueryOutput, BudgetQueryVariables>(BudgetDocument, variables, options);
+}
+export type BudgetQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<BudgetQueryOutput, BudgetQueryVariables>;
+export const BudgetsDocument = gql`
+    query Budgets {
+  budgets {
+    id
+    name
+    initializationStep
+  }
+}
+    `;
+
+/**
+ * __useBudgetsQuery__
+ *
+ * To run a query within a Vue component, call `useBudgetsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useBudgetsQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useBudgetsQuery();
+ */
+export function useBudgetsQuery(options: VueApolloComposable.UseQueryOptions<BudgetsQueryOutput, BudgetsQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<BudgetsQueryOutput, BudgetsQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<BudgetsQueryOutput, BudgetsQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<BudgetsQueryOutput, BudgetsQueryVariables>(BudgetsDocument, {}, options);
+}
+export function useBudgetsLazyQuery(options: VueApolloComposable.UseQueryOptions<BudgetsQueryOutput, BudgetsQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<BudgetsQueryOutput, BudgetsQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<BudgetsQueryOutput, BudgetsQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<BudgetsQueryOutput, BudgetsQueryVariables>(BudgetsDocument, {}, options);
+}
+export type BudgetsQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<BudgetsQueryOutput, BudgetsQueryVariables>;
+export const CreateBudgetDocument = gql`
+    mutation CreateBudget($name: String!) {
+  createBudget(name: $name) {
+    id
+  }
+}
+    `;
+
+/**
+ * __useCreateBudgetMutation__
+ *
+ * To run a mutation, you first call `useCreateBudgetMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useCreateBudgetMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useCreateBudgetMutation({
+ *   variables: {
+ *     name: // value for 'name'
+ *   },
+ * });
+ */
+export function useCreateBudgetMutation(options: VueApolloComposable.UseMutationOptions<CreateBudgetMutationOutput, CreateBudgetMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<CreateBudgetMutationOutput, CreateBudgetMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<CreateBudgetMutationOutput, CreateBudgetMutationVariables>(CreateBudgetDocument, options);
+}
+export type CreateBudgetMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<CreateBudgetMutationOutput, CreateBudgetMutationVariables>;
+export const CategoriesDocument = gql`
+    query categories($budgetId: UUID!) {
+  categories(budgetId: $budgetId) {
+    id
+    parentId
+    name
+    description
+    visible
+    children {
+      id
+      parentId
+      name
+      description
+      visible
+      children {
+        id
+        parentId
+        name
+        description
+        visible
+        children {
+          id
+          parentId
+          name
+          description
+          visible
+          children {
+            id
+            parentId
+            name
+            description
+            visible
+            children {
+              id
+              parentId
+              name
+              description
+              visible
+              children {
+                id
+                parentId
+                name
+                description
+                visible
+                children {
+                  id
+                  parentId
+                  name
+                  description
+                  visible
+                  children {
+                    id
+                    parentId
+                    name
+                    description
+                    visible
+                    children {
+                      id
+                      parentId
+                      name
+                      description
+                      visible
+                      children {
+                        id
+                        parentId
+                        name
+                        description
+                        visible
+                        children {
+                          id
+                          parentId
+                          name
+                          description
+                          visible
+                          children {
+                            id
+                            parentId
+                            name
+                            description
+                            visible
+                            children {
+                              id
+                              parentId
+                              name
+                              description
+                              visible
+                              children {
+                                id
+                                parentId
+                                name
+                                description
+                                visible
+                                children {
+                                  id
+                                  parentId
+                                  name
+                                  description
+                                  visible
+                                  children {
+                                    id
+                                    parentId
+                                    name
+                                    description
+                                    visible
+                                    children {
+                                      id
+                                      parentId
+                                      name
+                                      description
+                                      visible
+                                      children {
+                                        id
+                                        parentId
+                                        name
+                                        description
+                                        visible
+                                        children {
+                                          id
+                                          parentId
+                                          name
+                                          description
+                                          visible
+                                          children {
+                                            id
+                                            parentId
+                                            name
+                                            description
+                                            visible
+                                            children {
+                                              id
+                                              parentId
+                                              name
+                                              description
+                                              visible
+                                              children {
+                                                id
+                                                parentId
+                                                name
+                                                description
+                                                visible
+                                                children {
+                                                  id
+                                                  parentId
+                                                  name
+                                                  description
+                                                  visible
+                                                  children {
+                                                    id
+                                                    parentId
+                                                    name
+                                                    description
+                                                    visible
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useCategoriesQuery__
+ *
+ * To run a query within a Vue component, call `useCategoriesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCategoriesQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param variables that will be passed into the query
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useCategoriesQuery({
+ *   budgetId: // value for 'budgetId'
+ * });
+ */
+export function useCategoriesQuery(variables: CategoriesQueryVariables | VueCompositionApi.Ref<CategoriesQueryVariables> | ReactiveFunction<CategoriesQueryVariables>, options: VueApolloComposable.UseQueryOptions<CategoriesQueryOutput, CategoriesQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<CategoriesQueryOutput, CategoriesQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<CategoriesQueryOutput, CategoriesQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<CategoriesQueryOutput, CategoriesQueryVariables>(CategoriesDocument, variables, options);
+}
+export function useCategoriesLazyQuery(variables: CategoriesQueryVariables | VueCompositionApi.Ref<CategoriesQueryVariables> | ReactiveFunction<CategoriesQueryVariables>, options: VueApolloComposable.UseQueryOptions<CategoriesQueryOutput, CategoriesQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<CategoriesQueryOutput, CategoriesQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<CategoriesQueryOutput, CategoriesQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<CategoriesQueryOutput, CategoriesQueryVariables>(CategoriesDocument, variables, options);
+}
+export type CategoriesQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<CategoriesQueryOutput, CategoriesQueryVariables>;
+export const UpdateCategoriesDocument = gql`
+    mutation updateCategories($budgetId: UUID!, $removedCategoryIds: [ID!]!, $categories: [CategoryInput!]!) {
+  deleteCategories(budgetId: $budgetId, categoryIds: $removedCategoryIds)
+  updateCategories(budgetId: $budgetId, categories: $categories) {
+    id
+    parentId
+    name
+    description
+    visible
+    children {
+      id
+      parentId
+      name
+      description
+      visible
+      children {
+        id
+        parentId
+        name
+        description
+        visible
+        children {
+          id
+          parentId
+          name
+          description
+          visible
+          children {
+            id
+            parentId
+            name
+            description
+            visible
+            children {
+              id
+              parentId
+              name
+              description
+              visible
+              children {
+                id
+                parentId
+                name
+                description
+                visible
+                children {
+                  id
+                  parentId
+                  name
+                  description
+                  visible
+                  children {
+                    id
+                    parentId
+                    name
+                    description
+                    visible
+                    children {
+                      id
+                      parentId
+                      name
+                      description
+                      visible
+                      children {
+                        id
+                        parentId
+                        name
+                        description
+                        visible
+                        children {
+                          id
+                          parentId
+                          name
+                          description
+                          visible
+                          children {
+                            id
+                            parentId
+                            name
+                            description
+                            visible
+                            children {
+                              id
+                              parentId
+                              name
+                              description
+                              visible
+                              children {
+                                id
+                                parentId
+                                name
+                                description
+                                visible
+                                children {
+                                  id
+                                  parentId
+                                  name
+                                  description
+                                  visible
+                                  children {
+                                    id
+                                    parentId
+                                    name
+                                    description
+                                    visible
+                                    children {
+                                      id
+                                      parentId
+                                      name
+                                      description
+                                      visible
+                                      children {
+                                        id
+                                        parentId
+                                        name
+                                        description
+                                        visible
+                                        children {
+                                          id
+                                          parentId
+                                          name
+                                          description
+                                          visible
+                                          children {
+                                            id
+                                            parentId
+                                            name
+                                            description
+                                            visible
+                                            children {
+                                              id
+                                              parentId
+                                              name
+                                              description
+                                              visible
+                                              children {
+                                                id
+                                                parentId
+                                                name
+                                                description
+                                                visible
+                                                children {
+                                                  id
+                                                  parentId
+                                                  name
+                                                  description
+                                                  visible
+                                                  children {
+                                                    id
+                                                    parentId
+                                                    name
+                                                    description
+                                                    visible
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useUpdateCategoriesMutation__
+ *
+ * To run a mutation, you first call `useUpdateCategoriesMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateCategoriesMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useUpdateCategoriesMutation({
+ *   variables: {
+ *     budgetId: // value for 'budgetId'
+ *     removedCategoryIds: // value for 'removedCategoryIds'
+ *     categories: // value for 'categories'
+ *   },
+ * });
+ */
+export function useUpdateCategoriesMutation(options: VueApolloComposable.UseMutationOptions<UpdateCategoriesMutationOutput, UpdateCategoriesMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<UpdateCategoriesMutationOutput, UpdateCategoriesMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<UpdateCategoriesMutationOutput, UpdateCategoriesMutationVariables>(UpdateCategoriesDocument, options);
+}
+export type UpdateCategoriesMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<UpdateCategoriesMutationOutput, UpdateCategoriesMutationVariables>;
+export const GoalsDocument = gql`
+    query goals($budgetId: UUID!) {
+  goals(budgetId: $budgetId) {
+    id
+    name
+    description
+    type
+    min
+    max
+    category {
+      id
+      name
+      description
+    }
+  }
+  visibleCategories(budgetId: $budgetId) {
+    id
+    name
+    description
+    children {
+      id
+      name
+      description
+      children {
+        id
+        name
+        description
+        children {
+          id
+          name
+          description
+          children {
+            id
+            name
+            description
+            children {
+              id
+              name
+              description
+            }
+            children {
+              id
+              name
+              description
+              children {
+                id
+                name
+                description
+              }
+              children {
+                id
+                name
+                description
+                children {
+                  id
+                  name
+                  description
+                }
+                children {
+                  id
+                  name
+                  description
+                  children {
+                    id
+                    name
+                    description
+                  }
+                  children {
+                    id
+                    name
+                    description
+                    children {
+                      id
+                      name
+                      description
+                    }
+                    children {
+                      id
+                      name
+                      description
+                      children {
+                        id
+                        name
+                        description
+                      }
+                      children {
+                        id
+                        name
+                        description
+                        children {
+                          id
+                          name
+                          description
+                        }
+                        children {
+                          id
+                          name
+                          description
+                          children {
+                            id
+                            name
+                            description
+                          }
+                          children {
+                            id
+                            name
+                            description
+                            children {
+                              id
+                              name
+                              description
+                            }
+                            children {
+                              id
+                              name
+                              description
+                              children {
+                                id
+                                name
+                                description
+                              }
+                              children {
+                                id
+                                name
+                                description
+                                children {
+                                  id
+                                  name
+                                  description
+                                }
+                                children {
+                                  id
+                                  name
+                                  description
+                                  children {
+                                    id
+                                    name
+                                    description
+                                  }
+                                  children {
+                                    id
+                                    name
+                                    description
+                                    children {
+                                      id
+                                      name
+                                      description
+                                    }
+                                    children {
+                                      id
+                                      name
+                                      description
+                                      children {
+                                        id
+                                        name
+                                        description
+                                      }
+                                      children {
+                                        id
+                                        name
+                                        description
+                                        children {
+                                          id
+                                          name
+                                          description
+                                        }
+                                        children {
+                                          id
+                                          name
+                                          description
+                                          children {
+                                            id
+                                            name
+                                            description
+                                          }
+                                          children {
+                                            id
+                                            name
+                                            description
+                                            children {
+                                              id
+                                              name
+                                              description
+                                            }
+                                            children {
+                                              id
+                                              name
+                                              description
+                                              children {
+                                                id
+                                                name
+                                                description
+                                              }
+                                              children {
+                                                id
+                                                name
+                                                description
+                                                children {
+                                                  id
+                                                  name
+                                                  description
+                                                }
+                                                children {
+                                                  id
+                                                  name
+                                                  description
+                                                  children {
+                                                    id
+                                                    name
+                                                    description
+                                                  }
+                                                  children {
+                                                    id
+                                                    name
+                                                    description
+                                                    children {
+                                                      id
+                                                      name
+                                                      description
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGoalsQuery__
+ *
+ * To run a query within a Vue component, call `useGoalsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGoalsQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param variables that will be passed into the query
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useGoalsQuery({
+ *   budgetId: // value for 'budgetId'
+ * });
+ */
+export function useGoalsQuery(variables: GoalsQueryVariables | VueCompositionApi.Ref<GoalsQueryVariables> | ReactiveFunction<GoalsQueryVariables>, options: VueApolloComposable.UseQueryOptions<GoalsQueryOutput, GoalsQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<GoalsQueryOutput, GoalsQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<GoalsQueryOutput, GoalsQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<GoalsQueryOutput, GoalsQueryVariables>(GoalsDocument, variables, options);
+}
+export function useGoalsLazyQuery(variables: GoalsQueryVariables | VueCompositionApi.Ref<GoalsQueryVariables> | ReactiveFunction<GoalsQueryVariables>, options: VueApolloComposable.UseQueryOptions<GoalsQueryOutput, GoalsQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<GoalsQueryOutput, GoalsQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<GoalsQueryOutput, GoalsQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<GoalsQueryOutput, GoalsQueryVariables>(GoalsDocument, variables, options);
+}
+export type GoalsQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<GoalsQueryOutput, GoalsQueryVariables>;
+export const UpdateGoalsDocument = gql`
+    mutation updateGoals($budgetId: UUID!, $removedGoalsIds: [ID!]!, $goals: [GoalInput!]!) {
+  deleteGoals(budgetId: $budgetId, goalIds: $removedGoalsIds)
+  updateGoals(budgetId: $budgetId, goals: $goals) {
+    id
+    name
+    description
+    type
+    min
+    max
+    category {
+      id
+      name
+      description
+    }
+  }
+}
+    `;
+
+/**
+ * __useUpdateGoalsMutation__
+ *
+ * To run a mutation, you first call `useUpdateGoalsMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateGoalsMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useUpdateGoalsMutation({
+ *   variables: {
+ *     budgetId: // value for 'budgetId'
+ *     removedGoalsIds: // value for 'removedGoalsIds'
+ *     goals: // value for 'goals'
+ *   },
+ * });
+ */
+export function useUpdateGoalsMutation(options: VueApolloComposable.UseMutationOptions<UpdateGoalsMutationOutput, UpdateGoalsMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<UpdateGoalsMutationOutput, UpdateGoalsMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<UpdateGoalsMutationOutput, UpdateGoalsMutationVariables>(UpdateGoalsDocument, options);
+}
+export type UpdateGoalsMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<UpdateGoalsMutationOutput, UpdateGoalsMutationVariables>;
+export const IncomesDocument = gql`
+    query incomes($budgetId: UUID!) {
+  incomes(budgetId: $budgetId) {
+    id
+    name
+    description
+  }
+}
+    `;
+
+/**
+ * __useIncomesQuery__
+ *
+ * To run a query within a Vue component, call `useIncomesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useIncomesQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param variables that will be passed into the query
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useIncomesQuery({
+ *   budgetId: // value for 'budgetId'
+ * });
+ */
+export function useIncomesQuery(variables: IncomesQueryVariables | VueCompositionApi.Ref<IncomesQueryVariables> | ReactiveFunction<IncomesQueryVariables>, options: VueApolloComposable.UseQueryOptions<IncomesQueryOutput, IncomesQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<IncomesQueryOutput, IncomesQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<IncomesQueryOutput, IncomesQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<IncomesQueryOutput, IncomesQueryVariables>(IncomesDocument, variables, options);
+}
+export function useIncomesLazyQuery(variables: IncomesQueryVariables | VueCompositionApi.Ref<IncomesQueryVariables> | ReactiveFunction<IncomesQueryVariables>, options: VueApolloComposable.UseQueryOptions<IncomesQueryOutput, IncomesQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<IncomesQueryOutput, IncomesQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<IncomesQueryOutput, IncomesQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<IncomesQueryOutput, IncomesQueryVariables>(IncomesDocument, variables, options);
+}
+export type IncomesQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<IncomesQueryOutput, IncomesQueryVariables>;
+export const UpdateIncomesDocument = gql`
+    mutation updateIncomes($budgetId: UUID!, $removedIncomeIds: [ID!]!, $incomes: [IncomeInput!]!) {
+  deleteIncomes(budgetId: $budgetId, incomeIds: $removedIncomeIds)
+  updateIncomes(budgetId: $budgetId, incomes: $incomes) {
+    id
+    name
+    description
+  }
+}
+    `;
+
+/**
+ * __useUpdateIncomesMutation__
+ *
+ * To run a mutation, you first call `useUpdateIncomesMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateIncomesMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useUpdateIncomesMutation({
+ *   variables: {
+ *     budgetId: // value for 'budgetId'
+ *     removedIncomeIds: // value for 'removedIncomeIds'
+ *     incomes: // value for 'incomes'
+ *   },
+ * });
+ */
+export function useUpdateIncomesMutation(options: VueApolloComposable.UseMutationOptions<UpdateIncomesMutationOutput, UpdateIncomesMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<UpdateIncomesMutationOutput, UpdateIncomesMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<UpdateIncomesMutationOutput, UpdateIncomesMutationVariables>(UpdateIncomesDocument, options);
+}
+export type UpdateIncomesMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<UpdateIncomesMutationOutput, UpdateIncomesMutationVariables>;
+export const SetUsersRightsDocument = gql`
+    mutation setUsersRights($budgetId: UUID!, $usersRights: [UserRightsInput!]!) {
+  setUsersRights(budgetId: $budgetId, usersRights: $usersRights) {
+    user {
+      email
+    }
+    rights
+  }
+}
+    `;
+
+/**
+ * __useSetUsersRightsMutation__
+ *
+ * To run a mutation, you first call `useSetUsersRightsMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useSetUsersRightsMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useSetUsersRightsMutation({
+ *   variables: {
+ *     budgetId: // value for 'budgetId'
+ *     usersRights: // value for 'usersRights'
+ *   },
+ * });
+ */
+export function useSetUsersRightsMutation(options: VueApolloComposable.UseMutationOptions<SetUsersRightsMutationOutput, SetUsersRightsMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<SetUsersRightsMutationOutput, SetUsersRightsMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<SetUsersRightsMutationOutput, SetUsersRightsMutationVariables>(SetUsersRightsDocument, options);
+}
+export type SetUsersRightsMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<SetUsersRightsMutationOutput, SetUsersRightsMutationVariables>;
+export const UsersRightsDocument = gql`
+    query usersRights($budgetId: UUID!) {
+  usersRights(budgetId: $budgetId) {
+    user {
+      email
+    }
+    rights
+  }
+}
+    `;
+
+/**
+ * __useUsersRightsQuery__
+ *
+ * To run a query within a Vue component, call `useUsersRightsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUsersRightsQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param variables that will be passed into the query
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useUsersRightsQuery({
+ *   budgetId: // value for 'budgetId'
+ * });
+ */
+export function useUsersRightsQuery(variables: UsersRightsQueryVariables | VueCompositionApi.Ref<UsersRightsQueryVariables> | ReactiveFunction<UsersRightsQueryVariables>, options: VueApolloComposable.UseQueryOptions<UsersRightsQueryOutput, UsersRightsQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<UsersRightsQueryOutput, UsersRightsQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<UsersRightsQueryOutput, UsersRightsQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<UsersRightsQueryOutput, UsersRightsQueryVariables>(UsersRightsDocument, variables, options);
+}
+export function useUsersRightsLazyQuery(variables: UsersRightsQueryVariables | VueCompositionApi.Ref<UsersRightsQueryVariables> | ReactiveFunction<UsersRightsQueryVariables>, options: VueApolloComposable.UseQueryOptions<UsersRightsQueryOutput, UsersRightsQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<UsersRightsQueryOutput, UsersRightsQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<UsersRightsQueryOutput, UsersRightsQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<UsersRightsQueryOutput, UsersRightsQueryVariables>(UsersRightsDocument, variables, options);
+}
+export type UsersRightsQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<UsersRightsQueryOutput, UsersRightsQueryVariables>;
 export const ActivateUserDocument = gql`
     mutation activateUser($email: String!, $token: String!) {
   activateUser(email: $email, token: $token)
@@ -293,7 +1233,7 @@ export function useUpdateUserPasswordMutation(options: VueApolloComposable.UseMu
 export type UpdateUserPasswordMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<UpdateUserPasswordMutationOutput, UpdateUserPasswordMutationVariables>;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: { input: string; output: string; }
+  ID: { input: number; output: number; }
   String: { input: string; output: string; }
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
@@ -301,12 +1241,38 @@ export type Scalars = {
   Date: { input: any; output: any; }
   DateTime: { input: any; output: any; }
   Time: { input: any; output: any; }
+  UUID: { input: string; output: string; }
 };
 
 export type AuthorizationOutput = {
   accessToken: Scalars['String']['output'];
   refreshToken: Scalars['String']['output'];
   user: User;
+};
+
+export type Budget = {
+  id: Scalars['UUID']['output'];
+  initializationStep?: Maybe<Step>;
+  name: Scalars['String']['output'];
+  rights?: Maybe<Array<Right>>;
+};
+
+export type Category = {
+  children: Array<Category>;
+  description?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  parentId?: Maybe<Scalars['ID']['output']>;
+  visible: Scalars['Boolean']['output'];
+};
+
+export type CategoryInput = {
+  children: Array<CategoryInput>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  name: Scalars['String']['input'];
+  parentId?: InputMaybe<Scalars['ID']['input']>;
+  visible: Scalars['Boolean']['input'];
 };
 
 export type CreateUserInput = {
@@ -317,13 +1283,57 @@ export type CreateUserInput = {
   theme: Theme;
 };
 
+export type Goal = {
+  category: Category;
+  description?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  max?: Maybe<Scalars['Float']['output']>;
+  min?: Maybe<Scalars['Float']['output']>;
+  name: Scalars['String']['output'];
+  type: GoalType;
+};
+
+export type GoalInput = {
+  categoryId: Scalars['ID']['input'];
+  description?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  max?: InputMaybe<Scalars['Float']['input']>;
+  min?: InputMaybe<Scalars['Float']['input']>;
+  name: Scalars['String']['input'];
+  type: GoalType;
+};
+
+export type GoalType =
+  | 'AMOUNT'
+  | 'PERCENTAGE';
+
+export type Income = {
+  description?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+};
+
+export type IncomeInput = {
+  description?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  name: Scalars['String']['input'];
+};
+
 export type Mutation = {
   activateUser: Scalars['Boolean']['output'];
+  createBudget: Budget;
   createUser: User;
+  deleteCategories: Scalars['Boolean']['output'];
+  deleteGoals: Scalars['Boolean']['output'];
+  deleteIncomes: Scalars['Boolean']['output'];
   login: AuthorizationOutput;
   refreshToken: AuthorizationOutput;
   requestPasswordReset: Scalars['Boolean']['output'];
   resetPassword: Scalars['Boolean']['output'];
+  setUsersRights: Array<UserRights>;
+  updateCategories: Array<Category>;
+  updateGoals: Array<Goal>;
+  updateIncomes: Array<Income>;
   updateUser: User;
   updateUserPassword: Scalars['Boolean']['output'];
 };
@@ -335,8 +1345,31 @@ export type MutationActivateUserArgs = {
 };
 
 
+export type MutationCreateBudgetArgs = {
+  name: Scalars['String']['input'];
+};
+
+
 export type MutationCreateUserArgs = {
   input: CreateUserInput;
+};
+
+
+export type MutationDeleteCategoriesArgs = {
+  budgetId: Scalars['UUID']['input'];
+  categoryIds: Array<Scalars['ID']['input']>;
+};
+
+
+export type MutationDeleteGoalsArgs = {
+  budgetId: Scalars['UUID']['input'];
+  goalIds: Array<Scalars['ID']['input']>;
+};
+
+
+export type MutationDeleteIncomesArgs = {
+  budgetId: Scalars['UUID']['input'];
+  incomeIds: Array<Scalars['ID']['input']>;
 };
 
 
@@ -364,6 +1397,30 @@ export type MutationResetPasswordArgs = {
 };
 
 
+export type MutationSetUsersRightsArgs = {
+  budgetId: Scalars['UUID']['input'];
+  usersRights: Array<UserRightsInput>;
+};
+
+
+export type MutationUpdateCategoriesArgs = {
+  budgetId: Scalars['UUID']['input'];
+  categories: Array<CategoryInput>;
+};
+
+
+export type MutationUpdateGoalsArgs = {
+  budgetId: Scalars['UUID']['input'];
+  goals: Array<GoalInput>;
+};
+
+
+export type MutationUpdateIncomesArgs = {
+  budgetId: Scalars['UUID']['input'];
+  incomes: Array<IncomeInput>;
+};
+
+
 export type MutationUpdateUserArgs = {
   input: UpdateUserInput;
 };
@@ -375,8 +1432,61 @@ export type MutationUpdateUserPasswordArgs = {
 };
 
 export type Query = {
+  budget?: Maybe<Budget>;
+  budgets: Array<Budget>;
+  categories: Array<Category>;
+  goals: Array<Goal>;
+  incomes: Array<Income>;
   user: User;
+  usersRights: Array<UserRights>;
+  visibleCategories: Array<Category>;
 };
+
+
+export type QueryBudgetArgs = {
+  id: Scalars['UUID']['input'];
+};
+
+
+export type QueryCategoriesArgs = {
+  budgetId: Scalars['UUID']['input'];
+};
+
+
+export type QueryGoalsArgs = {
+  budgetId: Scalars['UUID']['input'];
+};
+
+
+export type QueryIncomesArgs = {
+  budgetId: Scalars['UUID']['input'];
+};
+
+
+export type QueryUsersRightsArgs = {
+  budgetId: Scalars['UUID']['input'];
+};
+
+
+export type QueryVisibleCategoriesArgs = {
+  budgetId: Scalars['UUID']['input'];
+};
+
+export type Right =
+  | 'EDIT_CATEGORIES'
+  | 'EDIT_EXPENSES'
+  | 'EDIT_GOALS'
+  | 'EDIT_INCOMES'
+  | 'EDIT_USERS_AND_RIGHTS'
+  | 'OWNER'
+  | 'VIEW';
+
+export type Step =
+  | 'EXPENSES_CATEGORIES'
+  | 'FINISHED'
+  | 'GOALS'
+  | 'INCOMES'
+  | 'USERS_AND_RIGHTS';
 
 export type Theme =
   | 'DARK'
@@ -397,6 +1507,98 @@ export type User = {
   name: Scalars['String']['output'];
   theme: Theme;
 };
+
+export type UserRights = {
+  rights: Array<Right>;
+  user: User;
+};
+
+export type UserRightsInput = {
+  email: Scalars['String']['input'];
+  rights: Array<Right>;
+};
+
+export type BudgetQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type BudgetQueryOutput = { budget?: { id: string, name: string, initializationStep?: Step | null } | null };
+
+export type BudgetsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type BudgetsQueryOutput = { budgets: Array<{ id: string, name: string, initializationStep?: Step | null }> };
+
+export type CreateBudgetMutationVariables = Exact<{
+  name: Scalars['String']['input'];
+}>;
+
+
+export type CreateBudgetMutationOutput = { createBudget: { id: string } };
+
+export type CategoriesQueryVariables = Exact<{
+  budgetId: Scalars['UUID']['input'];
+}>;
+
+
+export type CategoriesQueryOutput = { categories: Array<{ id: number, parentId?: number | null, name: string, description?: string | null, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description?: string | null, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description?: string | null, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description?: string | null, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description?: string | null, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description?: string | null, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description?: string | null, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description?: string | null, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description?: string | null, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description?: string | null, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description?: string | null, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description?: string | null, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description?: string | null, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description?: string | null, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description?: string | null, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description?: string | null, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description?: string | null, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description?: string | null, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description?: string | null, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description?: string | null, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description?: string | null, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description?: string | null, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description?: string | null, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description?: string | null, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description?: string | null, visible: boolean }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> };
+
+export type UpdateCategoriesMutationVariables = Exact<{
+  budgetId: Scalars['UUID']['input'];
+  removedCategoryIds: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
+  categories: Array<CategoryInput> | CategoryInput;
+}>;
+
+
+export type UpdateCategoriesMutationOutput = { deleteCategories: boolean, updateCategories: Array<{ id: number, parentId?: number | null, name: string, description?: string | null, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description?: string | null, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description?: string | null, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description?: string | null, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description?: string | null, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description?: string | null, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description?: string | null, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description?: string | null, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description?: string | null, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description?: string | null, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description?: string | null, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description?: string | null, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description?: string | null, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description?: string | null, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description?: string | null, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description?: string | null, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description?: string | null, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description?: string | null, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description?: string | null, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description?: string | null, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description?: string | null, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description?: string | null, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description?: string | null, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description?: string | null, visible: boolean, children: Array<{ id: number, parentId?: number | null, name: string, description?: string | null, visible: boolean }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> };
+
+export type GoalsQueryVariables = Exact<{
+  budgetId: Scalars['UUID']['input'];
+}>;
+
+
+export type GoalsQueryOutput = { goals: Array<{ id: number, name: string, description?: string | null, type: GoalType, min?: number | null, max?: number | null, category: { id: number, name: string, description?: string | null } }>, visibleCategories: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> };
+
+export type UpdateGoalsMutationVariables = Exact<{
+  budgetId: Scalars['UUID']['input'];
+  removedGoalsIds: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
+  goals: Array<GoalInput> | GoalInput;
+}>;
+
+
+export type UpdateGoalsMutationOutput = { deleteGoals: boolean, updateGoals: Array<{ id: number, name: string, description?: string | null, type: GoalType, min?: number | null, max?: number | null, category: { id: number, name: string, description?: string | null } }> };
+
+export type IncomesQueryVariables = Exact<{
+  budgetId: Scalars['UUID']['input'];
+}>;
+
+
+export type IncomesQueryOutput = { incomes: Array<{ id: number, name: string, description?: string | null }> };
+
+export type UpdateIncomesMutationVariables = Exact<{
+  budgetId: Scalars['UUID']['input'];
+  removedIncomeIds: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
+  incomes: Array<IncomeInput> | IncomeInput;
+}>;
+
+
+export type UpdateIncomesMutationOutput = { deleteIncomes: boolean, updateIncomes: Array<{ id: number, name: string, description?: string | null }> };
+
+export type SetUsersRightsMutationVariables = Exact<{
+  budgetId: Scalars['UUID']['input'];
+  usersRights: Array<UserRightsInput> | UserRightsInput;
+}>;
+
+
+export type SetUsersRightsMutationOutput = { setUsersRights: Array<{ rights: Array<Right>, user: { email: string } }> };
+
+export type UsersRightsQueryVariables = Exact<{
+  budgetId: Scalars['UUID']['input'];
+}>;
+
+
+export type UsersRightsQueryOutput = { usersRights: Array<{ rights: Array<Right>, user: { email: string } }> };
 
 export type ActivateUserMutationVariables = Exact<{
   email: Scalars['String']['input'];

@@ -122,5 +122,6 @@ module.exports = {
       },
     ],
     'no-case-declarations': 'off',
+    'import/prefer-default-export': 'off',
   },
 };

@@ -2,6 +2,8 @@ import { RouteRecordRaw } from 'vue-router';
 
 import LeftNavBarLayout from '@/layouts/view/LeftNavbar/LeftNavbar.vue';
 import TopNavBarLayout from '@/layouts/view/TopNavbar/TopNavbar.vue';
+import Budget from '@/views/budget/Budget/Budget.vue';
+import BudgetCreate from '@/views/budget/BudgetCreate.vue';
 import Dashboard from '@/views/Dashboard.vue';
 import Home from '@/views/Home.vue';
 import Activate from '@/views/user/Activate.vue';
@@ -32,6 +34,8 @@ export default [
     children: [
       { path: '', name: 'Dashboard', component: Dashboard },
       { path: 'profile', name: 'Profile', component: Profile },
+      { path: 'budget/:id', name: 'Budget', component: Budget, props: true },
+      { path: 'budget/create', name: 'BudgetCreate', component: BudgetCreate },
     ],
   },
 ] as RouteRecordRaw[];
