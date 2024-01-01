@@ -50,6 +50,8 @@
   "oldPassword": "Obecne hasło",
   "newPassword": "Nowe hasło",
   "budgets": "Budżety",
+  "budget": "Budżet",
+  "budget.month": "Miesiąc budżetowy",
   "budget.create": "Utwórz budżet",
   "budget.create.name": "Nadaj nazwę budżetowi",
   "budget.name": "Nazwa budżetu",
@@ -57,6 +59,7 @@
   "next": "Dalej",
   "back": "Wstecz",
   "finish": "Zakończ",
+  "budget.incomes": "Przychody",
   "budget.incomes.define": "Zdefiniuj swoje przychody",
   "budget.incomes.add": "Dodaj przychód",
   "budget.incomes.name": "Nazwa",
@@ -64,6 +67,7 @@
   "budget.incomes.frequency": "Częstotliwość",
   "budget.incomes.description": "Opis",
   "budget.incomes.new": "Nowy przychód",
+  "budget.expenses": "Wydatki",
   "budget.expenses.categories.define": "Zdefiniuj swoje kategorie wydatków",
   "budget.expenses.categories.new": "Nowa kategoria",
   "budget.expenses.categories.add": "Dodaj kategorię",
@@ -73,6 +77,7 @@
   "budget.expenses.categories.parent": "Kategoria nadrzędna",
   "budget.expenses.categories.no.parent": "Brak",
   "budget.expenses.categories.empty": "Musisz dodać przynajmniej jedną kategorię.",
+  "budget.goals": "Cele",
   "budget.goals.define": "Zdefiniuj swoje cele",
   "budget.goals.add": "Dodaj cel",
   "budget.goals.name": "Nazwa",
@@ -98,5 +103,19 @@
   "budget.usersRights.rights.owner": "Właściciel",
   "budget.usersRights.rights.view": "Wyświetlanie",
   "budget.usersRights.addUser": "Dodaj użytkownika",
-  "email.userRights.email.validation.error": "Konto z podanym adresem email jest już przypisane do tego budżetu."
+  "email.userRights.email.validation.error": "Konto z podanym adresem email jest już przypisane do tego budżetu.",
+  "months": {
+    "1": "Styczeń",
+    "2": "Luty",
+    "3": "Marzec",
+    "4": "Kwiecień",
+    "5": "Maj",
+    "6": "Czerwiec",
+    "7": "Lipiec",
+    "8": "Sierpień",
+    "9": "Wrzesień",
+    "10": "Październik",
+    "11": "Listopad",
+    "12": "Grudzień"
+  }
 }

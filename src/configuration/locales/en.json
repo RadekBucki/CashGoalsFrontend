@@ -50,6 +50,8 @@
   "oldPassword": "Current password",
   "newPassword": "New password",
   "budgets": "Budgets",
+  "budget": "Budget",
+  "budget.month": "Budget month",
   "budget.create": "Create budget",
   "budget.create.name": "Set budget name",
   "budget.name": "Budget name",
@@ -57,6 +59,7 @@
   "next": "Next",
   "back": "Back",
   "finish": "Finish",
+  "budget.incomes": "Incomes",
   "budget.incomes.define": "Define your incomes",
   "budget.incomes.add": "Add income",
   "budget.incomes.name": "Name",
@@ -64,6 +67,7 @@
   "budget.incomes.frequency": "Frequency",
   "budget.incomes.description": "Description",
   "budget.incomes.new": "New income",
+  "budget.expenses": "Expenses",
   "budget.expenses.categories.define": "Define your categories",
   "budget.expenses.categories.new": "New category",
   "budget.expenses.categories.add": "Add category",
@@ -73,6 +77,7 @@
   "budget.expenses.categories.parent": "Parent category",
   "budget.expenses.categories.no.parent": "No parent",
   "budget.expenses.categories.empty": "You have to define at least one category",
+  "budget.goals": "Goals",
   "budget.goals.define": "Define your goals",
   "budget.goals.add": "Add goal",
   "budget.goals.name": "Name",
@@ -97,5 +102,19 @@
   "budget.usersRights.rights.editUsersAndRights": "Edit users and rights",
   "budget.usersRights.rights.owner": "Owner",
   "budget.usersRights.rights.view": "View",
-  "budget.usersRights.addUser": "Add user"
+  "budget.usersRights.addUser": "Add user",
+  "months": {
+    "1": "January",
+    "2": "February",
+    "3": "March",
+    "4": "April",
+    "5": "May",
+    "6": "June",
+    "7": "July",
+    "8": "August",
+    "9": "September",
+    "10": "October",
+    "11": "November",
+    "12": "December"
+  }
 }
