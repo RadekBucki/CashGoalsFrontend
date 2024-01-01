@@ -96,5 +96,6 @@
   "budget.usersRights.rights.editUsersAndRights": "Edycja użytkowników i praw",
   "budget.usersRights.rights.owner": "Właściciel",
   "budget.usersRights.rights.view": "Wyświetlanie",
-  "budget.usersRights.addUser": "Dodaj użytkownika"
+  "budget.usersRights.addUser": "Dodaj użytkownika",
+  "email.userRights.email.validation.error": "Konto z podanym adresem email jest już przypisane do tego budżetu."
 }

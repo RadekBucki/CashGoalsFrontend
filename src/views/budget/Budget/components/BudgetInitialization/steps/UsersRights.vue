@@ -3,6 +3,7 @@ import { onMounted, PropType, Ref, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import { FetchResult } from '@apollo/client';
+import { VTextField } from 'vuetify/components';
 
 import {
   Budget, Right, SetUsersRightsMutationOutput,
@@ -41,6 +42,24 @@ onMounted(() => {
     );
   });
 });
+
+const newUserEmailRef = ref<VTextField | null>(null);
+const addUser = async () => {
+  if (!newUserEmail.value) {
+    return;
+  }
+  const valid = await newUserEmailRef.value?.validate();
+  if (!valid) {
+    return;
+  }
+  usersRights.value.push({
+    email: newUserEmail.value,
+    rights: [],
+  });
+  newUserEmail.value = '';
+  newUserEmailRef.value?.reset();
+};
+
 const { mutate, onDone } = useSetUsersRightsMutation();
 onDone((result: FetchResult<SetUsersRightsMutationOutput>) => {
   if (!result.data?.setUsersRights) {
@@ -56,7 +75,6 @@ onDone((result: FetchResult<SetUsersRightsMutationOutput>) => {
     },
   );
 });
-
 const acceptStep = () => {
   mutate({
     budgetId: props.budget?.id,
@@ -111,19 +129,24 @@ defineExpose({ acceptStep });
       </tbody>
       <tfoot>
         <tr>
-          <td>
+          <td colspan="2">
             <VTextField
               v-model="newUserEmail"
+              ref="newUserEmailRef"
               :label="t('budget.usersRights.email')"
               type="email"
+              :rules="[
+                (v: string) => /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(v) || t('email.format.validation.error'),
+                (v: string) => !usersRights.find((userRight) => userRight.email === v) || t('email.userRights.email.validation.error'),
+              ]"
               variant="underlined"
             />
           </td>
-          <td colspan="7">
+          <td colspan="6">
             <VBtn
               prepend-icon="mdi-plus"
               :text="t('budget.usersRights.addUser')"
-              @click="usersRights.push({ email: newUserEmail, rights: [] })"
+              @click="addUser"
             />
           </td>
         </tr>
