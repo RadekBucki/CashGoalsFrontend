@@ -1,5 +1,3 @@
-mutation updateIncomeItem($budgetId: UUID!, $incomeItem: IncomeItemInput!) {
-    updateIncomeItem(budgetId: $budgetId, incomeItem: $incomeItem) {
-        id
-    }
+mutation deleteIncomeItem($budgetId: UUID!, $incomeItemId: ID!) {
+  deleteIncomeItem(budgetId: $budgetId, incomeItemId: $incomeItemId)
 }

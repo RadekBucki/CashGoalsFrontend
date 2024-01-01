@@ -2,6 +2,9 @@
   "$vuetify": {
     "open": "Otwórz",
     "close": "Zamknij",
+    "confirm": "Ok",
+    "cancel": "Anuluj",
+    "delete": "Czy na pewno chcesz usunąć ten element?",
     "dataFooter": {
       "itemsPerPageText": "Elementów na stronie:",
       "itemsPerPageAll": "Wszystkie",

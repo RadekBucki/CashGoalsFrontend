@@ -887,36 +887,34 @@ export function useUpdateIncomesMutation(options: VueApolloComposable.UseMutatio
   return VueApolloComposable.useMutation<UpdateIncomesMutationOutput, UpdateIncomesMutationVariables>(UpdateIncomesDocument, options);
 }
 export type UpdateIncomesMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<UpdateIncomesMutationOutput, UpdateIncomesMutationVariables>;
-export const UpdateIncomeItemDocument = gql`
-    mutation updateIncomeItem($budgetId: UUID!, $incomeItem: IncomeItemInput!) {
-  updateIncomeItem(budgetId: $budgetId, incomeItem: $incomeItem) {
-    id
-  }
+export const DeleteIncomeItemDocument = gql`
+    mutation deleteIncomeItem($budgetId: UUID!, $incomeItemId: ID!) {
+  deleteIncomeItem(budgetId: $budgetId, incomeItemId: $incomeItemId)
 }
     `;
 
 /**
- * __useUpdateIncomeItemMutation__
+ * __useDeleteIncomeItemMutation__
  *
- * To run a mutation, you first call `useUpdateIncomeItemMutation` within a Vue component and pass it any options that fit your needs.
- * When your component renders, `useUpdateIncomeItemMutation` returns an object that includes:
+ * To run a mutation, you first call `useDeleteIncomeItemMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteIncomeItemMutation` returns an object that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
  *
  * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
  *
  * @example
- * const { mutate, loading, error, onDone } = useUpdateIncomeItemMutation({
+ * const { mutate, loading, error, onDone } = useDeleteIncomeItemMutation({
  *   variables: {
  *     budgetId: // value for 'budgetId'
- *     incomeItem: // value for 'incomeItem'
+ *     incomeItemId: // value for 'incomeItemId'
  *   },
  * });
  */
-export function useUpdateIncomeItemMutation(options: VueApolloComposable.UseMutationOptions<UpdateIncomeItemMutationOutput, UpdateIncomeItemMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<UpdateIncomeItemMutationOutput, UpdateIncomeItemMutationVariables>> = {}) {
-  return VueApolloComposable.useMutation<UpdateIncomeItemMutationOutput, UpdateIncomeItemMutationVariables>(UpdateIncomeItemDocument, options);
+export function useDeleteIncomeItemMutation(options: VueApolloComposable.UseMutationOptions<DeleteIncomeItemMutationOutput, DeleteIncomeItemMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<DeleteIncomeItemMutationOutput, DeleteIncomeItemMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<DeleteIncomeItemMutationOutput, DeleteIncomeItemMutationVariables>(DeleteIncomeItemDocument, options);
 }
-export type UpdateIncomeItemMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<UpdateIncomeItemMutationOutput, UpdateIncomeItemMutationVariables>;
+export type DeleteIncomeItemMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<DeleteIncomeItemMutationOutput, DeleteIncomeItemMutationVariables>;
 export const IncomeItemsDocument = gql`
     query incomeItems($budgetId: UUID!, $month: Int!, $year: Int!) {
   incomeItems(budgetId: $budgetId, month: $month, year: $year) {
@@ -963,6 +961,36 @@ export function useIncomeItemsLazyQuery(variables: IncomeItemsQueryVariables | V
   return VueApolloComposable.useLazyQuery<IncomeItemsQueryOutput, IncomeItemsQueryVariables>(IncomeItemsDocument, variables, options);
 }
 export type IncomeItemsQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<IncomeItemsQueryOutput, IncomeItemsQueryVariables>;
+export const UpdateIncomeItemDocument = gql`
+    mutation updateIncomeItem($budgetId: UUID!, $incomeItem: IncomeItemInput!) {
+  updateIncomeItem(budgetId: $budgetId, incomeItem: $incomeItem) {
+    id
+  }
+}
+    `;
+
+/**
+ * __useUpdateIncomeItemMutation__
+ *
+ * To run a mutation, you first call `useUpdateIncomeItemMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateIncomeItemMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useUpdateIncomeItemMutation({
+ *   variables: {
+ *     budgetId: // value for 'budgetId'
+ *     incomeItem: // value for 'incomeItem'
+ *   },
+ * });
+ */
+export function useUpdateIncomeItemMutation(options: VueApolloComposable.UseMutationOptions<UpdateIncomeItemMutationOutput, UpdateIncomeItemMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<UpdateIncomeItemMutationOutput, UpdateIncomeItemMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<UpdateIncomeItemMutationOutput, UpdateIncomeItemMutationVariables>(UpdateIncomeItemDocument, options);
+}
+export type UpdateIncomeItemMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<UpdateIncomeItemMutationOutput, UpdateIncomeItemMutationVariables>;
 export const SetUsersRightsDocument = gql`
     mutation setUsersRights($budgetId: UUID!, $usersRights: [UserRightsInput!]!) {
   setUsersRights(budgetId: $budgetId, usersRights: $usersRights) {
@@ -1708,13 +1736,13 @@ export type UpdateIncomesMutationVariables = Exact<{
 
 export type UpdateIncomesMutationOutput = { deleteIncomes: boolean, updateIncomes: Array<{ id: number, name: string, description?: string | null }> };
 
-export type UpdateIncomeItemMutationVariables = Exact<{
+export type DeleteIncomeItemMutationVariables = Exact<{
   budgetId: Scalars['UUID']['input'];
-  incomeItem: IncomeItemInput;
+  incomeItemId: Scalars['ID']['input'];
 }>;
 
 
-export type UpdateIncomeItemMutationOutput = { updateIncomeItem: { id: number } };
+export type DeleteIncomeItemMutationOutput = { deleteIncomeItem: boolean };
 
 export type IncomeItemsQueryVariables = Exact<{
   budgetId: Scalars['UUID']['input'];
@@ -1724,6 +1752,14 @@ export type IncomeItemsQueryVariables = Exact<{
 
 
 export type IncomeItemsQueryOutput = { incomeItems: Array<{ id: number, name: string, description?: string | null, incomeItems: Array<{ id: number, name: string, description?: string | null, amount: number, date: any }> }>, incomes: Array<{ id: number, name: string, description?: string | null }> };
+
+export type UpdateIncomeItemMutationVariables = Exact<{
+  budgetId: Scalars['UUID']['input'];
+  incomeItem: IncomeItemInput;
+}>;
+
+
+export type UpdateIncomeItemMutationOutput = { updateIncomeItem: { id: number } };
 
 export type SetUsersRightsMutationVariables = Exact<{
   budgetId: Scalars['UUID']['input'];

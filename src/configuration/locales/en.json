@@ -2,6 +2,9 @@
   "$vuetify": {
     "open": "Open",
     "close": "Close",
+    "confirm": "Ok",
+    "cancel": "Cancel",
+    "delete": "Are you sure you want to delete this item?",
     "dataFooter": {
       "itemsPerPageText": "Items per page:",
       "itemsPerPageAll": "All",

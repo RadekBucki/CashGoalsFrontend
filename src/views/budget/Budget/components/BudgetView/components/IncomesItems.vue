@@ -4,10 +4,11 @@ import { useI18n } from 'vue-i18n';
 
 import { ApolloQueryResult } from '@apollo/client';
 
+import { useModalStore } from '@/components/Modal';
 import {
   Budget,
   Income,
-  IncomeItemsOutput, IncomeItemsQueryOutput,
+  IncomeItemsOutput, IncomeItemsQueryOutput, useDeleteIncomeItemMutation,
   useIncomeItemsQuery,
 } from '@/graphql';
 
@@ -27,6 +28,7 @@ const props = defineProps({
 });
 
 const { t } = useI18n();
+const modalStore = useModalStore();
 
 const incomesItems: Ref<IncomeItemsOutput[]> = ref<IncomeItemsOutput[]>([]);
 const incomes: Ref<Income[]> = ref<Income[]>([]);
@@ -45,8 +47,25 @@ const editIncomeItem = (incomeItem: IncomeItemsOutput) => {
   console.log(incomeItem);
 };
 
+const { mutate: deleteItem } = useDeleteIncomeItemMutation();
 const deleteIncomeItem = (incomeItem: IncomeItemsOutput) => {
-  console.log(incomeItem);
+  modalStore.showQuestionModal({
+    title: t('$vuetify.delete'),
+    type: 'question',
+    onConfirm: () => deleteItem({ budgetId: props.budget.id, incomeItemId: incomeItem.id })
+      .then(() => {
+        incomesItems.value = incomesItems.value.map((incomeItemsOutput: IncomeItemsOutput) => {
+          const incomeItemsOutputCopy = JSON.parse(JSON.stringify(incomeItemsOutput));
+          incomeItemsOutputCopy.incomeItems = incomeItemsOutputCopy.incomeItems
+            .filter((incomeItemOutput: IncomeItemsOutput) => incomeItemOutput.id !== incomeItem.id);
+          if (incomeItemsOutputCopy.incomeItems.length === 0) {
+            return null;
+          }
+          return incomeItemsOutputCopy;
+        })
+          .filter((incomeItemsOutput: IncomeItemsOutput | null) => incomeItemsOutput != null);
+      }),
+  });
 };
 </script>
 
