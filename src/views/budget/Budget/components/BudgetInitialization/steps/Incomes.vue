@@ -3,6 +3,7 @@ import { onMounted, PropType, Ref, ref } from 'vue';
 import { useLocale } from 'vuetify';
 
 import { ApolloQueryResult, FetchResult } from '@apollo/client';
+import { VForm } from 'vuetify/components';
 
 import {
   Budget,
@@ -33,10 +34,25 @@ onMounted(() => {
     if (!result.data?.incomes) {
       return;
     }
-    initialIncomes.value = structuredClone(result.data.incomes);
-    incomes.value = result.data.incomes;
+    initialIncomes.value = JSON.parse(JSON.stringify(result.data.incomes));
+    incomes.value = JSON.parse(JSON.stringify(result.data.incomes));
   });
 });
+const requiredFieldRule = [(v: string) => !!v || t('required.validation.error')];
+const selectedIncomeRef = ref<VForm | null>(null);
+const validateSelectedIncome = async (): Promise<boolean> => {
+  if (!selectedIncomeRef.value) {
+    return true;
+  }
+  const { valid } = await selectedIncomeRef.value.validate();
+  return valid;
+};
+const updateSelectedIncome = async (income: IncomeInput) => {
+  if (!await validateSelectedIncome()) {
+    return;
+  }
+  selectedIncome.value = income;
+};
 const removeIncome = (income: IncomeInput) => {
   incomes.value = incomes.value.filter((i) => i !== income);
   if (selectedIncome.value === income) {
@@ -46,7 +62,10 @@ const removeIncome = (income: IncomeInput) => {
     removedIncomesIds.value.push(income.id);
   }
 };
-const addIncome = () => {
+const addIncome = async () => {
+  if (!await validateSelectedIncome()) {
+    return;
+  }
   selectedIncome.value = {
     name: t('budget.incomes.new'),
     description: '',
@@ -60,11 +79,14 @@ onDone((result: FetchResult<UpdateIncomesMutationOutput>) => {
   if (!result.data?.updateIncomes) {
     return;
   }
-  initialIncomes.value = structuredClone(result.data.updateIncomes);
-  incomes.value = result.data.updateIncomes;
+  initialIncomes.value = JSON.parse(JSON.stringify(result.data.updateIncomes));
+  incomes.value = JSON.parse(JSON.stringify(result.data.updateIncomes));
   removedIncomesIds.value = [];
 });
-const acceptStep = () => {
+const acceptStep = async () => {
+  if (!await validateSelectedIncome()) {
+    return;
+  }
   const modifiedIncomes = incomes.value.filter((income) => {
     const initialIncome = initialIncomes.value.find((i) => i.id === income.id);
     return !initialIncome || income.name !== initialIncome.name || income.description !== initialIncome.description;
@@ -72,7 +94,7 @@ const acceptStep = () => {
   if (modifiedIncomes.length === 0 && removedIncomesIds.value.length === 0) {
     return;
   }
-  mutate({
+  await mutate({
     budgetId: props.budget.id,
     incomes: modifiedIncomes,
     removedIncomeIds: removedIncomesIds.value,
@@ -91,7 +113,8 @@ defineExpose({ acceptStep });
             v-for="income in incomes"
             :key="income.id ?? income.name"
             :value="income"
-            @click="selectedIncome = income"
+            :active="selectedIncome === income"
+            @click="updateSelectedIncome(income)"
           >
             <VListItemTitle>
               {{ income.name }}
@@ -107,17 +130,19 @@ defineExpose({ acceptStep });
         </VList>
       </VCol>
       <VCol cols="12" md="6" v-if="selectedIncome">
-        <VTextField
-          v-model="selectedIncome.name"
-          :label="t('budget.incomes.name')"
-          outlined
-          required
-        />
-        <VTextField
-          v-model="selectedIncome.description"
-          :label="t('budget.incomes.description')"
-          outlined
-        />
+        <VForm ref="selectedIncomeRef">
+          <VTextField
+            v-model="selectedIncome.name"
+            :label="t('budget.incomes.name')"
+            :rules="requiredFieldRule"
+            outlined
+          />
+          <VTextField
+            v-model="selectedIncome.description"
+            :label="t('budget.incomes.description')"
+            outlined
+          />
+        </VForm>
       </VCol>
     </VRow>
   </div>
