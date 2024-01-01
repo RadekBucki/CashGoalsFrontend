@@ -72,6 +72,7 @@
   "budget.expenses.categories.visible": "Widoczna",
   "budget.expenses.categories.parent": "Kategoria nadrzędna",
   "budget.expenses.categories.no.parent": "Brak",
+  "budget.expenses.categories.empty": "Musisz dodać przynajmniej jedną kategorię.",
   "budget.goals.define": "Zdefiniuj swoje cele",
   "budget.goals.add": "Dodaj cel",
   "budget.goals.name": "Nazwa",

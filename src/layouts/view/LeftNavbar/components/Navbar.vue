@@ -60,13 +60,6 @@ onResult((result: ApolloQueryResult<BudgetsQueryOutput>) => {
             :to="{ name: 'Budget', params: { id: budget.id } }"
           />
           <VListItem prepend-icon="mdi-plus" :title="t('budget.create')" :to="{ name: 'BudgetCreate' }" />
-          <VListItem
-            v-for="budget in budgets"
-            :key="budget.id"
-            :title="budget.name"
-            :to="{ name: 'Budget', params: { id: budget.id } }"
-          />
-          <VListItem prepend-icon="mdi-plus" :title="t('budget.create')" :to="{ name: 'BudgetCreate' }" />
         </template>
       </VListGroup>
     </VList>

@@ -9,6 +9,10 @@ defineProps({
     type: Object as PropType<CategoryInput>,
     required: true,
   },
+  selectedCategory: {
+    type: Object as PropType<CategoryInput | null>,
+    required: true,
+  },
   onSelect: {
     type: Function as PropType<(category: CategoryInput) => void>,
     required: true,
@@ -29,14 +33,20 @@ const { t } = useLocale();
 <template>
   <VListGroup v-for="child in category.children" :key="child.id ?? child.name" subgroup>
     <template v-slot:activator="{ props }">
-      <VListItem v-bind="props" @click="onSelect(child)">
+      <VListItem v-bind="props" @click="onSelect(child)" :active="child === selectedCategory">
         <VListItemTitle>
           {{ child.name }}
           <VIcon style="float: right" @click="onRemove(child)">mdi-trash-can-outline</VIcon>
         </VListItemTitle>
       </VListItem>
     </template>
-    <EditableCategoryTree :onRemove="onRemove" :onSelect="onSelect" :onAdd="onAdd" :category="child" />
+    <EditableCategoryTree
+      :onRemove="onRemove"
+      :onSelect="onSelect"
+      :onAdd="onAdd"
+      :category="child"
+      :selectedCategory="selectedCategory"
+    />
     <VListItem>
       <VListItemTitle>
         <VIcon @click="onAdd(child)">mdi-plus</VIcon>

@@ -72,6 +72,7 @@
   "budget.expenses.categories.visible": "Visible",
   "budget.expenses.categories.parent": "Parent category",
   "budget.expenses.categories.no.parent": "No parent",
+  "budget.expenses.categories.empty": "You have to define at least one category",
   "budget.goals.define": "Define your goals",
   "budget.goals.add": "Add goal",
   "budget.goals.name": "Name",
