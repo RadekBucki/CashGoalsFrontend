@@ -1,7 +1,16 @@
 {
   "$vuetify": {
     "open": "Otwórz",
-    "close": "Zamknij"
+    "close": "Zamknij",
+    "dataFooter": {
+      "itemsPerPageText": "Elementów na stronie:",
+      "itemsPerPageAll": "Wszystkie",
+      "nextPage": "Następna strona",
+      "prevPage": "Poprzednia strona",
+      "firstPage": "Pierwsza strona",
+      "lastPage": "Ostatnia strona",
+      "pageText": "{0}-{1} z {2}"
+    }
   },
   "your.account": "Twoje konto",
   "register": "Zarejestruj się",
@@ -117,5 +126,9 @@
     "10": "Październik",
     "11": "Listopad",
     "12": "Grudzień"
-  }
+  },
+  "budget.incomeItem.date": "Data",
+  "budget.incomeItem.name": "Nazwa",
+  "budget.incomeItem.description": "Opis",
+  "budget.incomeItem.amount": "Kwota"
 }

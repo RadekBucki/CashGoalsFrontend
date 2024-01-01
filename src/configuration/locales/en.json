@@ -1,7 +1,16 @@
 {
   "$vuetify": {
     "open": "Open",
-    "close": "Close"
+    "close": "Close",
+    "dataFooter": {
+      "itemsPerPageText": "Items per page:",
+      "itemsPerPageAll": "All",
+      "nextPage": "Next page",
+      "prevPage": "Previous page",
+      "firstPage": "First page",
+      "lastPage": "Last page",
+      "pageText": "{0}-{1} of {2}"
+    }
   },
   "your.account": "Your account",
   "register": "Register",
@@ -116,5 +125,9 @@
     "10": "October",
     "11": "November",
     "12": "December"
-  }
+  },
+  "budget.incomeItem.date": "Date",
+  "budget.incomeItem.name": "Name",
+  "budget.incomeItem.description": "Description",
+  "budget.incomeItem.amount": "Amount"
 }

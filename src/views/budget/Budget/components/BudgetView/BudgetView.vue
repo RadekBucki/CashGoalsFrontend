@@ -2,6 +2,7 @@
 import { PropType, ref, Ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
+import { IncomesItems } from './components';
 import { Budget } from '@/graphql';
 import LeftLayout from '@/layouts/content/LeftLayout.vue';
 
@@ -71,9 +72,24 @@ const editYear: Ref<boolean> = ref(false);
       </VBtn>
     </h2>
     <VExpansionPanels variant="accordion" multiple :model-value="['goals', 'incomes', 'expenses']">
-      <VExpansionPanel :title="t('budget.goals')" value="goals" />
-      <VExpansionPanel :title="t('budget.incomes')" value="incomes" />
-      <VExpansionPanel :title="t('budget.expenses')" value="expenses" />
+      <VExpansionPanel value="goals">
+        <VExpansionPanelTitle>
+          <h3>{{ t('budget.goals') }}</h3>
+        </VExpansionPanelTitle>
+      </VExpansionPanel>
+      <VExpansionPanel value="incomes">
+        <VExpansionPanelTitle>
+          <h3>{{ t('budget.incomes') }}</h3>
+        </VExpansionPanelTitle>
+        <VExpansionPanelText>
+          <IncomesItems :budget="budget" :month="month" :year="year" />
+        </VExpansionPanelText>
+      </VExpansionPanel>
+      <VExpansionPanel value="expenses">
+        <VExpansionPanelTitle>
+          <h3>{{ t('budget.expenses') }}</h3>
+        </VExpansionPanelTitle>
+      </VExpansionPanel>
     </VExpansionPanels>
   </LeftLayout>
 </template>
