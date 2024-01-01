@@ -129,7 +129,7 @@ const updateSelectedCategoryParent = (category: CategoryInput | null) => {
     categories.value.splice(categories.value.indexOf(selectedCategory.value), 1);
   }
   if (category) {
-    const categoryFromList = findCategory(category, categories.value);
+    const categoryFromList: CategoryInput | null = findCategory(category, categories.value) as CategoryInput | null;
     categoryFromList?.children.push(selectedCategory.value);
   } else {
     categories.value.push(selectedCategory.value);

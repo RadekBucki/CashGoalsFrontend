@@ -34,7 +34,7 @@ const selectedGoalCategory: ComputedRef<Category | null> = computed<Category | n
   if (!selectedGoal.value) {
     return null;
   }
-  return findCategoryById(selectedGoal.value.categoryId, categories.value);
+  return findCategoryById(selectedGoal.value.categoryId, categories.value) as Category | null;
 });
 const removedGoalsIds: Ref<number[]> = ref<number[]>([]);
 

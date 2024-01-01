@@ -19,11 +19,11 @@ const props = defineProps({
 });
 const emit = defineEmits(['initialized']);
 
-const stepsRefs: { [key in Step]: Ref<typeof Incomes|null> } = {
-  INCOMES: ref<typeof Incomes|null>(null),
-  EXPENSES_CATEGORIES: ref<typeof ExpensesCategories|null>(null),
-  GOALS: ref<typeof Goals|null>(null),
-  USERS_AND_RIGHTS: ref<typeof UsersRights|null>(null),
+const stepsRefs: { [key in Step]: Ref<typeof ExpensesCategories | typeof Goals | typeof Incomes | typeof UsersRights | null> } = {
+  INCOMES: ref<typeof Incomes | null>(null),
+  EXPENSES_CATEGORIES: ref<typeof ExpensesCategories | null>(null),
+  GOALS: ref<typeof Goals | null>(null),
+  USERS_AND_RIGHTS: ref<typeof UsersRights | null>(null),
   FINISHED: ref<null>(null),
 };
 const steps = Object.keys(stepsRefs) as Step[];

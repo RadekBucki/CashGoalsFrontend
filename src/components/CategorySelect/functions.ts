@@ -17,21 +17,21 @@ const findCategoryById = (
   return null;
 };
 
-const findCategoryParent = (
-  category: CategoryInput | Category | null,
-  categoriesList: CategoryInput[] | Category[],
-): CategoryInput | Category | null => {
+const findCategoryParent = <T extends CategoryInput | Category>(
+  category: T | null,
+  categoriesList: T[],
+): T | null => {
   if (!category) {
     return null;
   }
   // eslint-disable-next-line no-restricted-syntax
   for (const categoryFromList of categoriesList) {
-    if (categoryFromList.children.includes(category)) {
+    if ((categoryFromList.children as T[]).includes(category)) {
       return categoryFromList;
     }
     const foundChild = findCategoryParent(category, categoryFromList.children);
     if (foundChild) {
-      return foundChild;
+      return foundChild as T;
     }
   }
   return null;
