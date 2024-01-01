@@ -35,14 +35,17 @@ onMounted(() => {
   }
   currentStep.value = props.budget.initializationStep;
 });
-const acceptCurrentStep = () => {
+const acceptCurrentStep = async (): Promise<boolean> => {
   const currentStepRef = stepsRefs[currentStep.value];
   if (currentStepRef.value) {
-    currentStepRef.value.acceptStep();
+    return currentStepRef.value.acceptStep();
   }
+  return true;
 };
-const nextStep = () => {
-  acceptCurrentStep();
+const nextStep = async () => {
+  if (!await acceptCurrentStep()) {
+    return;
+  }
   const currentStepIndexValue = steps.indexOf(currentStep.value);
   if (currentStepIndexValue < steps.length - 1) {
     currentStep.value = steps[currentStepIndexValue + 1];
@@ -51,8 +54,10 @@ const nextStep = () => {
     emit('initialized');
   }
 };
-const previousStep = () => {
-  acceptCurrentStep();
+const previousStep = async () => {
+  if (!await acceptCurrentStep()) {
+    return;
+  }
   const currentStepIndexValue = steps.indexOf(currentStep.value);
   if (currentStepIndexValue > 0) {
     currentStep.value = steps[currentStepIndexValue - 1];

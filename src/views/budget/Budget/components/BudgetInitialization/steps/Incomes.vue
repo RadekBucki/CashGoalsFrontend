@@ -83,22 +83,23 @@ onDone((result: FetchResult<UpdateIncomesMutationOutput>) => {
   incomes.value = JSON.parse(JSON.stringify(result.data.updateIncomes));
   removedIncomesIds.value = [];
 });
-const acceptStep = async () => {
+const acceptStep = async (): Promise<boolean> => {
   if (!await validateSelectedIncome()) {
-    return;
+    return false;
   }
   const modifiedIncomes = incomes.value.filter((income) => {
     const initialIncome = initialIncomes.value.find((i) => i.id === income.id);
     return !initialIncome || income.name !== initialIncome.name || income.description !== initialIncome.description;
   });
   if (modifiedIncomes.length === 0 && removedIncomesIds.value.length === 0) {
-    return;
+    return true;
   }
   await mutate({
     budgetId: props.budget.id,
     incomes: modifiedIncomes,
     removedIncomeIds: removedIncomesIds.value,
   });
+  return true;
 };
 defineExpose({ acceptStep });
 </script>

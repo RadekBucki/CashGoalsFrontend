@@ -139,7 +139,10 @@ onDone((result) => {
   goals.value = JSON.parse(JSON.stringify(result.data.updateGoals));
   removedGoalsIds.value = [];
 });
-const acceptStep = () => {
+const acceptStep = async (): Promise<boolean> => {
+  if (!await validateSelectedGoalForm()) {
+    return false;
+  }
   const modifiedGoals: GoalInput[] = goals.value.filter((goal) => {
     const initialGoal = initialGoals.value.find((i) => i.id === goal.id);
     return !initialGoal
@@ -151,13 +154,14 @@ const acceptStep = () => {
       || goal.categoryId !== initialGoal.categoryId;
   });
   if (modifiedGoals.length === 0 && removedGoalsIds.value.length === 0) {
-    return;
+    return true;
   }
-  mutate({
+  await mutate({
     budgetId: props.budget.id,
     goals: modifiedGoals,
     removedGoalsIds: removedGoalsIds.value,
   });
+  return true;
 };
 defineExpose({ acceptStep });
 </script>

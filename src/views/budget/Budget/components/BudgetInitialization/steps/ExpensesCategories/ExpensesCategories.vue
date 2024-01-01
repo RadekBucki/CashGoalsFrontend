@@ -45,8 +45,8 @@ onMounted(() => {
     if (!result.data?.categories) {
       return;
     }
-    initialCategories.value = structuredClone(result.data.categories);
-    categories.value = structuredClone(result.data.categories);
+    initialCategories.value = JSON.parse(JSON.stringify(result.data.categories));
+    categories.value = JSON.parse(JSON.stringify(result.data.categories));
   });
 });
 
@@ -117,13 +117,13 @@ onDone((result: FetchResult<UpdateCategoriesMutationOutput>) => {
   if (!result.data?.updateCategories) {
     return;
   }
-  initialCategories.value = structuredClone(result.data.updateCategories);
-  categories.value = result.data.updateCategories;
+  initialCategories.value = JSON.parse(JSON.stringify(result.data.updateCategories));
+  categories.value = JSON.parse(JSON.stringify(result.data.updateCategories));
   removedCategoriesIds.value = [];
 });
 const findInitialCategory = (category: CategoryInput): CategoryInput | null => (category.id ? findCategoryById(category.id, initialCategories.value) : null);
 
-const acceptStep = () => {
+const acceptStep = async (): Promise<boolean> => {
   const modifiedCategories: CategoryInput[] = [];
   const filterModifiedCategories = (categoriesToBeFiltered: CategoryInput[]) => {
     categoriesToBeFiltered.forEach((category) => {
@@ -152,13 +152,14 @@ const acceptStep = () => {
   filterModifiedCategories(categories.value);
 
   if (modifiedCategories.length === 0 && removedCategoriesIds.value.length === 0) {
-    return;
+    return true;
   }
-  mutate({
+  await mutate({
     budgetId: props.budget.id,
     categories: modifiedCategories,
     removedCategoryIds: removedCategoriesIds.value,
   });
+  return true;
 };
 defineExpose({ acceptStep });
 </script>

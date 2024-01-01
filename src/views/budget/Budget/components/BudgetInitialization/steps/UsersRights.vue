@@ -75,11 +75,12 @@ onDone((result: FetchResult<SetUsersRightsMutationOutput>) => {
     },
   );
 });
-const acceptStep = () => {
+const acceptStep = (): boolean => {
   mutate({
     budgetId: props.budget?.id,
     usersRights: usersRights.value,
   });
+  return true;
 };
 defineExpose({ acceptStep });
 </script>
