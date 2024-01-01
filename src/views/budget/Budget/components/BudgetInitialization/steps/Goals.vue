@@ -3,6 +3,7 @@ import { computed, ComputedRef, onMounted, PropType, ref, Ref } from 'vue';
 import { useLocale } from 'vuetify';
 
 import { ApolloQueryResult } from '@apollo/client';
+import { VForm } from 'vuetify/components';
 
 import { findCategoryById } from '@/components/CategorySelect';
 import CategorySelect from '@/components/CategorySelect/CategorySelect.vue';
@@ -62,7 +63,45 @@ onMounted(() => {
   });
 });
 
-const addGoal = () => {
+const minMaxRules: ComputedRef<((v: number | null) => boolean | string)[]> = computed(() => {
+  const rules: ((v: number | null) => boolean | string)[] = [];
+  if (!selectedGoal.value) {
+    return [];
+  }
+  rules.push(() => {
+    if (!selectedGoal.value?.min || !selectedGoal.value?.max) {
+      return true;
+    }
+    return selectedGoal.value?.min < selectedGoal.value?.max || t('budget.goals.minMax.validation.error');
+  });
+  if (selectedGoal.value.type === 'AMOUNT') {
+    rules.push((v: number | null) => v === null || v > 0 || t('budget.goals.minMaxAmount.validation.error'));
+  } else {
+    rules.push((v: number | null) => v === null || v > 0 || t('budget.goals.minMaxPercentage.validation.error'));
+  }
+  return rules;
+});
+const requiredFieldRule = [(v: string) => !!v || t('required.validation.error')];
+
+const selectedGoalForm = ref<typeof VForm | null>(null);
+const validateSelectedGoalForm = async (): Promise<boolean> => {
+  if (!selectedGoalForm.value) {
+    return true;
+  }
+  const { valid } = await selectedGoalForm.value.validate();
+  return valid;
+};
+const selectGoal = async (goal: GoalInput) => {
+  if (!await validateSelectedGoalForm()) {
+    return;
+  }
+  selectedGoal.value = goal;
+};
+
+const addGoal = async () => {
+  if (!await validateSelectedGoalForm()) {
+    return;
+  }
   selectedGoal.value = {
     name: t('budget.goals.new'),
     description: '',
@@ -133,7 +172,8 @@ defineExpose({ acceptStep });
             v-for="goal in goals"
             :key="goal.id ?? goal.name"
             :value="goal"
-            @click="selectedGoal = goal"
+            :active="selectedGoal === goal"
+            @click="selectGoal(goal)"
           >
             <VListItemTitle>
               {{ goal.name }}
@@ -149,46 +189,52 @@ defineExpose({ acceptStep });
         </VList>
       </VCol>
       <VCol cols="12" md="6" v-if="selectedGoal">
-        <VTextField
-          v-model="selectedGoal.name"
-          :label="t('budget.goals.name')"
-          outlined
-          required
-        />
-        <VTextField
-          v-model="selectedGoal.description"
-          :label="t('budget.goals.description')"
-          outlined
-        />
-        <VSelect
-          v-model="selectedGoal.type"
-          :label="t('budget.goals.type')"
-          :items="[
-            { value: 'AMOUNT', title: t('budget.goals.types.amount') },
-            { value: 'PERCENTAGE', title: t('budget.goals.types.percentage') },
-          ]"
-          outlined
-          required
-        />
-        <VTextField
-          v-model="selectedGoal.min"
-          @update:modelValue="selectedGoal.min = $event ? Number($event) : null"
-          type="number"
-          :label="t('budget.goals.min')"
-          outlined
-        />
-        <VTextField
-          v-model="selectedGoal.max"
-          @update:modelValue="selectedGoal.min = $event ? Number($event) : null"
-          :label="t('budget.goals.max')"
-          outlined
-        />
-        <CategorySelect
-          :selectedCategory="selectedGoalCategory as CategoryInput"
-          :categories="categories as CategoryInput[]"
-          :update="updateCategoryId"
-          :label="t('budget.goals.category')"
-        />
+        <VForm ref="selectedGoalForm" validateOn="input lazy">
+          <VTextField
+            v-model="selectedGoal.name"
+            :label="t('budget.goals.name')"
+            :rules="requiredFieldRule"
+            outlined
+          />
+          <VTextField
+            v-model="selectedGoal.description"
+            :label="t('budget.goals.description')"
+            outlined
+          />
+          <VSelect
+            v-model="selectedGoal.type"
+            :label="t('budget.goals.type')"
+            :items="[
+              { value: 'AMOUNT', title: t('budget.goals.types.amount') },
+              { value: 'PERCENTAGE', title: t('budget.goals.types.percentage') },
+            ]"
+            outlined
+          />
+          <VTextField
+            v-model="selectedGoal.min"
+            @update:modelValue="selectedGoal.min = $event ? Number($event) : null"
+            type="number"
+            :label="t('budget.goals.min')"
+            :appendInnerIcon="selectedGoal.type === 'AMOUNT' ? 'mdi-cash' : 'mdi-percent'"
+            :rules="minMaxRules"
+            outlined
+          />
+          <VTextField
+            v-model="selectedGoal.max"
+            @update:modelValue="selectedGoal.max = $event ? Number($event) : null"
+            type="number"
+            :label="t('budget.goals.max')"
+            :appendInnerIcon="selectedGoal.type === 'AMOUNT' ? 'mdi-cash' : 'mdi-percent'"
+            :rules="minMaxRules"
+            outlined
+          />
+          <CategorySelect
+            :selectedCategory="selectedGoalCategory as CategoryInput"
+            :categories="categories as CategoryInput[]"
+            :update="updateCategoryId"
+            :label="t('budget.goals.category')"
+          />
+        </VForm>
       </VCol>
     </VRow>
   </div>
