@@ -19,9 +19,13 @@ const props = defineProps({
     required: true,
   },
 });
-const formRef: Ref<VForm | null> = ref<VForm | null>(null);
-const confirm = () => {
-  if (!formRef.value && !formRef.value?.validate()) {
+const formRef: Ref<VForm | null> = ref(null);
+const confirm = async () => {
+  if (!formRef.value) {
+    return;
+  }
+  const { valid } = await formRef.value.validate();
+  if (!valid) {
     return;
   }
   props.onConfirm();

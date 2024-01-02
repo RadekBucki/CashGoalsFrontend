@@ -8,7 +8,7 @@ import CenteredLayout from '@/layouts/content/CenteredLayout.vue';
 const { t } = useI18n();
 const modalStore = useModalStore();
 
-const modal: ComputedRef<QuestionModal> = computed(() => modalStore.modal);
+const modal: ComputedRef<QuestionModal> = computed(() => modalStore.modal as QuestionModal);
 const visible: ComputedRef<boolean> = computed(() => modalStore.visible);
 
 const close = () => {

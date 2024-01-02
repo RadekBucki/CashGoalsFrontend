@@ -4,7 +4,7 @@ import { useRouter } from 'vue-router';
 import { useLocale } from 'vuetify';
 
 import { CardForm, Field, useFieldsLibrary, useFormsStore } from '@/components/CardForm';
-import { Modal, useModalStore } from '@/components/Modal';
+import { useModalStore } from '@/components/Modal';
 import { useRequestPasswordResetMutation, RequestPasswordResetMutationVariables } from '@/graphql';
 import CenteredLayout from '@/layouts/content/CenteredLayout.vue';
 
@@ -42,7 +42,7 @@ onDone(() => {
       const queryParameters = new URLSearchParams({ user: form.value.email });
       router.push(`${url}?${queryParameters.toString()}`);
     },
-  } as Modal);
+  });
 });
 
 async function requestPasswordReset() {

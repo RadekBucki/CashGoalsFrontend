@@ -6,7 +6,7 @@ import CenteredLayout from '@/layouts/content/CenteredLayout.vue';
 
 const modalStore = useModalStore();
 
-const modal: ComputedRef<StandardModal> = computed(() => modalStore.modal);
+const modal: ComputedRef<StandardModal> = computed(() => modalStore.modal as StandardModal);
 const visible: ComputedRef<boolean> = computed(() => modalStore.visible);
 const close = () => {
   modalStore.hideModal();

@@ -104,6 +104,23 @@ const deleteIncomeItem = (incomeItem: IncomeItem) => {
     },
   });
 };
+
+// This type is not exported by Vuetify, so we need to define it here
+type GroupHeaderSlotItem = {
+  type: 'group';
+  depth: number;
+  id: string;
+  key: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  value: any;
+  items: readonly ({ raw: IncomeItem })[],
+};
+type GroupHeaderSlotFixed = {
+  item: GroupHeaderSlotItem
+  columns: { length: number }
+  toggleGroup: (group: GroupHeaderSlotItem) => void,
+  isGroupOpen: (group: GroupHeaderSlotItem) => boolean,
+};
 </script>
 
 <template>
@@ -148,7 +165,8 @@ const deleteIncomeItem = (incomeItem: IncomeItem) => {
         <template
           v-slot:group-header="{
             item, columns, toggleGroup, isGroupOpen,
-          }">
+          }: GroupHeaderSlotFixed"
+        >
           <tr>
             <td :colspan="columns.length - 2">
               <VBtn variant="text" @click="toggleGroup(item)">
@@ -161,10 +179,8 @@ const deleteIncomeItem = (incomeItem: IncomeItem) => {
               </VBtn>
             </td>
             <td>
-              <strong>{{
-                item.items.map((item: { raw: IncomeItem }) => item.raw.amount)
-                  .reduce((a: number, b: number) => a + b, 0)
-              }}
+              <strong>
+                {{item.items.map((i) => i.raw.amount).reduce((a: number, b: number) => a + b, 0) }}
               </strong>
             </td>
             <td class="text-end">
@@ -197,7 +213,7 @@ const deleteIncomeItem = (incomeItem: IncomeItem) => {
       </VDataTable>
       <VFormModal
         v-if="editedIncomeItem !== null"
-        :title="editedIncomeItem.id ? t('budget.incomeItem.edit', editedIncomeItem?.name ?? '') : t('budget.incomeItem.add')"
+        :title="editedIncomeItem.id ? t('budget.incomeItem.edit') : t('budget.incomeItem.add')"
         :onClose="setEditedIncomeItem"
         :onConfirm="editIncomeItem"
       >
