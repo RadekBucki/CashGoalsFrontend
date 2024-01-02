@@ -134,5 +134,7 @@
   "budget.incomeItem.date": "Data",
   "budget.incomeItem.name": "Nazwa",
   "budget.incomeItem.description": "Opis",
-  "budget.incomeItem.amount": "Kwota"
+  "budget.incomeItem.amount": "Kwota",
+  "budget.incomeItem.income": "Przychód",
+  "budget.incomeItem.edit": "Edycja przychodu {0}"
 }

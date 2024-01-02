@@ -10,6 +10,19 @@ const modalStore = useModalStore();
 
 const modal: ComputedRef<QuestionModal> = computed(() => modalStore.modal);
 const visible: ComputedRef<boolean> = computed(() => modalStore.visible);
+
+const close = () => {
+  modalStore.hideModal();
+  if (modal.value.onClose) {
+    modal.value.onClose();
+  }
+};
+const confirm = () => {
+  modalStore.hideModal();
+  if (modal.value.onConfirm) {
+    modal.value.onConfirm();
+  }
+};
 </script>
 
 <template>
@@ -18,14 +31,14 @@ const visible: ComputedRef<boolean> = computed(() => modalStore.visible);
       <VCard class="pa-10">
         <VCardActions class="close-button">
           <VSpacer />
-          <VBtn icon @click="modalStore.hideModal(); modal.onClose()">
+          <VBtn icon @click="close">
             <VIcon>mdi-close</VIcon>
           </VBtn>
         </VCardActions>
         <VCardTitle class="mt-10 text-center text-wrap">{{ modal.title }}</VCardTitle>
         <VCardActions class="d-flex justify-center mt-10">
-          <VBtn color="error" @click="modalStore.hideModal(); modal.onClose()">{{ t('$vuetify.cancel') }}</VBtn>
-          <VBtn color="success" @click="modalStore.hideModal(); modal.onConfirm();">{{ t('$vuetify.confirm') }}</VBtn>
+          <VBtn color="error" @click="close">{{ t('$vuetify.cancel') }}</VBtn>
+          <VBtn color="success" @click="confirm">{{ t('$vuetify.confirm') }}</VBtn>
         </VCardActions>
       </VCard>
     </CenteredLayout>
