@@ -3,12 +3,12 @@ query incomeItems($budgetId: UUID!, $month: Int!, $year: Int!) {
         id
         name
         description
-        incomeItems {
+        amount
+        date
+        income {
             id
             name
             description
-            amount
-            date
         }
     }
     incomes(budgetId: $budgetId) {

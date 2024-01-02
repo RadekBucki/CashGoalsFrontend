@@ -921,12 +921,12 @@ export const IncomeItemsDocument = gql`
     id
     name
     description
-    incomeItems {
+    amount
+    date
+    income {
       id
       name
       description
-      amount
-      date
     }
   }
   incomes(budgetId: $budgetId) {
@@ -965,6 +965,15 @@ export const UpdateIncomeItemDocument = gql`
     mutation updateIncomeItem($budgetId: UUID!, $incomeItem: IncomeItemInput!) {
   updateIncomeItem(budgetId: $budgetId, incomeItem: $incomeItem) {
     id
+    name
+    description
+    amount
+    date
+    income {
+      id
+      name
+      description
+    }
   }
 }
     `;
@@ -1428,6 +1437,7 @@ export type IncomeItem = {
   date: Scalars['Date']['output'];
   description?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
+  income: Income;
   name: Scalars['String']['output'];
 };
 
@@ -1438,13 +1448,6 @@ export type IncomeItemInput = {
   id?: InputMaybe<Scalars['ID']['input']>;
   incomeId: Scalars['ID']['input'];
   name: Scalars['String']['input'];
-};
-
-export type IncomeItemsOutput = {
-  description?: Maybe<Scalars['String']['output']>;
-  id: Scalars['ID']['output'];
-  incomeItems: Array<IncomeItem>;
-  name: Scalars['String']['output'];
 };
 
 export type Mutation = {
@@ -1578,7 +1581,7 @@ export type Query = {
   budgets: Array<Budget>;
   categories: Array<Category>;
   goals: Array<Goal>;
-  incomeItems: Array<IncomeItemsOutput>;
+  incomeItems: Array<IncomeItem>;
   incomes: Array<Income>;
   user: User;
   usersRights: Array<UserRights>;
@@ -1751,7 +1754,7 @@ export type IncomeItemsQueryVariables = Exact<{
 }>;
 
 
-export type IncomeItemsQueryOutput = { incomeItems: Array<{ id: number, name: string, description?: string | null, incomeItems: Array<{ id: number, name: string, description?: string | null, amount: number, date: any }> }>, incomes: Array<{ id: number, name: string, description?: string | null }> };
+export type IncomeItemsQueryOutput = { incomeItems: Array<{ id: number, name: string, description?: string | null, amount: number, date: any, income: { id: number, name: string, description?: string | null } }>, incomes: Array<{ id: number, name: string, description?: string | null }> };
 
 export type UpdateIncomeItemMutationVariables = Exact<{
   budgetId: Scalars['UUID']['input'];
@@ -1759,7 +1762,7 @@ export type UpdateIncomeItemMutationVariables = Exact<{
 }>;
 
 
-export type UpdateIncomeItemMutationOutput = { updateIncomeItem: { id: number } };
+export type UpdateIncomeItemMutationOutput = { updateIncomeItem: { id: number, name: string, description?: string | null, amount: number, date: any, income: { id: number, name: string, description?: string | null } } };
 
 export type SetUsersRightsMutationVariables = Exact<{
   budgetId: Scalars['UUID']['input'];
