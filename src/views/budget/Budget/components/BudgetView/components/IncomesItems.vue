@@ -180,7 +180,7 @@ type GroupHeaderSlotFixed = {
             </td>
             <td>
               <strong>
-                {{item.items.map((i) => i.raw.amount).reduce((a: number, b: number) => a + b, 0) }}
+                {{ item.items.map((i) => i.raw.amount).reduce((a: number, b: number) => a + b, 0) }}
               </strong>
             </td>
             <td class="text-end">
@@ -229,6 +229,7 @@ type GroupHeaderSlotFixed = {
           :itemValue="item => item.id"
           :itemTitle="item => item.name"
           :label="t('budget.incomeItem.income')"
+          :rules="[v => !!v || t('required.validation.error')]"
         >
           <template v-slot:item="{ item, props }">
             <VListItem v-bind="props" :subtitle="item.value?.description" />

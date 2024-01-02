@@ -103,6 +103,340 @@ export function useCreateBudgetMutation(options: VueApolloComposable.UseMutation
   return VueApolloComposable.useMutation<CreateBudgetMutationOutput, CreateBudgetMutationVariables>(CreateBudgetDocument, options);
 }
 export type CreateBudgetMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<CreateBudgetMutationOutput, CreateBudgetMutationVariables>;
+export const DeleteExpenseDocument = gql`
+    mutation deleteExpense($budgetId: UUID!, $expenseId: ID!) {
+  deleteExpense(budgetId: $budgetId, expenseId: $expenseId)
+}
+    `;
+
+/**
+ * __useDeleteExpenseMutation__
+ *
+ * To run a mutation, you first call `useDeleteExpenseMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteExpenseMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useDeleteExpenseMutation({
+ *   variables: {
+ *     budgetId: // value for 'budgetId'
+ *     expenseId: // value for 'expenseId'
+ *   },
+ * });
+ */
+export function useDeleteExpenseMutation(options: VueApolloComposable.UseMutationOptions<DeleteExpenseMutationOutput, DeleteExpenseMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<DeleteExpenseMutationOutput, DeleteExpenseMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<DeleteExpenseMutationOutput, DeleteExpenseMutationVariables>(DeleteExpenseDocument, options);
+}
+export type DeleteExpenseMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<DeleteExpenseMutationOutput, DeleteExpenseMutationVariables>;
+export const ExpensesDocument = gql`
+    query expenses($budgetId: UUID!, $month: Int!, $year: Int!) {
+  expenses(budgetId: $budgetId, month: $month, year: $year) {
+    id
+    description
+    amount
+    date
+    category {
+      id
+    }
+    categories
+  }
+  visibleCategories(budgetId: $budgetId) {
+    id
+    name
+    description
+    children {
+      id
+      name
+      description
+      children {
+        id
+        name
+        description
+        children {
+          id
+          name
+          description
+          children {
+            id
+            name
+            description
+            children {
+              id
+              name
+              description
+            }
+            children {
+              id
+              name
+              description
+              children {
+                id
+                name
+                description
+              }
+              children {
+                id
+                name
+                description
+                children {
+                  id
+                  name
+                  description
+                }
+                children {
+                  id
+                  name
+                  description
+                  children {
+                    id
+                    name
+                    description
+                  }
+                  children {
+                    id
+                    name
+                    description
+                    children {
+                      id
+                      name
+                      description
+                    }
+                    children {
+                      id
+                      name
+                      description
+                      children {
+                        id
+                        name
+                        description
+                      }
+                      children {
+                        id
+                        name
+                        description
+                        children {
+                          id
+                          name
+                          description
+                        }
+                        children {
+                          id
+                          name
+                          description
+                          children {
+                            id
+                            name
+                            description
+                          }
+                          children {
+                            id
+                            name
+                            description
+                            children {
+                              id
+                              name
+                              description
+                            }
+                            children {
+                              id
+                              name
+                              description
+                              children {
+                                id
+                                name
+                                description
+                              }
+                              children {
+                                id
+                                name
+                                description
+                                children {
+                                  id
+                                  name
+                                  description
+                                }
+                                children {
+                                  id
+                                  name
+                                  description
+                                  children {
+                                    id
+                                    name
+                                    description
+                                  }
+                                  children {
+                                    id
+                                    name
+                                    description
+                                    children {
+                                      id
+                                      name
+                                      description
+                                    }
+                                    children {
+                                      id
+                                      name
+                                      description
+                                      children {
+                                        id
+                                        name
+                                        description
+                                      }
+                                      children {
+                                        id
+                                        name
+                                        description
+                                        children {
+                                          id
+                                          name
+                                          description
+                                        }
+                                        children {
+                                          id
+                                          name
+                                          description
+                                          children {
+                                            id
+                                            name
+                                            description
+                                          }
+                                          children {
+                                            id
+                                            name
+                                            description
+                                            children {
+                                              id
+                                              name
+                                              description
+                                            }
+                                            children {
+                                              id
+                                              name
+                                              description
+                                              children {
+                                                id
+                                                name
+                                                description
+                                              }
+                                              children {
+                                                id
+                                                name
+                                                description
+                                                children {
+                                                  id
+                                                  name
+                                                  description
+                                                }
+                                                children {
+                                                  id
+                                                  name
+                                                  description
+                                                  children {
+                                                    id
+                                                    name
+                                                    description
+                                                  }
+                                                  children {
+                                                    id
+                                                    name
+                                                    description
+                                                    children {
+                                                      id
+                                                      name
+                                                      description
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useExpensesQuery__
+ *
+ * To run a query within a Vue component, call `useExpensesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useExpensesQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param variables that will be passed into the query
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useExpensesQuery({
+ *   budgetId: // value for 'budgetId'
+ *   month: // value for 'month'
+ *   year: // value for 'year'
+ * });
+ */
+export function useExpensesQuery(variables: ExpensesQueryVariables | VueCompositionApi.Ref<ExpensesQueryVariables> | ReactiveFunction<ExpensesQueryVariables>, options: VueApolloComposable.UseQueryOptions<ExpensesQueryOutput, ExpensesQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<ExpensesQueryOutput, ExpensesQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<ExpensesQueryOutput, ExpensesQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<ExpensesQueryOutput, ExpensesQueryVariables>(ExpensesDocument, variables, options);
+}
+export function useExpensesLazyQuery(variables: ExpensesQueryVariables | VueCompositionApi.Ref<ExpensesQueryVariables> | ReactiveFunction<ExpensesQueryVariables>, options: VueApolloComposable.UseQueryOptions<ExpensesQueryOutput, ExpensesQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<ExpensesQueryOutput, ExpensesQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<ExpensesQueryOutput, ExpensesQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<ExpensesQueryOutput, ExpensesQueryVariables>(ExpensesDocument, variables, options);
+}
+export type ExpensesQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<ExpensesQueryOutput, ExpensesQueryVariables>;
+export const UpdateExpenseDocument = gql`
+    mutation updateExpense($budgetId: UUID!, $expense: ExpenseInput!) {
+  updateExpense(budgetId: $budgetId, expense: $expense) {
+    id
+    description
+    amount
+    date
+    category {
+      id
+    }
+    categories
+  }
+}
+    `;
+
+/**
+ * __useUpdateExpenseMutation__
+ *
+ * To run a mutation, you first call `useUpdateExpenseMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateExpenseMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useUpdateExpenseMutation({
+ *   variables: {
+ *     budgetId: // value for 'budgetId'
+ *     expense: // value for 'expense'
+ *   },
+ * });
+ */
+export function useUpdateExpenseMutation(options: VueApolloComposable.UseMutationOptions<UpdateExpenseMutationOutput, UpdateExpenseMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<UpdateExpenseMutationOutput, UpdateExpenseMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<UpdateExpenseMutationOutput, UpdateExpenseMutationVariables>(UpdateExpenseDocument, options);
+}
+export type UpdateExpenseMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<UpdateExpenseMutationOutput, UpdateExpenseMutationVariables>;
 export const CategoriesDocument = gql`
     query categories($budgetId: UUID!) {
   categories(budgetId: $budgetId) {
@@ -1394,6 +1728,23 @@ export type CreateUserInput = {
   theme: Theme;
 };
 
+export type Expense = {
+  amount: Scalars['Float']['output'];
+  categories: Scalars['String']['output'];
+  category: Category;
+  date: Scalars['Date']['output'];
+  description?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+};
+
+export type ExpenseInput = {
+  amount: Scalars['Float']['input'];
+  categoryId: Scalars['ID']['input'];
+  date: Scalars['Date']['input'];
+  description?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+};
+
 export type Goal = {
   category: Category;
   description?: Maybe<Scalars['String']['output']>;
@@ -1451,6 +1802,7 @@ export type Mutation = {
   createBudget: Budget;
   createUser: User;
   deleteCategories: Scalars['Boolean']['output'];
+  deleteExpense: Scalars['Boolean']['output'];
   deleteGoals: Scalars['Boolean']['output'];
   deleteIncomeItem: Scalars['Boolean']['output'];
   deleteIncomes: Scalars['Boolean']['output'];
@@ -1460,6 +1812,7 @@ export type Mutation = {
   resetPassword: Scalars['Boolean']['output'];
   setUsersRights: Array<UserRights>;
   updateCategories: Array<Category>;
+  updateExpense: Expense;
   updateGoals: Array<Goal>;
   updateIncomeItem: IncomeItem;
   updateIncomes: Array<Income>;
@@ -1487,6 +1840,12 @@ export type MutationCreateUserArgs = {
 export type MutationDeleteCategoriesArgs = {
   budgetId: Scalars['UUID']['input'];
   categoryIds: Array<Scalars['ID']['input']>;
+};
+
+
+export type MutationDeleteExpenseArgs = {
+  budgetId: Scalars['UUID']['input'];
+  expenseId: Scalars['ID']['input'];
 };
 
 
@@ -1544,6 +1903,12 @@ export type MutationUpdateCategoriesArgs = {
 };
 
 
+export type MutationUpdateExpenseArgs = {
+  budgetId: Scalars['UUID']['input'];
+  expense: ExpenseInput;
+};
+
+
 export type MutationUpdateGoalsArgs = {
   budgetId: Scalars['UUID']['input'];
   goals: Array<GoalInput>;
@@ -1576,6 +1941,7 @@ export type Query = {
   budget?: Maybe<Budget>;
   budgets: Array<Budget>;
   categories: Array<Category>;
+  expenses: Array<Expense>;
   goals: Array<Goal>;
   incomeItems: Array<IncomeItem>;
   incomes: Array<Income>;
@@ -1592,6 +1958,13 @@ export type QueryBudgetArgs = {
 
 export type QueryCategoriesArgs = {
   budgetId: Scalars['UUID']['input'];
+};
+
+
+export type QueryExpensesArgs = {
+  budgetId: Scalars['UUID']['input'];
+  month: Scalars['Int']['input'];
+  year: Scalars['Int']['input'];
 };
 
 
@@ -1686,6 +2059,31 @@ export type CreateBudgetMutationVariables = Exact<{
 
 
 export type CreateBudgetMutationOutput = { createBudget: { id: string } };
+
+export type DeleteExpenseMutationVariables = Exact<{
+  budgetId: Scalars['UUID']['input'];
+  expenseId: Scalars['ID']['input'];
+}>;
+
+
+export type DeleteExpenseMutationOutput = { deleteExpense: boolean };
+
+export type ExpensesQueryVariables = Exact<{
+  budgetId: Scalars['UUID']['input'];
+  month: Scalars['Int']['input'];
+  year: Scalars['Int']['input'];
+}>;
+
+
+export type ExpensesQueryOutput = { expenses: Array<{ id: number, description?: string | null, amount: number, date: any, categories: string, category: { id: number } }>, visibleCategories: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> };
+
+export type UpdateExpenseMutationVariables = Exact<{
+  budgetId: Scalars['UUID']['input'];
+  expense: ExpenseInput;
+}>;
+
+
+export type UpdateExpenseMutationOutput = { updateExpense: { id: number, description?: string | null, amount: number, date: any, categories: string, category: { id: number } } };
 
 export type CategoriesQueryVariables = Exact<{
   budgetId: Scalars['UUID']['input'];

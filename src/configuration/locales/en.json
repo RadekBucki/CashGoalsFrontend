@@ -5,6 +5,7 @@
     "confirm": "Ok",
     "cancel": "Cancel",
     "delete": "Are you sure you want to delete this item?",
+    "noDataText": "No data available",
     "dataFooter": {
       "itemsPerPageText": "Items per page:",
       "itemsPerPageAll": "All",
@@ -135,5 +136,11 @@
   "budget.incomeItem.amount": "Amount",
   "budget.incomeItem.income": "Income",
   "budget.incomeItem.edit": "Edit income",
-  "budget.incomeItem.add": "Add income"
+  "budget.incomeItem.add": "Add income",
+  "budget.expenses.date": "Date",
+  "budget.expenses.description": "Description",
+  "budget.expenses.amount": "Amount",
+  "budget.expenses.category": "Category",
+  "budget.expenses.edit": "Edit expense",
+  "budget.expenses.add": "Add expense"
 }

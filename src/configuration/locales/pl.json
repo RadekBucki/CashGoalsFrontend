@@ -5,6 +5,7 @@
     "confirm": "Ok",
     "cancel": "Anuluj",
     "delete": "Czy na pewno chcesz usunąć ten element?",
+    "noDataText": "Brak danych",
     "dataFooter": {
       "itemsPerPageText": "Elementów na stronie:",
       "itemsPerPageAll": "Wszystkie",
@@ -136,5 +137,12 @@
   "budget.incomeItem.amount": "Kwota",
   "budget.incomeItem.income": "Przychód",
   "budget.incomeItem.edit": "Edycja przychodu",
-  "budget.incomeItem.add": "Dodaj przychód"
+  "budget.incomeItem.add": "Dodaj przychód",
+  "budget.expense.date": "Data",
+  "budget.expense.description": "Opis",
+  "budget.expense.amount": "Kwota",
+  "budget.expense.category": "Kategoria",
+  "budget.expense.edit": "Edycja wydatku",
+  "budget.expense.add": "Dodaj wydatek"
+
 }
