@@ -5,6 +5,7 @@ import { useI18n } from 'vue-i18n';
 import { IncomesItems } from './components';
 import { Budget } from '@/graphql';
 import LeftLayout from '@/layouts/content/LeftLayout.vue';
+import Expenses from '@/views/budget/Budget/components/BudgetView/components/Expenses.vue';
 
 defineProps({
   budget: {
@@ -78,11 +79,7 @@ const editYear: Ref<boolean> = ref(false);
         </VExpansionPanelTitle>
       </VExpansionPanel>
       <IncomesItems :budget="budget" :month="month" :year="year" />
-      <VExpansionPanel value="expenses">
-        <VExpansionPanelTitle>
-          <h3>{{ t('budget.expenses') }}</h3>
-        </VExpansionPanelTitle>
-      </VExpansionPanel>
+      <Expenses :budget="budget" :month="month" :year="year" />
     </VExpansionPanels>
   </LeftLayout>
 </template>
