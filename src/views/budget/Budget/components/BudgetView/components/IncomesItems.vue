@@ -3,7 +3,6 @@ import { onMounted, PropType, ref, Ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import { ApolloQueryResult, FetchResult } from '@apollo/client';
-import { MutateResult } from '@vue/apollo-composable';
 
 import { useModalStore } from '@/components/Modal';
 import VFormModal from '@/components/Modal/VFormModal.vue';
@@ -46,10 +45,19 @@ onMounted(async () => {
 });
 
 const editedIncomeItem: Ref<IncomeItemInput | null> = ref<IncomeItemInput | null>(null);
-const setEditedIncomeItem = (incomeItem: IncomeItemInput | null = null, incomeId: number | null = null) => {
-  editedIncomeItem.value = incomeItem;
-  if (editedIncomeItem.value && incomeId) {
-    editedIncomeItem.value.incomeId = incomeId;
+const setEditedIncomeItem = (incomeItem: IncomeItem | null = null) => {
+  if (incomeItem) {
+    editedIncomeItem.value = {
+      date: incomeItem.date,
+      description: incomeItem.description,
+      amount: incomeItem.amount,
+      incomeId: incomeItem.income?.id,
+    };
+    if (incomeItem.id) {
+      editedIncomeItem.value.id = incomeItem.id;
+    }
+  } else {
+    editedIncomeItem.value = null;
   }
 };
 const { mutate: updateItem, onDone: onUpdateItem } = useUpdateIncomeItemMutation();
@@ -79,13 +87,7 @@ const editIncomeItem = () => {
   });
 };
 
-const { mutate: deleteItem, onDone: onDeleteItem } = useDeleteIncomeItemMutation();
-onDeleteItem((result: FetchResult<MutateResult>) => {
-  if (!result.data?.deleteIncomeItem) {
-    return;
-  }
-  incomesItems.value = incomesItems.value.filter((item: IncomeItem) => item.id !== result.data?.deleteIncomeItem?.id);
-});
+const { mutate: deleteItem } = useDeleteIncomeItemMutation();
 const deleteIncomeItem = (incomeItem: IncomeItem) => {
   modalStore.showQuestionModal({
     title: t('$vuetify.delete'),
@@ -94,7 +96,11 @@ const deleteIncomeItem = (incomeItem: IncomeItem) => {
       deleteItem({
         budgetId: props.budget.id,
         incomeItemId: incomeItem.id,
-      });
+      })
+        .then(() => {
+          incomesItems.value = incomesItems.value.filter((item: IncomeItem) => item.id !== incomeItem.id);
+          editedIncomeItem.value = null;
+        });
     },
   });
 };
@@ -128,6 +134,17 @@ const deleteIncomeItem = (incomeItem: IncomeItem) => {
             <th class="w-0" scope="col" />
           </tr>
         </template>
+        <template v-slot:[`header.actions`]>
+          <VBtn
+            variant="plain"
+            class="pa-0"
+            style="min-width: 0;"
+            @click="setEditedIncomeItem({ description: '', amount: 0.0, date: '' } as IncomeItem)"
+          >
+            <VIcon icon="mdi-plus" />
+            {{ t('budget.incomeItem.add') }}
+          </VBtn>
+        </template>
         <template
           v-slot:group-header="{
             item, columns, toggleGroup, isGroupOpen,
@@ -150,7 +167,21 @@ const deleteIncomeItem = (incomeItem: IncomeItem) => {
               }}
               </strong>
             </td>
-            <td />
+            <td class="text-end">
+              <VBtn
+                variant="plain"
+                class="pa-0"
+                style="min-width: 0;"
+                @click="setEditedIncomeItem(
+                  {
+                    description: '', amount: 0.0, date: '', income: { id: item.items[0].raw.income.id },
+                  } as IncomeItem,
+                )"
+              >
+                <VIcon icon="mdi-plus" />
+                {{ t('budget.incomeItem.add') }}
+              </VBtn>
+            </td>
           </tr>
         </template>
         <template v-slot:[`item.actions`]="{ item }">
@@ -159,14 +190,14 @@ const deleteIncomeItem = (incomeItem: IncomeItem) => {
             variant="plain"
             class="pa-0"
             style="min-width: 0;"
-            @click="setEditedIncomeItem(item, item.income.id)"
+            @click="setEditedIncomeItem(item)"
           />
           <VBtn icon="mdi-delete" variant="plain" class="pa-0" style="min-width: 0;" @click="deleteIncomeItem(item)" />
         </template>
       </VDataTable>
       <VFormModal
         v-if="editedIncomeItem !== null"
-        :title="t('budget.incomeItem.edit', editedIncomeItem?.name ?? '')"
+        :title="editedIncomeItem.id ? t('budget.incomeItem.edit', editedIncomeItem?.name ?? '') : t('budget.incomeItem.add')"
         :onClose="setEditedIncomeItem"
         :onConfirm="editIncomeItem"
       >
@@ -192,10 +223,10 @@ const deleteIncomeItem = (incomeItem: IncomeItem) => {
           :label="t('budget.incomeItem.description')"
         />
         <VTextField
-          v-model="editedIncomeItem.amount"
+          v-model.number="editedIncomeItem.amount"
+          type="number"
           :rules="[v => !!v || t('required.validation.error')]"
           :label="`${t('budget.incomeItem.amount')} (${t('budget.currency')})`"
-          type="number"
         />
       </VFormModal>
     </VExpansionPanelText>

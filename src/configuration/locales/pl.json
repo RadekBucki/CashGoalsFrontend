@@ -135,5 +135,6 @@
   "budget.incomeItem.description": "Opis",
   "budget.incomeItem.amount": "Kwota",
   "budget.incomeItem.income": "Przychód",
-  "budget.incomeItem.edit": "Edycja przychodu {0}"
+  "budget.incomeItem.edit": "Edycja przychodu {0}",
+  "budget.incomeItem.add": "Dodaj przychód"
 }

@@ -134,5 +134,6 @@
   "budget.incomeItem.description": "Description",
   "budget.incomeItem.amount": "Amount",
   "budget.incomeItem.income": "Income",
-  "budget.incomeItem.edit": "Edit income {0}"
+  "budget.incomeItem.edit": "Edit income {0}",
+  "budget.incomeItem.add": "Add income"
 }
