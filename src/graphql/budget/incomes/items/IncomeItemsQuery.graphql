@@ -1,7 +1,6 @@
 query incomeItems($budgetId: UUID!, $month: Int!, $year: Int!) {
     incomeItems(budgetId: $budgetId, month: $month, year: $year) {
         id
-        name
         description
         amount
         date

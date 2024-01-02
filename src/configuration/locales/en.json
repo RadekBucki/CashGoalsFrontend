@@ -131,7 +131,6 @@
     "12": "December"
   },
   "budget.incomeItem.date": "Date",
-  "budget.incomeItem.name": "Name",
   "budget.incomeItem.description": "Description",
   "budget.incomeItem.amount": "Amount",
   "budget.incomeItem.income": "Income",

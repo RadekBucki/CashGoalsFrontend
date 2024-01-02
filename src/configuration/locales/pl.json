@@ -132,7 +132,6 @@
     "12": "Grudzień"
   },
   "budget.incomeItem.date": "Data",
-  "budget.incomeItem.name": "Nazwa",
   "budget.incomeItem.description": "Opis",
   "budget.incomeItem.amount": "Kwota",
   "budget.incomeItem.income": "Przychód",

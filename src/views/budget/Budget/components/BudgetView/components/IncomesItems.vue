@@ -116,7 +116,6 @@ const deleteIncomeItem = (incomeItem: IncomeItem) => {
       <VDataTable
         :headers="[
           { title: t('budget.incomeItem.date'), value: 'date', sortable: true },
-          { title: t('budget.incomeItem.name'), value: 'name' },
           { title: t('budget.incomeItem.description'), value: 'description' },
           { title: `${t('budget.incomeItem.amount')} (${t('budget.currency')})`, value: 'amount', sortable: true },
           { value: 'actions', align: 'end' },
@@ -124,6 +123,11 @@ const deleteIncomeItem = (incomeItem: IncomeItem) => {
         :items="incomesItems"
         :groupBy="[{ key: 'income.id' }]"
       >
+        <template v-slot:[`header.data-table-group`]>
+          <tr>
+            <th class="w-0" scope="col" />
+          </tr>
+        </template>
         <template
           v-slot:group-header="{
             item, columns, toggleGroup, isGroupOpen,
@@ -183,11 +187,6 @@ const deleteIncomeItem = (incomeItem: IncomeItem) => {
             <VListItem v-bind="props" :subtitle="item.value?.description" />
           </template>
         </VSelect>
-        <VTextField
-          v-model="editedIncomeItem.name"
-          :rules="[v => !!v || t('required.validation.error')]"
-          :label="t('budget.incomeItem.name')"
-        />
         <VTextField
           v-model="editedIncomeItem.description"
           :label="t('budget.incomeItem.description')"
