@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { defineStore } from 'pinia';
 
-import { Modal } from '@/components/Modal/types.ts';
+import { Modal, QuestionModal, StandardModal } from '@/components/Modal/types.ts';
 
 export default defineStore('modal', {
   state: () => ({
@@ -14,10 +14,14 @@ export default defineStore('modal', {
     visible: false as boolean,
   }),
   actions: {
-    showModal(modal: Modal) {
+    showModal(modal: StandardModal) {
       if (modal.type === undefined) {
         modal.type = 'info';
       }
+      this.modal = modal;
+      this.visible = true;
+    },
+    showQuestionModal(modal: QuestionModal) {
       this.modal = modal;
       this.visible = true;
     },

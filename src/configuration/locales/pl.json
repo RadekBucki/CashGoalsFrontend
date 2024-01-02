@@ -1,7 +1,19 @@
 {
   "$vuetify": {
     "open": "Otwórz",
-    "close": "Zamknij"
+    "close": "Zamknij",
+    "confirm": "Ok",
+    "cancel": "Anuluj",
+    "delete": "Czy na pewno chcesz usunąć ten element?",
+    "dataFooter": {
+      "itemsPerPageText": "Elementów na stronie:",
+      "itemsPerPageAll": "Wszystkie",
+      "nextPage": "Następna strona",
+      "prevPage": "Poprzednia strona",
+      "firstPage": "Pierwsza strona",
+      "lastPage": "Ostatnia strona",
+      "pageText": "{0}-{1} z {2}"
+    }
   },
   "your.account": "Twoje konto",
   "register": "Zarejestruj się",
@@ -50,13 +62,17 @@
   "oldPassword": "Obecne hasło",
   "newPassword": "Nowe hasło",
   "budgets": "Budżety",
+  "budget": "Budżet",
+  "budget.month": "Miesiąc budżetowy",
   "budget.create": "Utwórz budżet",
   "budget.create.name": "Nadaj nazwę budżetowi",
   "budget.name": "Nazwa budżetu",
+  "budget.currency": "zł",
   "budget.name.validation.error": "Nazwa budżetu musi mieć pomiędzy 1 a 100 znaków.",
   "next": "Dalej",
   "back": "Wstecz",
   "finish": "Zakończ",
+  "budget.incomes": "Przychody",
   "budget.incomes.define": "Zdefiniuj swoje przychody",
   "budget.incomes.add": "Dodaj przychód",
   "budget.incomes.name": "Nazwa",
@@ -64,6 +80,7 @@
   "budget.incomes.frequency": "Częstotliwość",
   "budget.incomes.description": "Opis",
   "budget.incomes.new": "Nowy przychód",
+  "budget.expenses": "Wydatki",
   "budget.expenses.categories.define": "Zdefiniuj swoje kategorie wydatków",
   "budget.expenses.categories.new": "Nowa kategoria",
   "budget.expenses.categories.add": "Dodaj kategorię",
@@ -73,6 +90,7 @@
   "budget.expenses.categories.parent": "Kategoria nadrzędna",
   "budget.expenses.categories.no.parent": "Brak",
   "budget.expenses.categories.empty": "Musisz dodać przynajmniej jedną kategorię.",
+  "budget.goals": "Cele",
   "budget.goals.define": "Zdefiniuj swoje cele",
   "budget.goals.add": "Dodaj cel",
   "budget.goals.name": "Nazwa",
@@ -98,5 +116,25 @@
   "budget.usersRights.rights.owner": "Właściciel",
   "budget.usersRights.rights.view": "Wyświetlanie",
   "budget.usersRights.addUser": "Dodaj użytkownika",
-  "email.userRights.email.validation.error": "Konto z podanym adresem email jest już przypisane do tego budżetu."
+  "email.userRights.email.validation.error": "Konto z podanym adresem email jest już przypisane do tego budżetu.",
+  "months": {
+    "1": "Styczeń",
+    "2": "Luty",
+    "3": "Marzec",
+    "4": "Kwiecień",
+    "5": "Maj",
+    "6": "Czerwiec",
+    "7": "Lipiec",
+    "8": "Sierpień",
+    "9": "Wrzesień",
+    "10": "Październik",
+    "11": "Listopad",
+    "12": "Grudzień"
+  },
+  "budget.incomeItem.date": "Data",
+  "budget.incomeItem.description": "Opis",
+  "budget.incomeItem.amount": "Kwota",
+  "budget.incomeItem.income": "Przychód",
+  "budget.incomeItem.edit": "Edycja przychodu",
+  "budget.incomeItem.add": "Dodaj przychód"
 }

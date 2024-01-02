@@ -4,7 +4,7 @@ import { useRouter } from 'vue-router';
 import { useLocale } from 'vuetify';
 
 import { CardForm, Field, useFormsStore, Link, useFieldsLibrary, useLinksLibrary } from '@/components/CardForm';
-import { useModalStore, Modal } from '@/components/Modal';
+import { useModalStore } from '@/components/Modal';
 import useApp from '@/composables/useApp';
 import { useCreateUserMutation, CreateUserInput } from '@/graphql';
 import CenteredLayout from '@/layouts/content/CenteredLayout.vue';
@@ -63,7 +63,7 @@ onDone(() => {
       const queryParameters = new URLSearchParams({ user: form.value.email });
       router.push(`${url}?${queryParameters.toString()}`);
     },
-  } as Modal);
+  });
 });
 function register() {
   mutate({
