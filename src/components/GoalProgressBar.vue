@@ -16,20 +16,6 @@ const { t } = useI18n();
 const min: ComputedRef<number | null> = computed<number | null>(() => props.goalResult.goal.min ?? null);
 const max: ComputedRef<number | null> = computed<number | null>(() => props.goalResult.goal.max ?? null);
 const actual: ComputedRef<number> = computed<number>(() => props.goalResult.actual);
-const total: ComputedRef<number> = computed<number>(() => props.goalResult.totalIncome);
-
-const valueFirst: ComputedRef<boolean> = computed<boolean>(() => min.value && actual.value < min.value);
-const valueLast: ComputedRef<boolean> = computed<boolean>(() => max.value && actual.value > max.value);
-
-const medianDiff: ComputedRef<number> = computed<number>(
-  () => {
-    const values: number[] = [0, min.value, actual.value, max.value, total.value]
-      .filter((v) => v !== null)
-      .sort((a, b) => a - b);
-
-    return (values[Math.floor(values.length / 2)] - values[Math.floor(values.length / 2) - 1]) / 2;
-  },
-);
 
 const postfix: ComputedRef<string> = computed<string>(
   () => {
@@ -40,35 +26,107 @@ const postfix: ComputedRef<string> = computed<string>(
   },
 );
 
-const expectedPhrase: ComputedRef<string> = computed<string>(
+type TimeLineItem = {
+  hideDot: boolean;
+  dotColor?: string;
+  icon?: string;
+  size: string;
+  text: string;
+  oppositeText: string;
+};
+const timelineItems: ComputedRef<TimeLineItem[]> = computed<TimeLineItem[]>(
   () => {
-    if (min.value && max.value) {
-      return `${t('budget.goals.expected')}: ${min.value} - ${max.value}${postfix.value}`;
+    const blankItem: TimeLineItem = {
+      hideDot: true,
+      size: 'default',
+      text: '',
+      oppositeText: '',
+    };
+    const getMinMaxItem = (value: number | null): TimeLineItem => {
+      if (!value) {
+        return blankItem;
+      }
+      return {
+        hideDot: false,
+        dotColor: 'light-green',
+        size: 'x-small',
+        text: '',
+        oppositeText: `${value}${postfix.value}`,
+      };
+    };
+
+    function optimizeArray(items: number[]) {
+      const differences = items.map((item, index) => {
+        if (index === 0) {
+          return 0;
+        }
+        return item - items[index - 1];
+      });
+
+      // eslint-disable-next-line no-plusplus
+      for (let i = 0; i < 5; i++) {
+        const maxDifferenceIndex = differences.indexOf(Math.max(...differences));
+
+        // Put new value between two values with max difference
+        const newValue = (items[maxDifferenceIndex] + items[maxDifferenceIndex - 1]) / 2;
+        items.splice(maxDifferenceIndex, 0, newValue);
+
+        // Update differences
+        differences[maxDifferenceIndex] = newValue - items[maxDifferenceIndex - 1];
+        differences.splice(maxDifferenceIndex, 0, items[maxDifferenceIndex + 1] - newValue);
+      }
+      return items;
     }
-    if (min.value) {
-      return `${t('budget.goals.expected')} ${t('budget.goals.expected.min')}: ${min.value}${postfix.value}`;
-    }
-    if (max.value) {
-      return `${t('budget.goals.expected')} ${t('budget.goals.expected.max')}: ${max.value}${postfix.value}`;
-    }
-    return '';
+
+    const getActualItem = (): TimeLineItem => {
+      if ((min.value && actual.value < min.value) || (max.value && actual.value > max.value)) {
+        return {
+          hideDot: false,
+          dotColor: 'warning',
+          icon: 'mdi-alert',
+          size: 'default',
+          text: `${actual.value}${postfix.value}`,
+          oppositeText: '',
+        };
+      }
+      let oppositeText = '';
+      if (min.value === actual.value) {
+        oppositeText = `${min.value}${postfix.value}`;
+      }
+      if (max.value === actual.value) {
+        oppositeText = `${max.value}${postfix.value}`;
+      }
+      return {
+        hideDot: false,
+        dotColor: 'success',
+        icon: 'mdi-check-bold',
+        size: 'default',
+        text: `${actual.value}${postfix.value}`,
+        oppositeText,
+      };
+    };
+
+    const items: number[] = [min.value, actual.value, max.value]
+      .filter((v) => v !== null)
+      .sort((a, b) => a - b);
+
+    return optimizeArray(items)
+      // remove duplicates
+      .filter((item, index, self) => self.indexOf(item) === index)
+      .map((item) => {
+        switch (item) {
+          case min.value:
+            return getMinMaxItem(min.value);
+          case actual.value:
+            return getActualItem();
+          case max.value:
+            return getMinMaxItem(max.value);
+          default:
+            return blankItem;
+        }
+      });
   },
 );
-
-const repeatArray = (times: number) => Array.from({ length: times }, (_, index) => index);
-const calculateNumberOfRepeats = (valueOnLeft: number, valueOnRight: number) => {
-  return 10;
-  if (!min.value || !max.value) {
-    return 0;
-  }
-  if ((valueOnRight - valueOnLeft) > medianDiff.value) {
-    return 1;
-  }
-  if ((valueOnRight - valueOnLeft) > medianDiff.value / 2) {
-    return 2;
-  }
-  return 0;
-};
 </script>
 
 <template>
@@ -76,94 +134,19 @@ const calculateNumberOfRepeats = (valueOnLeft: number, valueOnRight: number) => 
     <h4>{{ goalResult.goal.name }}</h4>
     <h5>{{ goalResult.goal.description }}</h5>
     <VTimeline direction="horizontal" side="start">
-      <template v-if="valueFirst">
-        <VTimelineItem hideDot v-for="index in repeatArray(calculateNumberOfRepeats(0, actual))" :key="index" />
-        <VTimelineItem hide-dot />
-        <VTimelineItem hide-dot />
-        <VTimelineItem v-if="valueFirst" dotColor="warning" icon="mdi-alert">
-          <strong>{{ actual }}{{ postfix }} ({{ expectedPhrase }})</strong>
-        </VTimelineItem>
-
-        <VTimelineItem hideDot v-for="index in repeatArray(calculateNumberOfRepeats(actual, min))" :key="index" />
-
-        <VTimelineItem v-if="min" dotColor="light-green" size="x-small">
-          <template v-slot:opposite>
-            {{ min }}{{ postfix }}
-          </template>
-        </VTimelineItem>
-
-        <VTimelineItem hideDot v-for="index in repeatArray(calculateNumberOfRepeats(min, max))" :key="index" />
-
-        <VTimelineItem v-if="max" dotColor="light-green" size="x-small">
-          <template v-slot:opposite>
-            {{ max }}{{ postfix }}
-          </template>
-        </VTimelineItem>
-
-        <VTimelineItem hideDot v-for="index in repeatArray(calculateNumberOfRepeats(max, total))" :key="index" />
-      </template>
-      <template v-if="!valueFirst && !valueLast">
-        <VTimelineItem hideDot v-for="index in repeatArray(calculateNumberOfRepeats(0, min))" :key="index" />
-
-        <VTimelineItem v-if="min && min != actual" dotColor="light-green" size="x-small">
-          <template v-slot:opposite>
-            {{ min }}{{ postfix }}
-          </template>
-        </VTimelineItem>
-
-        <VTimelineItem hideDot v-for="index in repeatArray(calculateNumberOfRepeats(min, actual))" :key="index" />
-
-        <VTimelineItem dotColor="success" icon="mdi-check-bold">
-          <strong>{{ actual }}{{ postfix }} ({{ expectedPhrase }})</strong>
-          <template v-slot:opposite v-if="min === actual || max === actual">
-            {{ min === actual ? min : max }}{{ postfix }}
-          </template>
-        </VTimelineItem>
-
-        <VTimelineItem hideDot v-for="index in repeatArray(calculateNumberOfRepeats(actual, max))" :key="index" />
-
-        <VTimelineItem v-if="max && max != actual" dotColor="light-green" size="x-small">
-          <template v-slot:opposite>
-            {{ max }}{{ postfix }}
-          </template>
-        </VTimelineItem>
-
-        <VTimelineItem hideDot v-for="index in repeatArray(calculateNumberOfRepeats(max, total))" :key="index" />
-      </template>
-      <template v-if="valueLast">
-        <VTimelineItem hideDot v-for="index in repeatArray(calculateNumberOfRepeats(0, min))" :key="index" />
-
-        <VTimelineItem v-if="min" dotColor="light-green" size="x-small">
-          <template v-slot:opposite>
-            {{ min }}{{ postfix }}
-          </template>
-        </VTimelineItem>
-
-        <VTimelineItem hideDot v-for="index in repeatArray(calculateNumberOfRepeats(min, max))" :key="index" />
-
-        <VTimelineItem v-if="max" dotColor="light-green" size="x-small">
-          <template v-slot:opposite>
-            {{ max }}{{ postfix }}
-          </template>
-        </VTimelineItem>
-
-        <VTimelineItem hideDot v-for="index in repeatArray(calculateNumberOfRepeats(max, actual))" :key="index" />
-
-        <VTimelineItem dotColor="warning" icon="mdi-alert">
-          <strong>{{ actual }}{{ postfix }} ({{ expectedPhrase }})</strong>
-        </VTimelineItem>
-
-        <VTimelineItem hideDot v-for="index in repeatArray(calculateNumberOfRepeats(actual, total))" :key="index" />
-      </template>
+      <VTimelineItem
+        v-for="item in timelineItems"
+        :key="item.text"
+        :hide-dot="item.hideDot"
+        :dot-color="item.dotColor"
+        :icon="item.icon"
+        :size="item.size"
+      >
+        <template v-slot:opposite>
+          <div>{{ item.oppositeText }}</div>
+        </template>
+        <div>{{ item.text }}</div>
+      </VTimelineItem>
     </VTimeline>
   </VCol>
 </template>
-
-<style scoped>
-.v-timeline--horizontal.v-timeline {
-  grid-column-gap: 0 !important;
-}
-.v-timeline--horizontal.v-timeline--align-center .v-timeline-item__body {
-  padding-inline: 0 !important;
-}
-</style>
