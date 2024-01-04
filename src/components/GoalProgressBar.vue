@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { computed, ComputedRef, PropType } from 'vue';
+import { computed, ComputedRef, PropType, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { useDisplay } from 'vuetify';
 
 import { GoalResult } from '@/graphql';
 
@@ -12,6 +13,7 @@ const props = defineProps({
 });
 
 const { t } = useI18n();
+const { mobile } = useDisplay();
 
 const min: ComputedRef<number | null> = computed<number | null>(() => props.goalResult.goal.min ?? null);
 const max: ComputedRef<number | null> = computed<number | null>(() => props.goalResult.goal.max ?? null);
@@ -133,7 +135,7 @@ const timelineItems: ComputedRef<TimeLineItem[]> = computed<TimeLineItem[]>(
   <VCol cols="12" md="12">
     <h4>{{ goalResult.goal.name }}</h4>
     <h5>{{ goalResult.goal.description }}</h5>
-    <VTimeline direction="horizontal" side="start">
+    <VTimeline :direction="mobile ? 'vertical' : 'horizontal'" side="start">
       <VTimelineItem
         v-for="item in timelineItems"
         :key="item.text"
@@ -142,10 +144,10 @@ const timelineItems: ComputedRef<TimeLineItem[]> = computed<TimeLineItem[]>(
         :icon="item.icon"
         :size="item.size"
       >
-        <template v-slot:opposite>
-          <div>{{ item.oppositeText }}</div>
+        <template v-slot:opposite v-if="!mobile">
+          {{ item.oppositeText }}
         </template>
-        <div>{{ item.text }}</div>
+        <template v-if="!mobile">{{ item.text }}</template>
       </VTimelineItem>
     </VTimeline>
   </VCol>
