@@ -29,7 +29,7 @@ onMounted(() => {
     if (!result.data?.goalResults) {
       return;
     }
-    goalsResults.value = result.data.goalResults;
+    goalsResults.value = JSON.parse(JSON.stringify(result.data.goalResults));
   });
 });
 </script>
