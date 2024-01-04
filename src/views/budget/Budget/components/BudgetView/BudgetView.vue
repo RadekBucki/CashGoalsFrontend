@@ -6,6 +6,7 @@ import { IncomesItems } from './components';
 import { Budget } from '@/graphql';
 import LeftLayout from '@/layouts/content/LeftLayout.vue';
 import Expenses from '@/views/budget/Budget/components/BudgetView/components/Expenses.vue';
+import GoalsResults from '@/views/budget/Budget/components/BudgetView/components/GoalsResults.vue';
 
 defineProps({
   budget: {
@@ -73,11 +74,7 @@ const editYear: Ref<boolean> = ref(false);
       </VBtn>
     </h2>
     <VExpansionPanels variant="accordion" multiple :model-value="['goals', 'incomes', 'expenses']">
-      <VExpansionPanel value="goals">
-        <VExpansionPanelTitle>
-          <h3>{{ t('budget.goals') }}</h3>
-        </VExpansionPanelTitle>
-      </VExpansionPanel>
+      <GoalsResults :budget="budget" :month="month" :year="year" />
       <IncomesItems :budget="budget" :month="month" :year="year" />
       <Expenses :budget="budget" :month="month" :year="year" />
     </VExpansionPanels>
