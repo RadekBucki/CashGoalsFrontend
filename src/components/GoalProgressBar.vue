@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ComputedRef, PropType, watch } from 'vue';
+import { computed, ComputedRef, PropType } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useDisplay } from 'vuetify';
 
@@ -110,7 +110,7 @@ const timelineItems: ComputedRef<TimeLineItem[]> = computed<TimeLineItem[]>(
 
     const items: number[] = [min.value, actual.value, max.value]
       .filter((v) => v !== null)
-      .sort((a, b) => a - b);
+      .sort((a:number, b: number) => a - b);
 
     return optimizeArray(items)
       // remove duplicates
