@@ -110,7 +110,7 @@ const timelineItems: ComputedRef<TimeLineItem[]> = computed<TimeLineItem[]>(
 
     const items: number[] = [min.value, actual.value, max.value]
       .filter((v) => v !== null)
-      .sort((a:number, b: number) => a - b);
+      .sort((a, b) => (a as number) - (b as number)) as number[];
 
     return optimizeArray(items)
       // remove duplicates
