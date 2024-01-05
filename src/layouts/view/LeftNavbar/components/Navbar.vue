@@ -29,16 +29,16 @@ onResult((result: ApolloQueryResult<BudgetsQueryOutput>) => {
 
 <template>
   <VNavigationDrawer permanent :rail="!showFullNavigation">
-    <VList>
-      <VListItem style="padding: 0" class="text-center">
-        <Logo :size="showFullNavigation ? 40 : 20" route-name="Dashboard" :slim="!showFullNavigation" />
-      </VListItem>
-      <VListItem v-show="showFullNavigation" class="text-center">
-        {{ t('hello.username', app.getUserName()) }}
-      </VListItem>
-    </VList>
-
-    <VSpacer />
+    <template v-slot:prepend>
+      <VList>
+        <VListItem style="padding: 0" class="text-center">
+          <Logo :size="showFullNavigation ? 40 : 20" route-name="Dashboard" :slim="!showFullNavigation" />
+        </VListItem>
+        <VListItem v-show="showFullNavigation" class="text-center">
+          {{ t('hello.username', app.getUserName()) }}
+        </VListItem>
+      </VList>
+    </template>
 
     <VList>
       <VListItem
