@@ -1155,6 +1155,48 @@ export function useUpdateGoalsMutation(options: VueApolloComposable.UseMutationO
   return VueApolloComposable.useMutation<UpdateGoalsMutationOutput, UpdateGoalsMutationVariables>(UpdateGoalsDocument, options);
 }
 export type UpdateGoalsMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<UpdateGoalsMutationOutput, UpdateGoalsMutationVariables>;
+export const GoalResultsDocument = gql`
+    query goalResults($budgetId: UUID!, $month: Int!, $year: Int!) {
+  goalResults(budgetId: $budgetId, month: $month, year: $year) {
+    goal {
+      id
+      name
+      description
+      type
+      min
+      max
+    }
+    actual
+    reached
+    totalIncome
+  }
+}
+    `;
+
+/**
+ * __useGoalResultsQuery__
+ *
+ * To run a query within a Vue component, call `useGoalResultsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGoalResultsQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param variables that will be passed into the query
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useGoalResultsQuery({
+ *   budgetId: // value for 'budgetId'
+ *   month: // value for 'month'
+ *   year: // value for 'year'
+ * });
+ */
+export function useGoalResultsQuery(variables: GoalResultsQueryVariables | VueCompositionApi.Ref<GoalResultsQueryVariables> | ReactiveFunction<GoalResultsQueryVariables>, options: VueApolloComposable.UseQueryOptions<GoalResultsQueryOutput, GoalResultsQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<GoalResultsQueryOutput, GoalResultsQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<GoalResultsQueryOutput, GoalResultsQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<GoalResultsQueryOutput, GoalResultsQueryVariables>(GoalResultsDocument, variables, options);
+}
+export function useGoalResultsLazyQuery(variables: GoalResultsQueryVariables | VueCompositionApi.Ref<GoalResultsQueryVariables> | ReactiveFunction<GoalResultsQueryVariables>, options: VueApolloComposable.UseQueryOptions<GoalResultsQueryOutput, GoalResultsQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<GoalResultsQueryOutput, GoalResultsQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<GoalResultsQueryOutput, GoalResultsQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<GoalResultsQueryOutput, GoalResultsQueryVariables>(GoalResultsDocument, variables, options);
+}
+export type GoalResultsQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<GoalResultsQueryOutput, GoalResultsQueryVariables>;
 export const IncomesDocument = gql`
     query incomes($budgetId: UUID!) {
   incomes(budgetId: $budgetId) {
@@ -1765,6 +1807,13 @@ export type GoalInput = {
   type: GoalType;
 };
 
+export type GoalResult = {
+  actual: Scalars['Float']['output'];
+  goal: Goal;
+  reached: Scalars['Boolean']['output'];
+  totalIncome: Scalars['Float']['output'];
+};
+
 export type GoalType =
   | 'AMOUNT'
   | 'PERCENTAGE';
@@ -1942,6 +1991,7 @@ export type Query = {
   budgets: Array<Budget>;
   categories: Array<Category>;
   expenses: Array<Expense>;
+  goalResults: Array<GoalResult>;
   goals: Array<Goal>;
   incomeItems: Array<IncomeItem>;
   incomes: Array<Income>;
@@ -1962,6 +2012,13 @@ export type QueryCategoriesArgs = {
 
 
 export type QueryExpensesArgs = {
+  budgetId: Scalars['UUID']['input'];
+  month: Scalars['Int']['input'];
+  year: Scalars['Int']['input'];
+};
+
+
+export type QueryGoalResultsArgs = {
   budgetId: Scalars['UUID']['input'];
   month: Scalars['Int']['input'];
   year: Scalars['Int']['input'];
@@ -2116,6 +2173,15 @@ export type UpdateGoalsMutationVariables = Exact<{
 
 
 export type UpdateGoalsMutationOutput = { deleteGoals: boolean, updateGoals: Array<{ id: number, name: string, description?: string | null, type: GoalType, min?: number | null, max?: number | null, category: { id: number, name: string, description?: string | null } }> };
+
+export type GoalResultsQueryVariables = Exact<{
+  budgetId: Scalars['UUID']['input'];
+  month: Scalars['Int']['input'];
+  year: Scalars['Int']['input'];
+}>;
+
+
+export type GoalResultsQueryOutput = { goalResults: Array<{ actual: number, reached: boolean, totalIncome: number, goal: { id: number, name: string, description?: string | null, type: GoalType, min?: number | null, max?: number | null } }> };
 
 export type IncomesQueryVariables = Exact<{
   budgetId: Scalars['UUID']['input'];
