@@ -1168,7 +1168,6 @@ export const GoalResultsDocument = gql`
     }
     actual
     reached
-    totalIncome
   }
 }
     `;
@@ -1811,7 +1810,6 @@ export type GoalResult = {
   actual: Scalars['Float']['output'];
   goal: Goal;
   reached: Scalars['Boolean']['output'];
-  totalIncome: Scalars['Float']['output'];
 };
 
 export type GoalType =
@@ -2181,7 +2179,7 @@ export type GoalResultsQueryVariables = Exact<{
 }>;
 
 
-export type GoalResultsQueryOutput = { goalResults: Array<{ actual: number, reached: boolean, totalIncome: number, goal: { id: number, name: string, description?: string | null, type: GoalType, min?: number | null, max?: number | null } }> };
+export type GoalResultsQueryOutput = { goalResults: Array<{ actual: number, reached: boolean, goal: { id: number, name: string, description?: string | null, type: GoalType, min?: number | null, max?: number | null } }> };
 
 export type IncomesQueryVariables = Exact<{
   budgetId: Scalars['UUID']['input'];
