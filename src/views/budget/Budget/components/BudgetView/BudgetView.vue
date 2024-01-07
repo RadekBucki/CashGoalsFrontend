@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, PropType, ref, Ref } from 'vue';
+import { PropType, ref, Ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useDisplay } from 'vuetify';
 
@@ -44,34 +44,38 @@ const categories: Ref<Category[]> = ref<Category[]>([]);
 
 const mounted: Ref<boolean> = ref(false);
 
-onMounted(() => {
-  const { onResult } = useBudgetViewQuery({
-    budgetId: props.budget.id,
-    month: month.value,
-    year: year.value,
-  });
-  onResult((result: ApolloQueryResult<BudgetViewQueryOutput>) => {
-    if (!result.data?.goalResults || !result.data?.incomeItems || !result.data?.expenses) {
-      return;
-    }
-    goalsResults.value = JSON.parse(JSON.stringify(result.data.goalResults));
-    incomesItems.value = JSON.parse(JSON.stringify(result.data.incomeItems));
-    expenses.value = JSON.parse(JSON.stringify(result.data.expenses));
-    incomes.value = JSON.parse(JSON.stringify(result.data.incomes));
-    categories.value = JSON.parse(JSON.stringify(result.data.visibleCategories));
-  });
+const { onResult: onBudgetViewQuery, refetch: refetchBudgetView } = useBudgetViewQuery({
+  budgetId: props.budget.id,
+  month: month.value,
+  year: year.value,
+});
+onBudgetViewQuery((result: ApolloQueryResult<BudgetViewQueryOutput>) => {
+  if (!result.data?.goalResults || !result.data?.incomeItems || !result.data?.expenses) {
+    return;
+  }
+  goalsResults.value = JSON.parse(JSON.stringify(result.data.goalResults));
+  incomesItems.value = JSON.parse(JSON.stringify(result.data.incomeItems));
+  expenses.value = JSON.parse(JSON.stringify(result.data.expenses));
+  incomes.value = JSON.parse(JSON.stringify(result.data.incomes));
+  categories.value = JSON.parse(JSON.stringify(result.data.visibleCategories));
   mounted.value = true;
 });
-const { onResult, refetch: updateGoalsResults } = useGoalResultsQuery(
+const { onResult: onGoalsResultsQuery, refetch: updateGoalsResults } = useGoalResultsQuery(
   { budgetId: props.budget.id, month: month.value, year: year.value },
   { enabled: mounted },
 );
-onResult((result: ApolloQueryResult<GoalResultsQueryOutput>) => {
+onGoalsResultsQuery((result: ApolloQueryResult<GoalResultsQueryOutput>) => {
   if (!result.data?.goalResults) {
     return;
   }
   goalsResults.value = JSON.parse(JSON.stringify(result.data.goalResults));
 });
+const editPeriod = () => {
+  if (editDate.value) {
+    refetchBudgetView({ budgetId: props.budget.id, month: month.value, year: year.value });
+  }
+  editDate.value = !editDate.value;
+};
 </script>
 
 <template>
@@ -98,11 +102,11 @@ onResult((result: ApolloQueryResult<GoalResultsQueryOutput>) => {
             { title: t('months.12'), value: 12 },
           ]"
         />
-        <VTextField v-model="year" type="number" density="compact" />
+        <VTextField v-model.number="year" type="number" density="compact" />
       </template>
       <template v-else>{{ t('months.' + month) }}&nbsp;{{ year }}</template>
       <VBtn
-        @click="editDate = !editDate"
+        @click="editPeriod"
         :variant="mobile && editDate ? 'elevated' : 'plain'"
         class="mb-5"
         style="min-width: 0;"
