@@ -100,6 +100,7 @@ defineExpose({ acceptStep });
           <th scope="col">{{ t('budget.usersRights.rights.editExpenses') }}</th>
           <th scope="col">{{ t('budget.usersRights.rights.editGoals') }}</th>
           <th scope="col">{{ t('budget.usersRights.rights.editIncomes') }}</th>
+          <th scope="col">{{ t('budget.usersRights.rights.editIncomesItems') }}</th>
           <th scope="col">{{ t('budget.usersRights.rights.editUsersAndRights') }}</th>
           <th scope="col" />
         </tr>
@@ -108,7 +109,7 @@ defineExpose({ acceptStep });
         <tr v-for="item in usersRights" :key="item.email">
           <td>{{ item.email }}</td>
           <td
-            v-for="right in ['VIEW', 'EDIT_CATEGORIES', 'EDIT_EXPENSES', 'EDIT_GOALS', 'EDIT_INCOMES', 'EDIT_USERS_AND_RIGHTS']"
+            v-for="right in ['VIEW', 'EDIT_CATEGORIES', 'EDIT_EXPENSES', 'EDIT_GOALS', 'EDIT_INCOMES', 'EDIT_INCOME_ITEMS', 'EDIT_USERS_AND_RIGHTS']"
             :key="right"
           >
             <VCheckbox

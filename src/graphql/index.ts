@@ -19,6 +19,7 @@ export const BudgetDocument = gql`
     id
     name
     initializationStep
+    rights
   }
 }
     `;
@@ -2084,7 +2085,7 @@ export type BudgetQueryVariables = Exact<{
 }>;
 
 
-export type BudgetQueryOutput = { budget?: { id: string, name: string, initializationStep?: Step | null } | null };
+export type BudgetQueryOutput = { budget?: { id: string, name: string, initializationStep?: Step | null, rights?: Array<Right> | null } | null };
 
 export type BudgetViewQueryVariables = Exact<{
   budgetId: Scalars['UUID']['input'];

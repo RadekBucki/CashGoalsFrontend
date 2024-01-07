@@ -4,7 +4,7 @@ import { PropType, ref, Ref } from 'vue';
 import { ApolloQueryResult } from '@apollo/client';
 
 import BudgetInitialization from './components/BudgetInitialization.vue';
-import BudgetView from './components/BudgetView/BudgetView.vue';
+import BudgetView from './components/BudgetView.vue';
 import { Budget, BudgetQueryOutput, BudgetQueryVariables, useBudgetQuery } from '@/graphql';
 
 const props = defineProps({
