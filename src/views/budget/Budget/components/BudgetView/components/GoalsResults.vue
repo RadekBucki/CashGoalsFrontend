@@ -18,7 +18,10 @@ const { t } = useI18n();
 <template>
   <VExpansionPanel value="goals">
     <VExpansionPanelTitle>
-      <h3>{{ t('budget.goals') }}</h3>
+      <h3>
+        {{ t('budget.goals') }}:
+        {{ goalsResults.filter(goalResult => goalResult.reached).length }}/{{ goalsResults.length }}
+      </h3>
     </VExpansionPanelTitle>
     <VExpansionPanelText>
       <VRow v-for="goalResult in goalsResults" :key="goalResult.goal.id">
