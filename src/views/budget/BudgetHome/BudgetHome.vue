@@ -5,7 +5,7 @@ import { useDisplay } from 'vuetify';
 
 import { ApolloQueryResult } from '@apollo/client';
 
-import { IncomesItems } from './Budget/components/BudgetView/components';
+import { IncomesItems, Expenses, GoalsResults } from './components';
 import {
   Budget,
   BudgetViewQueryOutput,
@@ -16,8 +16,6 @@ import {
   IncomeItem,
   useBudgetViewQuery, useGoalResultsQuery,
 } from '@/graphql';
-import Expenses from '@/views/budget/Budget/components/BudgetView/components/Expenses.vue';
-import GoalsResults from '@/views/budget/Budget/components/BudgetView/components/GoalsResults.vue';
 
 const props = defineProps({
   budget: {
@@ -123,12 +121,14 @@ const editPeriod = () => {
       <GoalsResults :goalsResults="goalsResults" />
       <IncomesItems
         :budgetId="props.budget?.id"
+        :editable="budget.rights?.includes('EDIT_INCOME_ITEMS')"
         :incomesItems="incomesItems"
         :incomes="incomes"
         :updateIncomesItems="(items: IncomeItem[]) => { incomesItems = items; updateGoalsResults(); }"
       />
       <Expenses
         :budgetId="props.budget?.id"
+        :editable="budget.rights?.includes('EDIT_EXPENSES')"
         :expenses="expenses"
         :categories="categories"
         :updateExpenses="(items: Expense[]) => { expenses = items; updateGoalsResults(); }"

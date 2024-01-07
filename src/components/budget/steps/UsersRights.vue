@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { onMounted, PropType, Ref, ref } from 'vue';
+import { inject, onMounted, PropType, Ref, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import { FetchResult } from '@apollo/client';
 import { VTextField } from 'vuetify/components';
 
+import useApp from '@/composables/useApp';
 import {
   Budget, Right, SetUsersRightsMutationOutput,
   UserRightsInput,
@@ -25,6 +26,12 @@ const props = defineProps({
 });
 
 const { t } = useI18n();
+
+const app = useApp();
+
+// noinspection JSUnusedLocalSymbols
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const updateRights = inject('updateRights', (rights: Right[]) => { });
 
 const usersRights: Ref<UserRightsInput[]> = ref<UserRightsInput[]>([]);
 const newUserEmail: Ref<string> = ref<string>('');
@@ -78,6 +85,9 @@ onDone((result: FetchResult<SetUsersRightsMutationOutput>) => {
       return userRightsInput;
     },
   );
+  const currentUserRights = result.data.setUsersRights
+    .filter((userRight) => userRight.user.email === app.getUserEmail())[0].rights;
+  updateRights(currentUserRights);
 });
 const acceptStep = async (): Promise<boolean> => mutate({
   budgetId: props.budget?.id,
@@ -100,6 +110,7 @@ defineExpose({ acceptStep });
           <th scope="col">{{ t('budget.usersRights.rights.editExpenses') }}</th>
           <th scope="col">{{ t('budget.usersRights.rights.editGoals') }}</th>
           <th scope="col">{{ t('budget.usersRights.rights.editIncomes') }}</th>
+          <th scope="col">{{ t('budget.usersRights.rights.editIncomesItems') }}</th>
           <th scope="col">{{ t('budget.usersRights.rights.editUsersAndRights') }}</th>
           <th scope="col" />
         </tr>
@@ -108,7 +119,7 @@ defineExpose({ acceptStep });
         <tr v-for="item in usersRights" :key="item.email">
           <td>{{ item.email }}</td>
           <td
-            v-for="right in ['VIEW', 'EDIT_CATEGORIES', 'EDIT_EXPENSES', 'EDIT_GOALS', 'EDIT_INCOMES', 'EDIT_USERS_AND_RIGHTS']"
+            v-for="right in ['VIEW', 'EDIT_CATEGORIES', 'EDIT_EXPENSES', 'EDIT_GOALS', 'EDIT_INCOMES', 'EDIT_INCOME_ITEMS', 'EDIT_USERS_AND_RIGHTS']"
             :key="right"
           >
             <VCheckbox

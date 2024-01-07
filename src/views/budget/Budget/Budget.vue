@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { PropType, ref, Ref } from 'vue';
+import { PropType, provide, ref, Ref } from 'vue';
 
 import { ApolloQueryResult } from '@apollo/client';
 
 import BudgetInitialization from './components/BudgetInitialization.vue';
-import BudgetView from './components/BudgetView/BudgetView.vue';
-import { Budget, BudgetQueryOutput, BudgetQueryVariables, useBudgetQuery } from '@/graphql';
+import BudgetView from './components/BudgetView.vue';
+import { Budget, BudgetQueryOutput, BudgetQueryVariables, Right, useBudgetQuery } from '@/graphql';
 
 const props = defineProps({
   id: {
@@ -15,6 +15,12 @@ const props = defineProps({
 });
 
 const budget: Ref<Budget|null> = ref<Budget|null>(null);
+provide('updateRights', (rights: Right[]) => {
+  if (!budget.value) {
+    return;
+  }
+  budget.value.rights = rights;
+});
 const { onResult } = useBudgetQuery(props as BudgetQueryVariables, { fetchPolicy: 'cache-first' });
 onResult((result: ApolloQueryResult<BudgetQueryOutput>) => {
   if (!result.data?.budget) {

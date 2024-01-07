@@ -6,7 +6,7 @@ import Budget from '@/views/budget/Budget/Budget.vue';
 import BudgetCategories from '@/views/budget/BudgetCategories.vue';
 import BudgetCreate from '@/views/budget/BudgetCreate.vue';
 import BudgetGoals from '@/views/budget/BudgetGoals.vue';
-import BudgetHome from '@/views/budget/BudgetHome.vue';
+import BudgetHome from '@/views/budget/BudgetHome/BudgetHome.vue';
 import BudgetIncomes from '@/views/budget/BudgetIncomes.vue';
 import BudgetUsers from '@/views/budget/BudgetUsers.vue';
 import Dashboard from '@/views/Dashboard.vue';

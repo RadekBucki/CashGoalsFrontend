@@ -10,7 +10,14 @@ import { AuthorizationOutput, User } from '@/graphql';
  */
 export default function useApp() {
   const appStore = useAppStore();
-  const { isUserLoggedIn, getUserName, logout, localeNames, locale } = appStore;
+  const {
+    isUserLoggedIn,
+    getUserName,
+    getUserEmail,
+    logout,
+    localeNames,
+    locale,
+  } = appStore;
 
   const theme = useTheme();
   const { current } = useLocale();
@@ -54,5 +61,6 @@ export default function useApp() {
     getUserName,
     logout,
     setUser,
+    getUserEmail,
   };
 }

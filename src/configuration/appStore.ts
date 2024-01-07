@@ -41,6 +41,9 @@ export default defineStore('app', {
     getUserName(): string | undefined {
       return this.authorizationOutput?.user?.name;
     },
+    getUserEmail(): string | undefined {
+      return this.authorizationOutput?.user?.email;
+    },
     getAccessToken(): string | undefined {
       return this.authorizationOutput?.accessToken;
     },

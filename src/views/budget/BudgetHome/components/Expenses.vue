@@ -22,6 +22,10 @@ const props = defineProps({
     type: String as PropType<string>,
     required: true,
   },
+  editable: {
+    type: Boolean,
+    default: true,
+  },
   expenses: {
     type: Array as PropType<Expense[]>,
     required: true,
@@ -144,6 +148,7 @@ type GroupHeaderSlotFixed = {
         </template>
         <template v-slot:[`header.actions`]>
           <VBtn
+            v-if="editable"
             variant="plain"
             class="pa-0"
             style="min-width: 0;"
@@ -174,6 +179,7 @@ type GroupHeaderSlotFixed = {
             </td>
             <td class="text-end">
               <VBtn
+                v-if="editable"
                 variant="plain"
                 class="pa-0"
                 style="min-width: 0;"
@@ -187,13 +193,21 @@ type GroupHeaderSlotFixed = {
         </template>
         <template v-slot:[`item.actions`]="{ item }">
           <VBtn
+            v-if="editable"
             icon="mdi-pencil"
             variant="plain"
             class="pa-0"
             style="min-width: 0;"
             @click="setEditedExpense(item)"
           />
-          <VBtn icon="mdi-delete" variant="plain" class="pa-0" style="min-width: 0;" @click="deleteExpense(item)" />
+          <VBtn
+            v-if="editable"
+            icon="mdi-delete"
+            variant="plain"
+            class="pa-0"
+            style="min-width: 0;"
+            @click="deleteExpense(item)"
+          />
         </template>
       </VDataTable>
       <VFormModal
