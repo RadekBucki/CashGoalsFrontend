@@ -11,8 +11,9 @@ import VFormModal from '@/components/Modal/VFormModal.vue';
 import {
   Category,
   Expense,
-  ExpenseInput, IncomeItem,
-  UpdateExpenseMutationOutput, useDeleteExpenseMutation,
+  ExpenseInput,
+  UpdateExpenseMutationOutput,
+  useDeleteExpenseMutation,
   useUpdateExpenseMutation,
 } from '@/graphql';
 
