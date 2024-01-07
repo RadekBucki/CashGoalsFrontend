@@ -45,6 +45,303 @@ export function useBudgetLazyQuery(variables: BudgetQueryVariables | VueComposit
   return VueApolloComposable.useLazyQuery<BudgetQueryOutput, BudgetQueryVariables>(BudgetDocument, variables, options);
 }
 export type BudgetQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<BudgetQueryOutput, BudgetQueryVariables>;
+export const BudgetViewDocument = gql`
+    query budgetView($budgetId: UUID!, $month: Int!, $year: Int!) {
+  goalResults(budgetId: $budgetId, month: $month, year: $year) {
+    goal {
+      id
+      name
+      description
+      type
+      min
+      max
+    }
+    actual
+    reached
+  }
+  incomeItems(budgetId: $budgetId, month: $month, year: $year) {
+    id
+    description
+    amount
+    date
+    income {
+      id
+      name
+      description
+    }
+  }
+  incomes(budgetId: $budgetId) {
+    id
+    name
+    description
+  }
+  expenses(budgetId: $budgetId, month: $month, year: $year) {
+    id
+    description
+    amount
+    date
+    category {
+      id
+    }
+    categories
+  }
+  visibleCategories(budgetId: $budgetId) {
+    id
+    name
+    description
+    children {
+      id
+      name
+      description
+      children {
+        id
+        name
+        description
+        children {
+          id
+          name
+          description
+          children {
+            id
+            name
+            description
+            children {
+              id
+              name
+              description
+            }
+            children {
+              id
+              name
+              description
+              children {
+                id
+                name
+                description
+              }
+              children {
+                id
+                name
+                description
+                children {
+                  id
+                  name
+                  description
+                }
+                children {
+                  id
+                  name
+                  description
+                  children {
+                    id
+                    name
+                    description
+                  }
+                  children {
+                    id
+                    name
+                    description
+                    children {
+                      id
+                      name
+                      description
+                    }
+                    children {
+                      id
+                      name
+                      description
+                      children {
+                        id
+                        name
+                        description
+                      }
+                      children {
+                        id
+                        name
+                        description
+                        children {
+                          id
+                          name
+                          description
+                        }
+                        children {
+                          id
+                          name
+                          description
+                          children {
+                            id
+                            name
+                            description
+                          }
+                          children {
+                            id
+                            name
+                            description
+                            children {
+                              id
+                              name
+                              description
+                            }
+                            children {
+                              id
+                              name
+                              description
+                              children {
+                                id
+                                name
+                                description
+                              }
+                              children {
+                                id
+                                name
+                                description
+                                children {
+                                  id
+                                  name
+                                  description
+                                }
+                                children {
+                                  id
+                                  name
+                                  description
+                                  children {
+                                    id
+                                    name
+                                    description
+                                  }
+                                  children {
+                                    id
+                                    name
+                                    description
+                                    children {
+                                      id
+                                      name
+                                      description
+                                    }
+                                    children {
+                                      id
+                                      name
+                                      description
+                                      children {
+                                        id
+                                        name
+                                        description
+                                      }
+                                      children {
+                                        id
+                                        name
+                                        description
+                                        children {
+                                          id
+                                          name
+                                          description
+                                        }
+                                        children {
+                                          id
+                                          name
+                                          description
+                                          children {
+                                            id
+                                            name
+                                            description
+                                          }
+                                          children {
+                                            id
+                                            name
+                                            description
+                                            children {
+                                              id
+                                              name
+                                              description
+                                            }
+                                            children {
+                                              id
+                                              name
+                                              description
+                                              children {
+                                                id
+                                                name
+                                                description
+                                              }
+                                              children {
+                                                id
+                                                name
+                                                description
+                                                children {
+                                                  id
+                                                  name
+                                                  description
+                                                }
+                                                children {
+                                                  id
+                                                  name
+                                                  description
+                                                  children {
+                                                    id
+                                                    name
+                                                    description
+                                                  }
+                                                  children {
+                                                    id
+                                                    name
+                                                    description
+                                                    children {
+                                                      id
+                                                      name
+                                                      description
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useBudgetViewQuery__
+ *
+ * To run a query within a Vue component, call `useBudgetViewQuery` and pass it any options that fit your needs.
+ * When your component renders, `useBudgetViewQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param variables that will be passed into the query
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useBudgetViewQuery({
+ *   budgetId: // value for 'budgetId'
+ *   month: // value for 'month'
+ *   year: // value for 'year'
+ * });
+ */
+export function useBudgetViewQuery(variables: BudgetViewQueryVariables | VueCompositionApi.Ref<BudgetViewQueryVariables> | ReactiveFunction<BudgetViewQueryVariables>, options: VueApolloComposable.UseQueryOptions<BudgetViewQueryOutput, BudgetViewQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<BudgetViewQueryOutput, BudgetViewQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<BudgetViewQueryOutput, BudgetViewQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<BudgetViewQueryOutput, BudgetViewQueryVariables>(BudgetViewDocument, variables, options);
+}
+export function useBudgetViewLazyQuery(variables: BudgetViewQueryVariables | VueCompositionApi.Ref<BudgetViewQueryVariables> | ReactiveFunction<BudgetViewQueryVariables>, options: VueApolloComposable.UseQueryOptions<BudgetViewQueryOutput, BudgetViewQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<BudgetViewQueryOutput, BudgetViewQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<BudgetViewQueryOutput, BudgetViewQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<BudgetViewQueryOutput, BudgetViewQueryVariables>(BudgetViewDocument, variables, options);
+}
+export type BudgetViewQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<BudgetViewQueryOutput, BudgetViewQueryVariables>;
 export const BudgetsDocument = gql`
     query Budgets {
   budgets {
@@ -2102,6 +2399,15 @@ export type BudgetQueryVariables = Exact<{
 
 
 export type BudgetQueryOutput = { budget?: { id: string, name: string, initializationStep?: Step | null } | null };
+
+export type BudgetViewQueryVariables = Exact<{
+  budgetId: Scalars['UUID']['input'];
+  month: Scalars['Int']['input'];
+  year: Scalars['Int']['input'];
+}>;
+
+
+export type BudgetViewQueryOutput = { goalResults: Array<{ actual: number, reached: boolean, goal: { id: number, name: string, description?: string | null, type: GoalType, min?: number | null, max?: number | null } }>, incomeItems: Array<{ id: number, description?: string | null, amount: number, date: any, income: { id: number, name: string, description?: string | null } }>, incomes: Array<{ id: number, name: string, description?: string | null }>, expenses: Array<{ id: number, description?: string | null, amount: number, date: any, categories: string, category: { id: number } }>, visibleCategories: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> };
 
 export type BudgetsQueryVariables = Exact<{ [key: string]: never; }>;
 

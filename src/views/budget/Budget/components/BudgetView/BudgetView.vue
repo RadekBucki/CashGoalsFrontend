@@ -1,15 +1,26 @@
 <script setup lang="ts">
-import { PropType, ref, Ref } from 'vue';
+import { onMounted, PropType, ref, Ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useDisplay } from 'vuetify';
 
+import { QueryResult } from '@apollo/client';
+
 import { IncomesItems } from './components';
-import { Budget } from '@/graphql';
+import {
+  Budget,
+  BudgetViewQueryOutput,
+  Category,
+  Expense,
+  GoalResult,
+  Income,
+  IncomeItem,
+  useBudgetViewQuery,
+} from '@/graphql';
 import LeftLayout from '@/layouts/content/LeftLayout.vue';
 import Expenses from '@/views/budget/Budget/components/BudgetView/components/Expenses.vue';
 import GoalsResults from '@/views/budget/Budget/components/BudgetView/components/GoalsResults.vue';
 
-defineProps({
+const props = defineProps({
   budget: {
     type: Object as PropType<Budget>,
     required: true,
@@ -23,6 +34,31 @@ const now = new Date();
 const month: Ref<number> = ref(now.getMonth() + 1);
 const year: Ref<number> = ref(now.getFullYear());
 const editDate: Ref<boolean> = ref(false);
+
+const goalsResults: Ref<GoalResult[]> = ref<GoalResult[]>([]);
+const incomesItems: Ref<IncomeItem[]> = ref<IncomeItem[]>([]);
+const expenses: Ref<Expense[]> = ref<Expense[]>([]);
+
+const incomes: Ref<Income[]> = ref<Income[]>([]);
+const categories: Ref<Category[]> = ref<Category[]>([]);
+
+onMounted(() => {
+  const { onResult } = useBudgetViewQuery({
+    budgetId: props.budget.id,
+    month: month.value,
+    year: year.value,
+  });
+  onResult((result: QueryResult<BudgetViewQueryOutput>) => {
+    if (!result.data?.goalResults || !result.data?.incomeItems || !result.data?.expenses) {
+      return;
+    }
+    goalsResults.value = JSON.parse(JSON.stringify(result.data.goalResults));
+    incomesItems.value = JSON.parse(JSON.stringify(result.data.incomeItems));
+    expenses.value = JSON.parse(JSON.stringify(result.data.expenses));
+    incomes.value = JSON.parse(JSON.stringify(result.data.incomes));
+    categories.value = JSON.parse(JSON.stringify(result.data.visibleCategories));
+  });
+});
 </script>
 
 <template>
@@ -69,9 +105,19 @@ const editDate: Ref<boolean> = ref(false);
       </VBtn>
     </h2>
     <VExpansionPanels variant="accordion" multiple :model-value="['goals', 'incomes', 'expenses']">
-      <GoalsResults :budget="budget" :month="month" :year="year" />
-      <IncomesItems :budget="budget" :month="month" :year="year" />
-      <Expenses :budget="budget" :month="month" :year="year" />
+      <GoalsResults :goalsResults="goalsResults" />
+      <IncomesItems
+        :budgetId="props.budget?.id"
+        :incomesItems="incomesItems"
+        :incomes="incomes"
+        :updateIncomesItems="(items: IncomeItem[]) => { incomesItems = items; }"
+      />
+      <Expenses
+        :budgetId="props.budget?.id"
+        :expenses="expenses"
+        :categories="categories"
+        :updateExpenses="(items: Expense[]) => { expenses = items; }"
+      />
     </VExpansionPanels>
   </LeftLayout>
 </template>

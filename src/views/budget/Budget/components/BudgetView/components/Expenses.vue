@@ -1,53 +1,41 @@
 <script setup lang="ts">
-import { onMounted, PropType, Ref, ref } from 'vue';
+import { PropType, Ref, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-import { ApolloQueryResult, FetchResult } from '@apollo/client';
+import { FetchResult } from '@apollo/client';
 
 import { findCategoryById } from '@/components/CategorySelect';
 import CategorySelect from '@/components/CategorySelect/CategorySelect.vue';
 import { useModalStore } from '@/components/Modal';
 import VFormModal from '@/components/Modal/VFormModal.vue';
 import {
-  Budget,
   Category,
   Expense,
   ExpenseInput,
-  ExpensesQueryOutput,
   UpdateExpenseMutationOutput, useDeleteExpenseMutation,
-  useExpensesQuery,
   useUpdateExpenseMutation,
 } from '@/graphql';
 
 const props = defineProps({
-  budget: {
-    type: Object as PropType<Budget>,
+  budgetId: {
+    type: String as PropType<string>,
     required: true,
   },
-  month: {
-    type: Number as PropType<number>,
+  expenses: {
+    type: Array as PropType<Expense[]>,
     required: true,
   },
-  year: {
-    type: Number as PropType<number>,
+  categories: {
+    type: Array as PropType<Category[]>,
+    required: true,
+  },
+  updateExpenses: {
+    type: Function as PropType<(expenses: Expense[]) => void>,
     required: true,
   },
 });
 const { t } = useI18n();
 const modalStore = useModalStore();
-
-const expenses: Ref<Expense[]> = ref<Expense[]>([]);
-const categories: Ref<Category[]> = ref<Category[]>([]);
-onMounted(async () => {
-  const { onResult } = useExpensesQuery({ budgetId: props.budget.id, month: props.month, year: props.year });
-  onResult((result: ApolloQueryResult<ExpensesQueryOutput>) => {
-    if (!result.data?.expenses) {
-      return;
-    }
-    expenses.value = JSON.parse(JSON.stringify(result.data.expenses));
-    categories.value = JSON.parse(JSON.stringify(result.data.visibleCategories));
-  });
-});
 
 const editedExpense: Ref<ExpenseInput | null> = ref<ExpenseInput | null>(null);
 const setEditedExpense = (expense: Expense | null = null) => {
@@ -71,23 +59,25 @@ onUpdateExpense((result: FetchResult<UpdateExpenseMutationOutput>) => {
   if (!result.data?.updateExpense) {
     return;
   }
+  let { expenses } = props;
   if (editedExpense.value?.id) {
-    expenses.value = expenses.value.map((expense) => {
+    expenses = expenses.map((expense) => {
       if (expense.id === editedExpense.value?.id) {
         return result.data?.updateExpense as Expense;
       }
       return expense;
     });
   } else {
-    expenses.value.push(result.data?.updateExpense as Expense);
+    expenses.push(result.data?.updateExpense as Expense);
   }
+  props.updateExpenses(expenses);
   editedExpense.value = null;
 });
 const editExpense = () => {
   if (!editedExpense.value) {
     return;
   }
-  updateExpense({ budgetId: props.budget.id, expense: editedExpense.value });
+  updateExpense({ budgetId: props.budgetId, expense: editedExpense.value });
 };
 
 const { mutate: deleteExpenseMutate } = useDeleteExpenseMutation();
@@ -96,9 +86,9 @@ const deleteExpense = (expense: Expense) => {
     title: t('$vuetify.delete'),
     type: 'question',
     onConfirm: () => {
-      deleteExpenseMutate({ budgetId: props.budget.id, expenseId: expense.id })
+      deleteExpenseMutate({ budgetId: props.budgetId, expenseId: expense.id })
         .then(() => {
-          expenses.value = expenses.value.filter((e) => e.id !== expense.id);
+          props.updateExpenses(props.expenses.filter((e) => e.id !== expense.id));
         });
     },
   });

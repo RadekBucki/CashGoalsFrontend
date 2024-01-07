@@ -1,37 +1,18 @@
 <script setup lang="ts">
-import { onMounted, PropType, ref, Ref } from 'vue';
+import { PropType } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import GoalProgressBar from '@/components/GoalProgressBar.vue';
-import { Budget, GoalResult, useGoalResultsQuery } from '@/graphql';
+import { GoalResult } from '@/graphql';
 
-const props = defineProps({
-  budget: {
-    type: Object as PropType<Budget>,
-    required: true,
-  },
-  month: {
-    type: Number as PropType<number>,
-    required: true,
-  },
-  year: {
-    type: Number as PropType<number>,
+defineProps({
+  goalsResults: {
+    type: Array as PropType<GoalResult[]>,
     required: true,
   },
 });
 
 const { t } = useI18n();
-
-const goalsResults: Ref<GoalResult[]> = ref<GoalResult[]>([]);
-onMounted(() => {
-  const { onResult } = useGoalResultsQuery({ budgetId: props.budget.id, month: props.month, year: props.year });
-  onResult((result) => {
-    if (!result.data?.goalResults) {
-      return;
-    }
-    goalsResults.value = JSON.parse(JSON.stringify(result.data.goalResults));
-  });
-});
 </script>
 
 <template>
