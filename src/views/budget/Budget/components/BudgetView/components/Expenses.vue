@@ -11,7 +11,7 @@ import VFormModal from '@/components/Modal/VFormModal.vue';
 import {
   Category,
   Expense,
-  ExpenseInput,
+  ExpenseInput, IncomeItem,
   UpdateExpenseMutationOutput, useDeleteExpenseMutation,
   useUpdateExpenseMutation,
 } from '@/graphql';
@@ -115,7 +115,14 @@ type GroupHeaderSlotFixed = {
 <template>
   <VExpansionPanel value="expenses">
     <VExpansionPanelTitle>
-      <h3>{{ t('budget.expenses') }}</h3>
+      <h3>{{
+        t('budget.expenses')
+          + ': '
+          + expenses
+            .map((expense: Expense) => expense.amount)
+            .reduce((a: number, b: number) => a + b, 0)
+          + ' ' + t('budget.currency')
+      }}</h3>
     </VExpansionPanelTitle>
     <VExpansionPanelText>
       <VDataTable
