@@ -1,48 +1,39 @@
 <script setup lang="ts">
-import { onMounted, PropType, ref, Ref } from 'vue';
+import { PropType, ref, Ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-import { ApolloQueryResult, FetchResult } from '@apollo/client';
+import { FetchResult } from '@apollo/client';
 
 import { useModalStore } from '@/components/Modal';
 import VFormModal from '@/components/Modal/VFormModal.vue';
 import {
-  Budget,
-  Income, IncomeItem, IncomeItemInput,
-  IncomeItemsQueryOutput, UpdateIncomeItemMutationOutput, useDeleteIncomeItemMutation,
-  useIncomeItemsQuery, useUpdateIncomeItemMutation,
+  Income,
+  IncomeItem, IncomeItemInput,
+  UpdateIncomeItemMutationOutput, useDeleteIncomeItemMutation,
+  useUpdateIncomeItemMutation,
 } from '@/graphql';
 
 const props = defineProps({
-  budget: {
-    type: Object as PropType<Budget>,
+  budgetId: {
+    type: String as PropType<string>,
     required: true,
   },
-  month: {
-    type: Number as PropType<number>,
+  incomesItems: {
+    type: Array as PropType<IncomeItem[]>,
     required: true,
   },
-  year: {
-    type: Number as PropType<number>,
+  incomes: {
+    type: Array as PropType<Income[]>,
+    required: true,
+  },
+  updateIncomesItems: {
+    type: Function as PropType<(incomeItems: IncomeItem[]) => void>,
     required: true,
   },
 });
 
 const { t } = useI18n();
 const modalStore = useModalStore();
-
-const incomesItems: Ref<IncomeItem[]> = ref<IncomeItem[]>([]);
-const incomes: Ref<Income[]> = ref<Income[]>([]);
-onMounted(async () => {
-  const { onResult } = useIncomeItemsQuery({ budgetId: props.budget.id, month: props.month, year: props.year });
-  onResult((result: ApolloQueryResult<IncomeItemsQueryOutput>) => {
-    if (!result.data?.incomeItems) {
-      return;
-    }
-    incomesItems.value = JSON.parse(JSON.stringify(result.data.incomeItems));
-    incomes.value = JSON.parse(JSON.stringify(result.data.incomes));
-  });
-});
 
 const editedIncomeItem: Ref<IncomeItemInput | null> = ref<IncomeItemInput | null>(null);
 const setEditedIncomeItem = (incomeItem: IncomeItem | null = null) => {
@@ -65,16 +56,18 @@ onUpdateItem((result: FetchResult<UpdateIncomeItemMutationOutput>) => {
   if (!result.data?.updateIncomeItem) {
     return;
   }
+  let { incomesItems } = props;
   if (editedIncomeItem.value?.id) {
-    incomesItems.value = incomesItems.value.map((item: IncomeItem) => {
+    incomesItems = props.incomesItems.map((item: IncomeItem) => {
       if (item.id === result.data?.updateIncomeItem?.id) {
         return result.data?.updateIncomeItem;
       }
       return item;
     });
   } else {
-    incomesItems.value.push(result.data?.updateIncomeItem);
+    incomesItems.push(result.data?.updateIncomeItem);
   }
+  props.updateIncomesItems(incomesItems);
   editedIncomeItem.value = null;
 });
 const editIncomeItem = () => {
@@ -82,7 +75,7 @@ const editIncomeItem = () => {
     return;
   }
   updateItem({
-    budgetId: props.budget.id,
+    budgetId: props.budgetId,
     incomeItem: editedIncomeItem.value,
   });
 };
@@ -94,11 +87,11 @@ const deleteIncomeItem = (incomeItem: IncomeItem) => {
     type: 'question',
     onConfirm: () => {
       deleteItem({
-        budgetId: props.budget.id,
+        budgetId: props.budgetId,
         incomeItemId: incomeItem.id,
       })
         .then(() => {
-          incomesItems.value = incomesItems.value.filter((item: IncomeItem) => item.id !== incomeItem.id);
+          props.updateIncomesItems(props.incomesItems.filter((item: IncomeItem) => item.id !== incomeItem.id));
           editedIncomeItem.value = null;
         });
     },

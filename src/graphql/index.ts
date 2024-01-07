@@ -45,94 +45,36 @@ export function useBudgetLazyQuery(variables: BudgetQueryVariables | VueComposit
   return VueApolloComposable.useLazyQuery<BudgetQueryOutput, BudgetQueryVariables>(BudgetDocument, variables, options);
 }
 export type BudgetQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<BudgetQueryOutput, BudgetQueryVariables>;
-export const BudgetsDocument = gql`
-    query Budgets {
-  budgets {
+export const BudgetViewDocument = gql`
+    query budgetView($budgetId: UUID!, $month: Int!, $year: Int!) {
+  goalResults(budgetId: $budgetId, month: $month, year: $year) {
+    goal {
+      id
+      name
+      description
+      type
+      min
+      max
+    }
+    actual
+    reached
+  }
+  incomeItems(budgetId: $budgetId, month: $month, year: $year) {
+    id
+    description
+    amount
+    date
+    income {
+      id
+      name
+      description
+    }
+  }
+  incomes(budgetId: $budgetId) {
     id
     name
-    initializationStep
+    description
   }
-}
-    `;
-
-/**
- * __useBudgetsQuery__
- *
- * To run a query within a Vue component, call `useBudgetsQuery` and pass it any options that fit your needs.
- * When your component renders, `useBudgetsQuery` returns an object from Apollo Client that contains result, loading and error properties
- * you can use to render your UI.
- *
- * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
- *
- * @example
- * const { result, loading, error } = useBudgetsQuery();
- */
-export function useBudgetsQuery(options: VueApolloComposable.UseQueryOptions<BudgetsQueryOutput, BudgetsQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<BudgetsQueryOutput, BudgetsQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<BudgetsQueryOutput, BudgetsQueryVariables>> = {}) {
-  return VueApolloComposable.useQuery<BudgetsQueryOutput, BudgetsQueryVariables>(BudgetsDocument, {}, options);
-}
-export function useBudgetsLazyQuery(options: VueApolloComposable.UseQueryOptions<BudgetsQueryOutput, BudgetsQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<BudgetsQueryOutput, BudgetsQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<BudgetsQueryOutput, BudgetsQueryVariables>> = {}) {
-  return VueApolloComposable.useLazyQuery<BudgetsQueryOutput, BudgetsQueryVariables>(BudgetsDocument, {}, options);
-}
-export type BudgetsQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<BudgetsQueryOutput, BudgetsQueryVariables>;
-export const CreateBudgetDocument = gql`
-    mutation CreateBudget($name: String!) {
-  createBudget(name: $name) {
-    id
-  }
-}
-    `;
-
-/**
- * __useCreateBudgetMutation__
- *
- * To run a mutation, you first call `useCreateBudgetMutation` within a Vue component and pass it any options that fit your needs.
- * When your component renders, `useCreateBudgetMutation` returns an object that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
- *
- * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
- *
- * @example
- * const { mutate, loading, error, onDone } = useCreateBudgetMutation({
- *   variables: {
- *     name: // value for 'name'
- *   },
- * });
- */
-export function useCreateBudgetMutation(options: VueApolloComposable.UseMutationOptions<CreateBudgetMutationOutput, CreateBudgetMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<CreateBudgetMutationOutput, CreateBudgetMutationVariables>> = {}) {
-  return VueApolloComposable.useMutation<CreateBudgetMutationOutput, CreateBudgetMutationVariables>(CreateBudgetDocument, options);
-}
-export type CreateBudgetMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<CreateBudgetMutationOutput, CreateBudgetMutationVariables>;
-export const DeleteExpenseDocument = gql`
-    mutation deleteExpense($budgetId: UUID!, $expenseId: ID!) {
-  deleteExpense(budgetId: $budgetId, expenseId: $expenseId)
-}
-    `;
-
-/**
- * __useDeleteExpenseMutation__
- *
- * To run a mutation, you first call `useDeleteExpenseMutation` within a Vue component and pass it any options that fit your needs.
- * When your component renders, `useDeleteExpenseMutation` returns an object that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
- *
- * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
- *
- * @example
- * const { mutate, loading, error, onDone } = useDeleteExpenseMutation({
- *   variables: {
- *     budgetId: // value for 'budgetId'
- *     expenseId: // value for 'expenseId'
- *   },
- * });
- */
-export function useDeleteExpenseMutation(options: VueApolloComposable.UseMutationOptions<DeleteExpenseMutationOutput, DeleteExpenseMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<DeleteExpenseMutationOutput, DeleteExpenseMutationVariables>> = {}) {
-  return VueApolloComposable.useMutation<DeleteExpenseMutationOutput, DeleteExpenseMutationVariables>(DeleteExpenseDocument, options);
-}
-export type DeleteExpenseMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<DeleteExpenseMutationOutput, DeleteExpenseMutationVariables>;
-export const ExpensesDocument = gql`
-    query expenses($budgetId: UUID!, $month: Int!, $year: Int!) {
   expenses(budgetId: $budgetId, month: $month, year: $year) {
     id
     description
@@ -377,29 +319,115 @@ export const ExpensesDocument = gql`
     `;
 
 /**
- * __useExpensesQuery__
+ * __useBudgetViewQuery__
  *
- * To run a query within a Vue component, call `useExpensesQuery` and pass it any options that fit your needs.
- * When your component renders, `useExpensesQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * To run a query within a Vue component, call `useBudgetViewQuery` and pass it any options that fit your needs.
+ * When your component renders, `useBudgetViewQuery` returns an object from Apollo Client that contains result, loading and error properties
  * you can use to render your UI.
  *
  * @param variables that will be passed into the query
  * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
  *
  * @example
- * const { result, loading, error } = useExpensesQuery({
+ * const { result, loading, error } = useBudgetViewQuery({
  *   budgetId: // value for 'budgetId'
  *   month: // value for 'month'
  *   year: // value for 'year'
  * });
  */
-export function useExpensesQuery(variables: ExpensesQueryVariables | VueCompositionApi.Ref<ExpensesQueryVariables> | ReactiveFunction<ExpensesQueryVariables>, options: VueApolloComposable.UseQueryOptions<ExpensesQueryOutput, ExpensesQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<ExpensesQueryOutput, ExpensesQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<ExpensesQueryOutput, ExpensesQueryVariables>> = {}) {
-  return VueApolloComposable.useQuery<ExpensesQueryOutput, ExpensesQueryVariables>(ExpensesDocument, variables, options);
+export function useBudgetViewQuery(variables: BudgetViewQueryVariables | VueCompositionApi.Ref<BudgetViewQueryVariables> | ReactiveFunction<BudgetViewQueryVariables>, options: VueApolloComposable.UseQueryOptions<BudgetViewQueryOutput, BudgetViewQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<BudgetViewQueryOutput, BudgetViewQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<BudgetViewQueryOutput, BudgetViewQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<BudgetViewQueryOutput, BudgetViewQueryVariables>(BudgetViewDocument, variables, options);
 }
-export function useExpensesLazyQuery(variables: ExpensesQueryVariables | VueCompositionApi.Ref<ExpensesQueryVariables> | ReactiveFunction<ExpensesQueryVariables>, options: VueApolloComposable.UseQueryOptions<ExpensesQueryOutput, ExpensesQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<ExpensesQueryOutput, ExpensesQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<ExpensesQueryOutput, ExpensesQueryVariables>> = {}) {
-  return VueApolloComposable.useLazyQuery<ExpensesQueryOutput, ExpensesQueryVariables>(ExpensesDocument, variables, options);
+export function useBudgetViewLazyQuery(variables: BudgetViewQueryVariables | VueCompositionApi.Ref<BudgetViewQueryVariables> | ReactiveFunction<BudgetViewQueryVariables>, options: VueApolloComposable.UseQueryOptions<BudgetViewQueryOutput, BudgetViewQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<BudgetViewQueryOutput, BudgetViewQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<BudgetViewQueryOutput, BudgetViewQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<BudgetViewQueryOutput, BudgetViewQueryVariables>(BudgetViewDocument, variables, options);
 }
-export type ExpensesQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<ExpensesQueryOutput, ExpensesQueryVariables>;
+export type BudgetViewQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<BudgetViewQueryOutput, BudgetViewQueryVariables>;
+export const BudgetsDocument = gql`
+    query Budgets {
+  budgets {
+    id
+    name
+    initializationStep
+  }
+}
+    `;
+
+/**
+ * __useBudgetsQuery__
+ *
+ * To run a query within a Vue component, call `useBudgetsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useBudgetsQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useBudgetsQuery();
+ */
+export function useBudgetsQuery(options: VueApolloComposable.UseQueryOptions<BudgetsQueryOutput, BudgetsQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<BudgetsQueryOutput, BudgetsQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<BudgetsQueryOutput, BudgetsQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<BudgetsQueryOutput, BudgetsQueryVariables>(BudgetsDocument, {}, options);
+}
+export function useBudgetsLazyQuery(options: VueApolloComposable.UseQueryOptions<BudgetsQueryOutput, BudgetsQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<BudgetsQueryOutput, BudgetsQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<BudgetsQueryOutput, BudgetsQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<BudgetsQueryOutput, BudgetsQueryVariables>(BudgetsDocument, {}, options);
+}
+export type BudgetsQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<BudgetsQueryOutput, BudgetsQueryVariables>;
+export const CreateBudgetDocument = gql`
+    mutation CreateBudget($name: String!) {
+  createBudget(name: $name) {
+    id
+  }
+}
+    `;
+
+/**
+ * __useCreateBudgetMutation__
+ *
+ * To run a mutation, you first call `useCreateBudgetMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useCreateBudgetMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useCreateBudgetMutation({
+ *   variables: {
+ *     name: // value for 'name'
+ *   },
+ * });
+ */
+export function useCreateBudgetMutation(options: VueApolloComposable.UseMutationOptions<CreateBudgetMutationOutput, CreateBudgetMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<CreateBudgetMutationOutput, CreateBudgetMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<CreateBudgetMutationOutput, CreateBudgetMutationVariables>(CreateBudgetDocument, options);
+}
+export type CreateBudgetMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<CreateBudgetMutationOutput, CreateBudgetMutationVariables>;
+export const DeleteExpenseDocument = gql`
+    mutation deleteExpense($budgetId: UUID!, $expenseId: ID!) {
+  deleteExpense(budgetId: $budgetId, expenseId: $expenseId)
+}
+    `;
+
+/**
+ * __useDeleteExpenseMutation__
+ *
+ * To run a mutation, you first call `useDeleteExpenseMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteExpenseMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useDeleteExpenseMutation({
+ *   variables: {
+ *     budgetId: // value for 'budgetId'
+ *     expenseId: // value for 'expenseId'
+ *   },
+ * });
+ */
+export function useDeleteExpenseMutation(options: VueApolloComposable.UseMutationOptions<DeleteExpenseMutationOutput, DeleteExpenseMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<DeleteExpenseMutationOutput, DeleteExpenseMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<DeleteExpenseMutationOutput, DeleteExpenseMutationVariables>(DeleteExpenseDocument, options);
+}
+export type DeleteExpenseMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<DeleteExpenseMutationOutput, DeleteExpenseMutationVariables>;
 export const UpdateExpenseDocument = gql`
     mutation updateExpense($budgetId: UUID!, $expense: ExpenseInput!) {
   updateExpense(budgetId: $budgetId, expense: $expense) {
@@ -1168,7 +1196,6 @@ export const GoalResultsDocument = gql`
     }
     actual
     reached
-    totalIncome
   }
 }
     `;
@@ -1291,51 +1318,6 @@ export function useDeleteIncomeItemMutation(options: VueApolloComposable.UseMuta
   return VueApolloComposable.useMutation<DeleteIncomeItemMutationOutput, DeleteIncomeItemMutationVariables>(DeleteIncomeItemDocument, options);
 }
 export type DeleteIncomeItemMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<DeleteIncomeItemMutationOutput, DeleteIncomeItemMutationVariables>;
-export const IncomeItemsDocument = gql`
-    query incomeItems($budgetId: UUID!, $month: Int!, $year: Int!) {
-  incomeItems(budgetId: $budgetId, month: $month, year: $year) {
-    id
-    description
-    amount
-    date
-    income {
-      id
-      name
-      description
-    }
-  }
-  incomes(budgetId: $budgetId) {
-    id
-    name
-    description
-  }
-}
-    `;
-
-/**
- * __useIncomeItemsQuery__
- *
- * To run a query within a Vue component, call `useIncomeItemsQuery` and pass it any options that fit your needs.
- * When your component renders, `useIncomeItemsQuery` returns an object from Apollo Client that contains result, loading and error properties
- * you can use to render your UI.
- *
- * @param variables that will be passed into the query
- * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
- *
- * @example
- * const { result, loading, error } = useIncomeItemsQuery({
- *   budgetId: // value for 'budgetId'
- *   month: // value for 'month'
- *   year: // value for 'year'
- * });
- */
-export function useIncomeItemsQuery(variables: IncomeItemsQueryVariables | VueCompositionApi.Ref<IncomeItemsQueryVariables> | ReactiveFunction<IncomeItemsQueryVariables>, options: VueApolloComposable.UseQueryOptions<IncomeItemsQueryOutput, IncomeItemsQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<IncomeItemsQueryOutput, IncomeItemsQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<IncomeItemsQueryOutput, IncomeItemsQueryVariables>> = {}) {
-  return VueApolloComposable.useQuery<IncomeItemsQueryOutput, IncomeItemsQueryVariables>(IncomeItemsDocument, variables, options);
-}
-export function useIncomeItemsLazyQuery(variables: IncomeItemsQueryVariables | VueCompositionApi.Ref<IncomeItemsQueryVariables> | ReactiveFunction<IncomeItemsQueryVariables>, options: VueApolloComposable.UseQueryOptions<IncomeItemsQueryOutput, IncomeItemsQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<IncomeItemsQueryOutput, IncomeItemsQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<IncomeItemsQueryOutput, IncomeItemsQueryVariables>> = {}) {
-  return VueApolloComposable.useLazyQuery<IncomeItemsQueryOutput, IncomeItemsQueryVariables>(IncomeItemsDocument, variables, options);
-}
-export type IncomeItemsQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<IncomeItemsQueryOutput, IncomeItemsQueryVariables>;
 export const UpdateIncomeItemDocument = gql`
     mutation updateIncomeItem($budgetId: UUID!, $incomeItem: IncomeItemInput!) {
   updateIncomeItem(budgetId: $budgetId, incomeItem: $incomeItem) {
@@ -1811,7 +1793,6 @@ export type GoalResult = {
   actual: Scalars['Float']['output'];
   goal: Goal;
   reached: Scalars['Boolean']['output'];
-  totalIncome: Scalars['Float']['output'];
 };
 
 export type GoalType =
@@ -2105,6 +2086,15 @@ export type BudgetQueryVariables = Exact<{
 
 export type BudgetQueryOutput = { budget?: { id: string, name: string, initializationStep?: Step | null } | null };
 
+export type BudgetViewQueryVariables = Exact<{
+  budgetId: Scalars['UUID']['input'];
+  month: Scalars['Int']['input'];
+  year: Scalars['Int']['input'];
+}>;
+
+
+export type BudgetViewQueryOutput = { goalResults: Array<{ actual: number, reached: boolean, goal: { id: number, name: string, description?: string | null, type: GoalType, min?: number | null, max?: number | null } }>, incomeItems: Array<{ id: number, description?: string | null, amount: number, date: any, income: { id: number, name: string, description?: string | null } }>, incomes: Array<{ id: number, name: string, description?: string | null }>, expenses: Array<{ id: number, description?: string | null, amount: number, date: any, categories: string, category: { id: number } }>, visibleCategories: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> };
+
 export type BudgetsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -2124,15 +2114,6 @@ export type DeleteExpenseMutationVariables = Exact<{
 
 
 export type DeleteExpenseMutationOutput = { deleteExpense: boolean };
-
-export type ExpensesQueryVariables = Exact<{
-  budgetId: Scalars['UUID']['input'];
-  month: Scalars['Int']['input'];
-  year: Scalars['Int']['input'];
-}>;
-
-
-export type ExpensesQueryOutput = { expenses: Array<{ id: number, description?: string | null, amount: number, date: any, categories: string, category: { id: number } }>, visibleCategories: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null, children: Array<{ id: number, name: string, description?: string | null }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> }> };
 
 export type UpdateExpenseMutationVariables = Exact<{
   budgetId: Scalars['UUID']['input'];
@@ -2181,7 +2162,7 @@ export type GoalResultsQueryVariables = Exact<{
 }>;
 
 
-export type GoalResultsQueryOutput = { goalResults: Array<{ actual: number, reached: boolean, totalIncome: number, goal: { id: number, name: string, description?: string | null, type: GoalType, min?: number | null, max?: number | null } }> };
+export type GoalResultsQueryOutput = { goalResults: Array<{ actual: number, reached: boolean, goal: { id: number, name: string, description?: string | null, type: GoalType, min?: number | null, max?: number | null } }> };
 
 export type IncomesQueryVariables = Exact<{
   budgetId: Scalars['UUID']['input'];
@@ -2206,15 +2187,6 @@ export type DeleteIncomeItemMutationVariables = Exact<{
 
 
 export type DeleteIncomeItemMutationOutput = { deleteIncomeItem: boolean };
-
-export type IncomeItemsQueryVariables = Exact<{
-  budgetId: Scalars['UUID']['input'];
-  month: Scalars['Int']['input'];
-  year: Scalars['Int']['input'];
-}>;
-
-
-export type IncomeItemsQueryOutput = { incomeItems: Array<{ id: number, description?: string | null, amount: number, date: any, income: { id: number, name: string, description?: string | null } }>, incomes: Array<{ id: number, name: string, description?: string | null }> };
 
 export type UpdateIncomeItemMutationVariables = Exact<{
   budgetId: Scalars['UUID']['input'];

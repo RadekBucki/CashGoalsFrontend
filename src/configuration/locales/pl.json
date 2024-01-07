@@ -16,6 +16,11 @@
       "pageText": "{0}-{1} z {2}"
     }
   },
+  "$vuetify.pagination.ariaLabel.root": "Przełączanie stron",
+  "10": "10",
+  "25": "25",
+  "50": "50",
+  "100": "100",
   "your.account": "Twoje konto",
   "register": "Zarejestruj się",
   "dont.have.account": "Nie masz jeszcze konta?",
@@ -147,5 +152,4 @@
   "budget.expense.category": "Kategoria",
   "budget.expense.edit": "Edycja wydatku",
   "budget.expense.add": "Dodaj wydatek"
-
 }

@@ -137,8 +137,8 @@ const timelineItems: ComputedRef<TimeLineItem[]> = computed<TimeLineItem[]>(
     <h5>{{ goalResult.goal.description }}</h5>
     <VTimeline :direction="mobile ? 'vertical' : 'horizontal'" side="start">
       <VTimelineItem
-        v-for="item in timelineItems"
-        :key="item.text"
+        v-for="(item, index) in timelineItems"
+        :key="index"
         :hide-dot="item.hideDot"
         :dot-color="item.dotColor"
         :icon="item.icon"
