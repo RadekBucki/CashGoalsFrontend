@@ -1,5 +1,3 @@
 <template>
-  <VMain>
-    <span>Dashboard</span>
-  </VMain>
+  <VMain />
 </template>
