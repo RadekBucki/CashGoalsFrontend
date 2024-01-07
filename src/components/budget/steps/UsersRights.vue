@@ -28,7 +28,10 @@ const props = defineProps({
 const { t } = useI18n();
 
 const app = useApp();
-const updateRights = inject('updateRights', () => { });
+
+// noinspection JSUnusedLocalSymbols
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const updateRights = inject('updateRights', (rights: Right[]) => { });
 
 const usersRights: Ref<UserRightsInput[]> = ref<UserRightsInput[]>([]);
 const newUserEmail: Ref<string> = ref<string>('');
