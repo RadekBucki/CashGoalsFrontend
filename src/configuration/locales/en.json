@@ -16,6 +16,11 @@
       "pageText": "{0}-{1} of {2}"
     }
   },
+  "$vuetify.pagination.ariaLabel.root": "Switch pages",
+  "10": "10",
+  "25": "25",
+  "50": "50",
+  "100": "100",
   "your.account": "Your account",
   "register": "Register",
   "dont.have.account": "Don't have an account?",
