@@ -3,7 +3,7 @@ import { PropType, ref, Ref } from 'vue';
 
 import { ApolloQueryResult } from '@apollo/client';
 
-import BudgetInitialization from './components/BudgetInitialization/BudgetInitialization.vue';
+import BudgetInitialization from './components/BudgetInitialization.vue';
 import BudgetView from './components/BudgetView/BudgetView.vue';
 import { Budget, BudgetQueryOutput, BudgetQueryVariables, useBudgetQuery } from '@/graphql';
 

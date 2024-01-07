@@ -2,10 +2,8 @@
 import { PropType, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
+import { Goals } from '@/components/budget/steps';
 import { Budget } from '@/graphql';
-import ExpensesCategories
-  from '@/views/budget/Budget/components/BudgetInitialization/steps/ExpensesCategories/ExpensesCategories.vue';
-import Goals from '@/views/budget/Budget/components/BudgetInitialization/steps/Goals.vue';
 
 defineProps({
   budget: {

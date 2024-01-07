@@ -16,7 +16,6 @@ import {
   IncomeItem,
   useBudgetViewQuery, useGoalResultsQuery,
 } from '@/graphql';
-import LeftLayout from '@/layouts/content/LeftLayout.vue';
 import Expenses from '@/views/budget/Budget/components/BudgetView/components/Expenses.vue';
 import GoalsResults from '@/views/budget/Budget/components/BudgetView/components/GoalsResults.vue';
 
