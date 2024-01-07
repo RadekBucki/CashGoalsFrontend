@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { onMounted, PropType, Ref, ref } from 'vue';
+import { inject, onMounted, PropType, Ref, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import { FetchResult } from '@apollo/client';
 import { VTextField } from 'vuetify/components';
 
+import useApp from '@/composables/useApp';
 import {
   Budget, Right, SetUsersRightsMutationOutput,
   UserRightsInput,
@@ -25,6 +26,9 @@ const props = defineProps({
 });
 
 const { t } = useI18n();
+
+const app = useApp();
+const updateRights = inject('updateRights', () => { });
 
 const usersRights: Ref<UserRightsInput[]> = ref<UserRightsInput[]>([]);
 const newUserEmail: Ref<string> = ref<string>('');
@@ -78,6 +82,9 @@ onDone((result: FetchResult<SetUsersRightsMutationOutput>) => {
       return userRightsInput;
     },
   );
+  const currentUserRights = result.data.setUsersRights
+    .filter((userRight) => userRight.user.email === app.getUserEmail())[0].rights;
+  updateRights(currentUserRights);
 });
 const acceptStep = async (): Promise<boolean> => mutate({
   budgetId: props.budget?.id,
