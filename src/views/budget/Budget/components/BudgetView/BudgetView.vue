@@ -3,7 +3,7 @@ import { onMounted, PropType, ref, Ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useDisplay } from 'vuetify';
 
-import { QueryResult } from '@apollo/client';
+import { ApolloQueryResult } from '@apollo/client';
 
 import { IncomesItems } from './components';
 import {
@@ -11,10 +11,10 @@ import {
   BudgetViewQueryOutput,
   Category,
   Expense,
-  GoalResult,
+  GoalResult, GoalResultsQueryOutput,
   Income,
   IncomeItem,
-  useBudgetViewQuery,
+  useBudgetViewQuery, useGoalResultsQuery,
 } from '@/graphql';
 import LeftLayout from '@/layouts/content/LeftLayout.vue';
 import Expenses from '@/views/budget/Budget/components/BudgetView/components/Expenses.vue';
@@ -42,13 +42,15 @@ const expenses: Ref<Expense[]> = ref<Expense[]>([]);
 const incomes: Ref<Income[]> = ref<Income[]>([]);
 const categories: Ref<Category[]> = ref<Category[]>([]);
 
+const mounted: Ref<boolean> = ref(false);
+
 onMounted(() => {
   const { onResult } = useBudgetViewQuery({
     budgetId: props.budget.id,
     month: month.value,
     year: year.value,
   });
-  onResult((result: QueryResult<BudgetViewQueryOutput>) => {
+  onResult((result: ApolloQueryResult<BudgetViewQueryOutput>) => {
     if (!result.data?.goalResults || !result.data?.incomeItems || !result.data?.expenses) {
       return;
     }
@@ -58,6 +60,17 @@ onMounted(() => {
     incomes.value = JSON.parse(JSON.stringify(result.data.incomes));
     categories.value = JSON.parse(JSON.stringify(result.data.visibleCategories));
   });
+  mounted.value = true;
+});
+const { onResult, refetch: updateGoalsResults } = useGoalResultsQuery(
+  { budgetId: props.budget.id, month: month.value, year: year.value },
+  { enabled: mounted },
+);
+onResult((result: ApolloQueryResult<GoalResultsQueryOutput>) => {
+  if (!result.data?.goalResults) {
+    return;
+  }
+  goalsResults.value = JSON.parse(JSON.stringify(result.data.goalResults));
 });
 </script>
 
@@ -110,13 +123,13 @@ onMounted(() => {
         :budgetId="props.budget?.id"
         :incomesItems="incomesItems"
         :incomes="incomes"
-        :updateIncomesItems="(items: IncomeItem[]) => { incomesItems = items; }"
+        :updateIncomesItems="(items: IncomeItem[]) => { incomesItems = items; updateGoalsResults(); }"
       />
       <Expenses
         :budgetId="props.budget?.id"
         :expenses="expenses"
         :categories="categories"
-        :updateExpenses="(items: Expense[]) => { expenses = items; }"
+        :updateExpenses="(items: Expense[]) => { expenses = items; updateGoalsResults(); }"
       />
     </VExpansionPanels>
   </LeftLayout>
