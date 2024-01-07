@@ -3,6 +3,8 @@ import { PropType, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import { Budget } from '@/graphql';
+import ExpensesCategories
+  from '@/views/budget/Budget/components/BudgetInitialization/steps/ExpensesCategories/ExpensesCategories.vue';
 import Incomes from '@/views/budget/Budget/components/BudgetInitialization/steps/Incomes.vue';
 import UsersRights from '@/views/budget/Budget/components/BudgetInitialization/steps/UsersRights.vue';
 
@@ -27,7 +29,7 @@ const save = () => {
 
 <template>
   <div>
-    <UsersRights :budget="budget" ref="usersRightsRef" />
+    <UsersRights :showTitle="false" :budget="budget" ref="usersRightsRef" />
     <VBtn class="mt-5" @click="save">{{ t('save') }}</VBtn>
   </div>
 </template>

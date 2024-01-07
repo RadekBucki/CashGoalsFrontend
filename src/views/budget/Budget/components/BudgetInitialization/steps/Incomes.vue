@@ -19,6 +19,10 @@ const props = defineProps({
     type: Object as PropType<Budget>,
     required: true,
   },
+  showTitle: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 const { t } = useLocale();
@@ -106,7 +110,7 @@ defineExpose({ acceptStep });
 
 <template>
   <div>
-    <h1>{{ t('budget.incomes.define') }}</h1>
+    <h1 v-if="showTitle">{{ t('budget.incomes.define') }}</h1>
     <VRow>
       <VCol cols="12" md="6">
         <VList>

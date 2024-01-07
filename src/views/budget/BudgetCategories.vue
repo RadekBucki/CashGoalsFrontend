@@ -27,7 +27,7 @@ const save = () => {
 
 <template>
   <div>
-    <ExpensesCategories :budget="budget" ref="expensesCategoriesRef" />
+    <ExpensesCategories :showTitle="false" :budget="budget" ref="expensesCategoriesRef" />
     <VBtn class="mt-5" @click="save">{{ t('save') }}</VBtn>
   </div>
 </template>

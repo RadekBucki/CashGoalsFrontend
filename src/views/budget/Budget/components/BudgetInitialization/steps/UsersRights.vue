@@ -18,6 +18,10 @@ const props = defineProps({
     type: Object as PropType<Budget>,
     required: true,
   },
+  showTitle: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 const { t } = useI18n();
@@ -86,7 +90,7 @@ defineExpose({ acceptStep });
 
 <template>
   <div>
-    <h1>{{ t('budget.usersRights.define') }}</h1>
+    <h1 v-if="showTitle">{{ t('budget.usersRights.define') }}</h1>
     <VTable>
       <thead>
         <tr>
