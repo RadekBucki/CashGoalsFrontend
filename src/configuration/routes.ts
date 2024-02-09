@@ -10,7 +10,6 @@ import BudgetHome from '@/views/budget/BudgetHome/BudgetHome.vue';
 import BudgetIncomes from '@/views/budget/BudgetIncomes.vue';
 import BudgetUsers from '@/views/budget/BudgetUsers.vue';
 import Dashboard from '@/views/Dashboard.vue';
-import Home from '@/views/Home.vue';
 import Activate from '@/views/user/Activate.vue';
 import ForgotPassword from '@/views/user/ForgotPassword.vue';
 import Login from '@/views/user/Login.vue';
@@ -24,7 +23,7 @@ export default [
     props: true,
     component: TopNavBarLayout,
     children: [
-      { path: '', name: 'Home', component: Home },
+      { path: '', name: 'Home', component: Login },
       { path: 'register', name: 'Register', component: Register },
       { path: 'login', name: 'Login', component: Login },
       { path: 'forgot-password', name: 'ForgotPassword', component: ForgotPassword },
